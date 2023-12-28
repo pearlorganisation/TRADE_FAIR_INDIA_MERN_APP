@@ -1,0 +1,31 @@
+.footer_container {
+  height: auto;
+  color: white;
+  background-color: #383d67;
+  font-size: 18px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  text-align: center;
+}
+
+/* For tablet */
+
+@media (max-width: 768px) {
+  .footer_container {
+    font-size: 15px;
+    text-align: center;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 575px) {
+  .footer_container {
+    font-size: 13px;
+    padding: 10px;
+  }
+}
+
+/* EO Mobile  */

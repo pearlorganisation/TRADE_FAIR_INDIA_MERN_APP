@@ -1,0 +1,18 @@
+{
+  "name": "trade_fair_india_mern_app",
+  "version": "1.0.0",
+  "description": "Trade Fair India MERN Project",
+  "main": "index.js",
+  "scripts": {
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && npm run dev",
+    "admin": "cd admin && npm start",
+    "shopPanel": "cd shopPanel && npm start",
+    "dev": "concurrently \"npm run frontend\" \"npm run admin\" \"npm run shopPanel\" \"npm run backend\" "
+  },
+  "author": "Pearl Organisation",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,0 +1,57 @@
+/* .navbar-nav  > a{
+  color: white !important;
+} */
+
+.main_header {
+  display: block;
+}
+
+/* #basic-navbar-nav a {
+  color: white !important;
+} */
+
+/* .main_header .navbar-nav a{
+  color: white !important;
+} */
+
+.main_navbar a {
+  color: white !important;
+  font-size: 17px !important;
+}
+
+.profileAvatar {
+  height: 3rem;
+  width: 3rem;
+}
+
+@media (max-width: 768px) {
+  .profileAvatar {
+    height: 2rem;
+    width: 2rem;
+  }
+  .main_navbar a {
+    color: white !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 575px) {
+  .profileAvatar {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  .main_navbar a {
+    color: white !important;
+    font-size: 12px !important;
+  }
+}
+
+/* .main_navbar .dropdown-menu {
+  
+} */
+
+.main_navbar .dropdown-menu.show {
+  background: #383d67 !important;
+}

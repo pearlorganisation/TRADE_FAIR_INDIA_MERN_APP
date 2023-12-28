@@ -1,0 +1,42 @@
+.modalWidth {
+  min-width: 60vw !important;
+}
+.modalHeight {
+  height: 80vh !important;
+  overflow: auto;
+}
+
+/* add icon class */
+.aicon path {
+  stroke: white !important;
+  color: white !important;
+  fill: white;
+  height: 25px;
+}
+
+.aicon {
+  height: 30px !important;
+  stroke-width: 4 !important;
+}
+
+.logoImage {
+  width: 13rem;
+  height: 12rem;
+  position: absolute;
+  /* display: none; */
+  right: 0px;
+  top: 40%;
+  padding: 8px;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.logoImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.addEventTitle {
+  background-color: beige;
+}

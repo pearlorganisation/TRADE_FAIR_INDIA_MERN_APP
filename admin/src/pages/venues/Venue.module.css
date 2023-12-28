@@ -1,0 +1,40 @@
+.modalWidth {
+  min-width: 60vw !important;
+}
+
+.modalHeight {
+  min-height: 50vh !important;
+  overflow: auto;
+}
+
+/* add icon class */
+.aicon path {
+  stroke: white !important;
+  color: white !important;
+  fill: white;
+  height: 25px;
+}
+
+.aicon {
+  height: 30px !important;
+  stroke-width: 4 !important;
+}
+
+.textCenter th:last-child,
+.textCenter td:last-child {
+  position: sticky;
+  right: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+.textCenter th:last-child {
+  box-shadow: 6px 0px 5px -2px rgba(0, 0, 0, 0.2);
+}
+
+.hotelsNearBy {
+  /* position-absolute  top-0 end-0 */
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+}

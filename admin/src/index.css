@@ -1,0 +1,81 @@
+/* @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css); */
+
+/* Bootstrap Icons */
+/* @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css"); */
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+ul {
+  /* list-style: none; */
+}
+li {
+  list-style: none;
+  margin: 10px 0;
+}
+a {
+  text-decoration: none;
+}
+
+.dropdown-menu.show {
+  background: #383d67 !important;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: #f8f9fa !important;
+  color: black !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  white-space: nowrap !important;
+}
+
+tr > td {
+  white-space: nowrap !important;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1) !important;
+}
+
+/******************* Media Query for Mobile responsive ***********/
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 22px !important;
+  }
+
+  .dropdown {
+    position: relative;
+    display: flex !important;
+    justify-content: flex-end !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+  }
+
+  .navbar-nav .dropdown-menu {
+    position: absolute !important;
+  }
+
+  .collapse:not(.show) {
+    display: contents !important;
+  }
+}
+
+/* Used to remove Increment and Decrement Icons from input type number  */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

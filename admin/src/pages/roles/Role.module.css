@@ -1,0 +1,12 @@
+.modalWidth {
+  min-width: 60vw !important;
+}
+.modalHeight {
+  height: 60vh !important;
+  overflow: auto;
+}
+.addRoleTitle {
+  background-color: beige;
+}
+
+/* ------------------------------------------- THE END ------------------------------------------- */

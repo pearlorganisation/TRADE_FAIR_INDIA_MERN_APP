@@ -1,0 +1,36 @@
+.custom_ol {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style-type: disc;
+  color: black;
+  font-weight: 500;
+  padding: 5px 8px !important;
+}
+
+li:nth-of-type(odd) {
+  color: crimson;
+}
+li:nth-of-type(even) {
+  color: darkblue;
+}
+li:last-child {
+  color: green;
+}
+
+.update_list {
+  height: 50vh;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.modalWidth {
+  min-width: 60vw !important;
+}
+.modalHeight {
+  height: 50vh !important;
+  overflow: auto;
+}

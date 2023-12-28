@@ -1,0 +1,12 @@
+.modalWidth {
+  min-width: 60vw !important;
+}
+.modalHeight {
+  height: 70vh !important;
+  overflow: auto;
+}
+.addUserTitle {
+  background-color: beige;
+}
+
+/* ------------------------------------------- THE END ------------------------------------------- */

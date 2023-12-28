@@ -1,0 +1,41 @@
+.table_heading h1 {
+  color: orange;
+}
+
+.table_heading {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.events_form {
+  max-width: 700px;
+  margin: auto;
+  padding: 50px;
+  background: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.organiser_button,
+.organiser_button:hover {
+  background-color: #00073d;
+  border: #00073d;
+}
+
+.organiser_details {
+  font-size: 20px;
+  font-weight: 500;
+  color: darkblue;
+  margin-bottom: 3px;
+  padding: 3px;
+  text-align: center;
+}
+
+.modalWidth {
+  min-width: 60vw !important;
+}
+.modalHeight {
+  height: 80vh !important;
+  overflow: auto;
+}
