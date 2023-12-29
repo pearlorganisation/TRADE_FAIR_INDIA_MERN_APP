@@ -54,6 +54,12 @@ exports.getSubBanner = async (req, res) => {
 exports.updateSubBanner = async (req, res) => {
   try {
     const existingData = await clientPageSubBanner.findById(req?.params?.id);
+    if (req?.body?.active) {
+      await clientPageSubBanner.updateMany(
+        { _id: { $ne: req?.params?.id } },
+        { active: false }
+      );
+    }
     const validData = await clientPageSubBanner.findByIdAndUpdate(
       req?.params?.id,
       { ...req?.body, banner: req?.file?.path || existingData?.banner }
