@@ -89,6 +89,8 @@ const roleRoute = require("./src/routes/Authentication/role");
 const enquiryRoutes = require("./src/routes/enquiryRoutes");
 const clientBannerRoutes = require("./src/routes/Banner/clientBanner.js");
 const clientSubBanner = require("./src/routes/Banner/clientSubBanner.js");
+const faqRoutes = require("./src/routes/faqRoutes.js");
+const eventCategory = require("./src/routes/eventCategoryRoutes.js");
 
 app.use("/api/v1/organiser", organiserRoutes);
 app.use("/api/v1/category", categoryRoutes);
@@ -105,6 +107,7 @@ app.use("/api/v1/clientBanner", clientBannerRoutes);
 app.use("/api/v1/clientSubBanner", clientSubBanner);
 app.use("/api/v1/vendor", vendorRoutes);
 app.use("/api/v1/owner/", ownerRoutes);
+app.use("/api/v1/faq", faqRoutes);
 
 app.use("*", (req, res) => {
   res.json({
