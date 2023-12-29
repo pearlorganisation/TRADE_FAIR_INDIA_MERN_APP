@@ -50,6 +50,12 @@ exports.getBanner = async (req, res) => {
 exports.updateBanner = async (req, res) => {
   try {
     const existingData = await clientPageBanner.findById(req?.params?.id);
+    if (req?.body?.active) {
+      await clientPageBanner.updateMany(
+        { _id: { $ne: req?.params?.id } },
+        { active: false }
+      );
+    }
     const validData = await clientPageBanner.findByIdAndUpdate(
       req?.params?.id,
       { ...req?.body, banner: req?.file?.path || existingData?.banner }
