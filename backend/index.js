@@ -9,19 +9,19 @@ const cookieParser = require("cookie-parser");
 const app = express();
 dotenv.config();
 
-//@@-- For handling uncaught Errors(Other then express errors)------------------------------------
-process.on("uncaughtException", (error) => {
-  console.log(
-    colorette.bold(
-      colorette.red(`Trade-Fair-India:::: ${error.name}-${error.message}`)
-    )
-  );
-  console.log(
-    colorette.bold(colorette.red("Unhandled error occured!! shutting down...."))
-  );
+// //@@-- For handling uncaught Errors(Other then express errors)------------------------------------
+// process.on("uncaughtException", (error) => {
+//   console.log(
+//     colorette.bold(
+//       colorette.red(`Trade-Fair-India:::: ${error.name}-${error.message}`)
+//     )
+//   );
+//   console.log(
+//     colorette.bold(colorette.red("Unhandled error occured!! shutting down...."))
+//   );
 
-  process.exit(1);
-});
+//   process.exit(1);
+// });
 
 //@@ --------middleware---section----------------------------------------------------------------
 
@@ -87,6 +87,8 @@ const mailRoutes = require("./src/routes/Mail/mailRoutes.js");
 const permissionRoute = require("./src/routes/Authentication/permission");
 const roleRoute = require("./src/routes/Authentication/role");
 const enquiryRoutes = require("./src/routes/enquiryRoutes");
+const clientBannerRoutes = require("./src/routes/Banner/clientBanner.js");
+const clientSubBanner = require("./src/routes/Banner/clientSubBanner.js");
 
 app.use("/api/v1/organiser", organiserRoutes);
 app.use("/api/v1/category", categoryRoutes);
@@ -99,7 +101,8 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/permission", permissionRoute);
 app.use("/api/v1/role", roleRoute);
 app.use("/api/v1/enquiry", enquiryRoutes);
-
+app.use("/api/v1/clientBanner", clientBannerRoutes);
+app.use("/api/v1/clientSubBanner", clientSubBanner);
 app.use("/api/v1/vendor", vendorRoutes);
 app.use("/api/v1/owner/", ownerRoutes);
 
@@ -124,17 +127,17 @@ mongoose.connect(process.env.MONGO_DB_DATABASE_URL).then(() => {
   console.log(colorette.yellow("Database connection successfully"));
 });
 
-// @@----For handling Uncaught rejected promises------------------------------------------------------------
-process.on("unhandledRejection", (error) => {
-  console.log(
-    colorette.bold(
-      colorette.red(`Trade-Fair-India:::: ${error.name}-${error.message}`)
-    )
-  );
-  console.log(
-    colorette.bold(colorette.red("Unhandled error occured!! shutting down...."))
-  );
-  server.close(() => {
-    process.exit(1);
-  });
-});
+// // @@----For handling Uncaught rejected promises------------------------------------------------------------
+// process.on("unhandledRejection", (error) => {
+//   console.log(
+//     colorette.bold(
+//       colorette.red(`Trade-Fair-India:::: ${error.name}-${error.message}`)
+//     )
+//   );
+//   console.log(
+//     colorette.bold(colorette.red("Unhandled error occured!! shutting down...."))
+//   );
+//   server.close(() => {
+//     process.exit(1);
+//   });
+// });
