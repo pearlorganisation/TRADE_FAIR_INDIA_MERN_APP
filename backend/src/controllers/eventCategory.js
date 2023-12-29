@@ -51,7 +51,10 @@ exports.deleteEventCategory = async (req, res) => {
 
 exports.updateEventCategory = async (req, res) => {
   try {
-    const categoryData = await eventCategory.findByIdAndUpdate(req?.params?.id);
+    const categoryData = await eventCategory.findByIdAndUpdate(
+      req?.params?.id,
+      { ...req?.body }
+    );
     if (!categoryData) {
       return res.status(400).json({
         status: "SUCCESS",
