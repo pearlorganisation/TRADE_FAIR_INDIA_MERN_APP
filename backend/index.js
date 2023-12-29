@@ -108,6 +108,7 @@ app.use("/api/v1/clientSubBanner", clientSubBanner);
 app.use("/api/v1/vendor", vendorRoutes);
 app.use("/api/v1/owner/", ownerRoutes);
 app.use("/api/v1/faq", faqRoutes);
+app.use("/api/v1/eventCategory", eventCategory);
 
 app.use("*", (req, res) => {
   res.json({

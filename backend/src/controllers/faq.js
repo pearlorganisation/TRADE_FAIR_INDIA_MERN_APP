@@ -49,7 +49,9 @@ exports.deleteFaq = async (req, res) => {
 
 exports.updateFaq = async (req, res) => {
   try {
-    const faqData = await Faq.findByIdAndUpdate(req?.params?.id);
+    const faqData = await Faq.findByIdAndUpdate(req?.params?.id, {
+      ...req?.body,
+    });
     if (!faqData) {
       return res.status(400).json({
         status: "SUCCESS",
