@@ -1,29 +1,24 @@
 const mongoose = require("mongoose");
-
-const clientBannerSchema = new mongoose.Schema(
+const subBanner = new mongoose.Schema(
   {
-    banner: { type: String, required: [true, "Banner image is required!!"] },
+    banner: {
+      type: String,
+      //   required: true,
+    },
     bannerData: {
       type: String,
-      // required: [true, "Banner data is required!!"],
-      // minLength: 2,
-      // maxLength: 50,
+      //   required: true,
     },
     active: {
-      type: Boolean,
+      type: String,
       default: false,
     },
-
     buttonLink: {
       type: String,
-      // required: [true, "Button link is required!! "],
+      //   required: true,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model(
-  "clientBanner",
-  clientBannerSchema,
-  "clientBanner"
-);
+module.exports = mongoose.model("subBanner", subBanner, "subBanner");
