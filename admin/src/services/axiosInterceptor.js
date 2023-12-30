@@ -12,8 +12,7 @@ export const instance = axios.create({
   baseURL: `${
     process.env.REACT_APP_WORKING_ENVIRONMENT === "development"
       ? process.env.REACT_APP_API_BASE_URL_DEVELOPMENT
-      : process.env.REACT_APP_API_BASE_URL_RENDER
-    // process.env.REACT_APP_API_BASE_URL_MAIN_PRODUCTION
+      : REACT_APP_API_BASE_URL_MAIN_PRODUCTION
   }`,
 });
 
