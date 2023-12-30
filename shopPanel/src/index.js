@@ -23,11 +23,11 @@ root.render(
   <React.StrictMode>
     <SkeletonTheme>
       <BrowserRouter
-        basename={
-          process.env.REACT_APP_WORKING_ENVIRONMENT === "production"
-            ? "/mern/trade-fair-india-shop-panel"
-            : ""
-        }
+      // basename={
+      //   process.env.REACT_APP_WORKING_ENVIRONMENT === "production"
+      //     ? "/mern/trade-fair-india-shop-panel"
+      //     : ""
+      // }
       >
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}></PersistGate>
