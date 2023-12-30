@@ -30,19 +30,19 @@ app.use(
     process.env.NODE_ENV === "production"
       ? {
           origin: [
-            "http://localhost:4000",
-            "http://localhost:4001",
+            "http://localhost:4112",
             "http://localhost:4113",
             "http://localhost:4114",
-            "https://trade-fair-india.netlify.app",
-            "https://trade-fair-india-frontend-admin.vercel.app",
             "https://development.pearl-developer.com",
+            "https://trade-fair-india.vercel.app",
+            "https://trade-fair-india-admin.vercel.app",
+            "https://trade-fair-india-shop-panel.vercel.app",
           ],
           credentials: true,
         }
       : {
           origin: [
-            "http://localhost:4000",
+            "http://localhost:4112",
             "http://localhost:4113",
             "http://localhost:4114",
           ],
