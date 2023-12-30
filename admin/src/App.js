@@ -35,6 +35,21 @@ import PageNotFound from "./layouts/PageNotFound";
 import { availablePermissions, availableRoles } from "./utils";
 import ViewLoggedInUserDetails from "./pages/users/ViewLoggedInUserDetails";
 import CreateEvent from "./pages/events/CreateEvent";
+import FetchHomeBanners from "./pages/client-panel/homeBanner/FetchHomeBanners";
+import CreateHomeBanner from "./pages/client-panel/homeBanner/CreateHomeBanner";
+import UpdateHomeBanner from "./pages/client-panel/homeBanner/UpdateHomeBanner";
+import CreateSubBanner from "./pages/client-panel/subBanner/CreateSubBanner";
+import UpdateSubBanner from "./pages/client-panel/subBanner/UpdateSubBanner";
+import FetchSubBanners from "./pages/client-panel/subBanner/FetchSubBanners";
+import FetchFaqs from "./pages/client-panel/faq/FetchFaqs";
+import CreateFaq from "./pages/client-panel/faq/CreateFaq";
+import UpdateFaq from "./pages/client-panel/faq/UpdateFaq";
+import FetchEventCategories from "./pages/client-panel/eventCategory/FetchEventCategories";
+import CreateEventCategory from "./pages/client-panel/eventCategory/CreateEventCategory";
+import UpdateEventCategory from "./pages/client-panel/eventCategory/UpdateEventCategory";
+import FetchEventBanners from "./pages/client-panel/eventBanner/FetchEventBanners";
+import CreateEventBanner from "./pages/client-panel/eventBanner/CreateEventBanner";
+import UpdateEventBanner from "./pages/client-panel/eventBanner/UpdateEventBanner";
 // ----------------------------------------------------------------------------------
 const App = () => {
   const { isUserLoggedIn, loggedInUserData, usersList } = useAuth();
@@ -110,6 +125,56 @@ const App = () => {
           <Route path="/users" element={<ViewUsers />} />
           <Route path="/addNewUser" element={<CreateUser />} />
           <Route path="/editUserDetails" element={<UpdateUser />} />
+
+          {/* // Client Panel Routes -- Start */}
+          <Route path="/client" element={<FetchHomeBanners />} />
+
+          <Route path="/client/homeBanners" element={<FetchHomeBanners />} />
+          <Route path="/client/addHomeBanner" element={<CreateHomeBanner />} />
+          <Route
+            path="/client/updateHomeBanner/:homeBannerId"
+            element={<UpdateHomeBanner />}
+          />
+
+          <Route path="/client/subBanners" element={<FetchSubBanners />} />
+          <Route path="/client/addSubBanner" element={<CreateSubBanner />} />
+          <Route
+            path="/client/updateSubBanner/:subBannerId"
+            element={<UpdateSubBanner />}
+          />
+
+          <Route path="/client/faqs" element={<FetchFaqs />} />
+          <Route path="/client/addFaq" element={<CreateFaq />} />
+          <Route path="/client/updateFaq/:faqId" element={<UpdateFaq />} />
+
+          <Route
+            path="/client/eventCategories"
+            element={<FetchEventCategories />}
+          />
+          <Route
+            path="/client/addEventCategory"
+            element={<CreateEventCategory />}
+          />
+          <Route
+            path="/client/updateEventCategory/:eventCategoryId"
+            element={<UpdateEventCategory />}
+          />
+
+          <Route path="/client/eventBanners" element={<FetchEventBanners />} />
+          <Route
+            path="/client/addEventBanner"
+            element={<CreateEventBanner />}
+          />
+          <Route
+            path="/client/updateEventBanner/:eventBannerId"
+            element={<UpdateEventBanner />}
+          />
+          {/* // Client Panel Routes -- Finished */}
+
+          <Route path="/client/sub-banner" element={<ViewShops />} />
+          <Route path="/client/event-category" element={<ViewShops />} />
+          <Route path="/client/shows-banner" element={<ViewShops />} />
+          <Route path="/client/faq" element={<ViewShops />} />
         </Route>
 
         <Route

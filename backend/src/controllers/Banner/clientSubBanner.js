@@ -1,4 +1,6 @@
 const clientPageSubBanner = require("../../models/Banner/clientPageSubBanner");
+
+
 exports.newClientSubBanner = async (req, res) => {
   try {
     if (req?.file && !req?.file?.mimetype.includes("image")) {

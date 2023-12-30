@@ -10,52 +10,98 @@ import SidebarMenu from "./SidebarMenu";
 import styles from "./Sidebar.module.css";
 import { FiUsers } from "react-icons/fi";
 import useAuth from "../../../hooks/useAuth";
+import { LuWallpaper } from "react-icons/lu";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { FaQuestion } from "react-icons/fa6";
+import { SiPrivateinternetaccess } from "react-icons/si";
 
+// ---------------------------------------------------------------------
 const routes = [
   {
     path: "/",
     name: "Dashboard",
     icon: <FaHome />,
   },
+
   {
-    path: "/venues",
-    name: "Venue",
-    icon: <TbBuildingCommunity />,
+    path: "/admin",
+    name: "Shop Panel ",
+    icon: <GiHamburgerMenu />,
+    subRoutes: [
+      {
+        path: "/venues",
+        name: "Venue",
+        icon: <TbBuildingCommunity />,
+      },
+      {
+        path: "/category",
+        name: "Category",
+        icon: <BiSolidCategory />,
+      },
+      {
+        path: "/organiser",
+        name: "Organiser",
+        icon: <BsPeopleFill />,
+      },
+      {
+        path: "/events",
+        name: "Events",
+        icon: <MdEventAvailable />,
+      },
+      {
+        path: "/shops",
+        name: "Shops",
+        icon: <BsShop />,
+      },
+      {
+        path: "/users",
+        name: "Users",
+        icon: <FiUsers />,
+      },
+      {
+        path: "/roles",
+        name: "Roles",
+        icon: <SiPrivateinternetaccess />,
+      },
+      {
+        path: "/permissions",
+        name: "Permissions",
+        icon: <FiUsers />,
+      },
+    ],
   },
+
   {
-    path: "/category",
-    name: "Category",
-    icon: <BiSolidCategory />,
-  },
-  {
-    path: "/organiser",
-    name: "Organiser",
-    icon: <BsPeopleFill />,
-  },
-  {
-    path: "/events",
-    name: "Events",
-    icon: <MdEventAvailable />,
-  },
-  {
-    path: "/shops",
-    name: "Shops",
-    icon: <BsShop />,
-  },
-  {
-    path: "/users",
-    name: "Users",
-    icon: <FiUsers />,
-  },
-  {
-    path: "/roles",
-    name: "Roles",
-    icon: <FiUsers />,
-  },
-  {
-    path: "/permissions",
-    name: "Permissions",
-    icon: <FiUsers />,
+    path: "/client",
+    name: "Client Panel ",
+    icon: <GiHamburgerMenu />,
+    subRoutes: [
+      {
+        path: "/client/homeBanners",
+        name: "Home Banner ",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/client/subBanners",
+        name: "Sub Banner",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/client/eventCategories",
+        name: "Event Category",
+        icon: <FiUsers />,
+      },
+      {
+        path: "/client/eventBanners",
+        name: "Shows/Events Banner",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/client/faqs",
+        name: "FAQs",
+        icon: <FaQuestion />,
+      },
+    ],
   },
 ];
 
@@ -178,7 +224,8 @@ const SideBar = ({ children }) => {
               ? userVendorRoutes
               : routes
             ).map((route, index) => {
-              if (route.subRoutes) {
+              console.log("route:::: ", route);
+              if (route?.subRoutes) {
                 return (
                   <SidebarMenu
                     setIsOpen={setIsOpen}
@@ -190,12 +237,12 @@ const SideBar = ({ children }) => {
               }
               return (
                 <NavLink
-                  to={route.path}
+                  to={route?.path}
                   key={index}
                   className="link"
                   activeClassName="active"
                 >
-                  <div className="icon">{route.icon}</div>
+                  <div className="icon">{route?.icon}</div>
                   <AnimatePresence>
                     {isOpen && (
                       <motion.div
@@ -205,7 +252,7 @@ const SideBar = ({ children }) => {
                         exit="hidden"
                         className="link_text"
                       >
-                        {route.name}
+                        {route?.name}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -249,7 +296,7 @@ const SideBar = ({ children }) => {
             </div>
             <section className="routes">
               {routes.map((route, index) => {
-                if (route.subRoutes) {
+                if (route?.subRoutes) {
                   return (
                     <SidebarMenu
                       setIsMobileOpen={setIsMobileOpen}
@@ -262,12 +309,12 @@ const SideBar = ({ children }) => {
 
                 return (
                   <NavLink
-                    to={route.path}
+                    to={route?.path}
                     key={index}
                     className="link"
                     activeClassName="active"
                   >
-                    <div className="icon">{route.icon}</div>
+                    <div className="icon">{route?.icon}</div>
                     <AnimatePresence>
                       {isMobileOpen && (
                         <motion.div
@@ -277,7 +324,7 @@ const SideBar = ({ children }) => {
                           exit="hidden"
                           className="link_text"
                         >
-                          {route.name}
+                          {route?.name}
                         </motion.div>
                       )}
                     </AnimatePresence>
