@@ -24,8 +24,40 @@ const routes = [
   },
 
   {
+    path: "/client",
+    name: "Client Panel ",
+    icon: <GiHamburgerMenu />,
+    subRoutes: [
+      {
+        path: "/client/homeBanners",
+        name: "Home Banner ",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/client/subBanners",
+        name: "Sub Banner",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/client/eventCategories",
+        name: "Event Category",
+        icon: <FiUsers />,
+      },
+      {
+        path: "/client/eventBanners",
+        name: "Shows/Events Banner",
+        icon: <LuWallpaper />,
+      },
+      {
+        path: "/client/faqs",
+        name: "FAQs",
+        icon: <FaQuestion />,
+      },
+    ],
+  },
+  {
     path: "/admin",
-    name: "Shop Panel ",
+    name: "Miscellaneous",
     icon: <GiHamburgerMenu />,
     subRoutes: [
       {
@@ -67,39 +99,6 @@ const routes = [
         path: "/permissions",
         name: "Permissions",
         icon: <FiUsers />,
-      },
-    ],
-  },
-
-  {
-    path: "/client",
-    name: "Client Panel ",
-    icon: <GiHamburgerMenu />,
-    subRoutes: [
-      {
-        path: "/client/homeBanners",
-        name: "Home Banner ",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/client/subBanners",
-        name: "Sub Banner",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/client/eventCategories",
-        name: "Event Category",
-        icon: <FiUsers />,
-      },
-      {
-        path: "/client/eventBanners",
-        name: "Shows/Events Banner",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/client/faqs",
-        name: "FAQs",
-        icon: <FaQuestion />,
       },
     ],
   },
