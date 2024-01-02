@@ -1,14 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa6";
 
 const Header = () => {
   const [state, setState] = useState(false);
+  const [showNav, setShowNav] = useState(false);
+
+  let prevScroll = window.scrollY;
+  let currScroll = 0;
+  const handleNavBar = () => {
+    currScroll = window.scrollY;
+    if (prevScroll < currScroll) {
+      setShowNav(true);
+    } else {
+      setShowNav(false);
+    }
+    // if(window.scrollY > 100){
+    //   setShowNav(true)
+    //   console.log("Greater than 100")}
+    //   else {
+    //     setShowNav(false)
+    //   }
+    prevScroll = currScroll;
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleNavBar);
+
+    return () => {
+      window.removeEventListener("scroll", handleNavBar);
+    };
+  }, []);
+
 
 
   return (
-    <nav className="bg-[#00373E] border-b w-full md:static md:text-sm md:border-none">
+    <nav className={`bg-[#00373E]  ${
+      showNav
+        ? "translate-y-[-100%]"
+        : "translate-y-0"
+    } transition-all duration-200 fixed border-b w-full md:text-sm md:border-none z-20`}>
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <Link to="/">
