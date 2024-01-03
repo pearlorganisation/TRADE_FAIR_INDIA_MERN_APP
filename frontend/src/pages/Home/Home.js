@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div className="">
       <HeroSection />
-      <TopEvents/>
+      <TopEvents />
       <FeaturedEvents />
       <ExploreByChoice />
       <PopularTradeEvent />
