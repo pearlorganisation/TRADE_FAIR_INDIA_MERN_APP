@@ -37,8 +37,8 @@ const Header = () => {
   return (
     <nav className={`bg-[#00373E]  ${
       showNav
-        ? "translate-y-[-100%]"
-        : "translate-y-0"
+        ? "translate-y-[-100%] opacity-0"
+        : "translate-y-0 opacity-100"
     } transition-all duration-200 fixed border-b w-full md:text-sm md:border-none z-20`}>
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">

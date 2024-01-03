@@ -10,12 +10,12 @@ import styles from "./styles.module.css";
 
 // import required modules
 import { Pagination, Navigation } from "swiper/modules";
-import sampleImage from "../assets/UpEvents.png";
+import sampleImage from "../../components/assets/UpEvents.png";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FaCalendarAlt } from "react-icons/fa";
 
-const PopularEventCarousel = () => {
+const ShopCarousel = () => {
   const swiperRef = useRef(null);
   const goNext = () => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -85,7 +85,7 @@ const PopularEventCarousel = () => {
           })}
       </Swiper>
       {/* Custom next and prev buttons */}
-      <div
+      {/* <div
         onClick={() => {
           goNext();
         }}
@@ -100,9 +100,9 @@ const PopularEventCarousel = () => {
         className="bg-[#DFFEC8] text-[#00373E] rounded-full p-1 absolute top-[50%] z-10 cursor-pointer"
       >
         <FaAngleLeft size={30} />
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default PopularEventCarousel;
+export default ShopCarousel;

@@ -14,7 +14,7 @@ const TopEvents = () => {
 
       <div className=" container mx-auto bg-transparent space-y-12 p-5 relative grid place-items-center text-[#00373E]">
         <div className="bg-[#DFFEC8] h-[23.5rem] w-[90%] mx-auto p-8 grid place-items-center absolute top-[-15rem] rounded-2xl">
-          <div className="text-5xl/tight w-[40rem] text-center">
+          <div className="text-3xl/tight md:text-4xl/tight lg:text-5xl/tight max-w-[40rem] text-center">
             Trade Shows, Exhibitions, Conferences & Business Events India
           </div>
           <button
