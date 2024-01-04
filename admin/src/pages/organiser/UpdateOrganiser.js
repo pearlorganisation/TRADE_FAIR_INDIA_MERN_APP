@@ -20,7 +20,7 @@ const UpdateOrganiser = () => {
   const logoRef = useRef(null);
   const organiserImageRef = useRef(null);
   const { state } = useLocation();
-  console.log("OrganiserState::",state)
+  console.log("OrganiserState::", state);
 
   useEffect(() => {
     if (!state?._id) navigate("/", { replace: true });
@@ -190,7 +190,7 @@ const UpdateOrganiser = () => {
     const orgImg = [];
     for (let i = 0; i < file.length; i++) {
       const imgFile = URL.createObjectURL(file[i]);
-      orgImg.push({path:imgFile});
+      orgImg.push({ path: imgFile });
     }
     setShowOrganiserImg(orgImg);
     setShowOrganiserFile(file);

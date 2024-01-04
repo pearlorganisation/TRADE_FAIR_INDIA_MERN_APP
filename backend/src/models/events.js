@@ -16,6 +16,10 @@ const eventSchema = new Schema(
     enquiries: {
       type: [{ type: mongoose.Schema.ObjectId, ref: "enquiry" }],
     },
+    isPopular: {
+      type: Boolean,
+      default: false,
+    },
     venue: {
       type: mongoose.Schema.ObjectId,
       ref: "Venue",
