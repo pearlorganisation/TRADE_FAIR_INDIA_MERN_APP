@@ -115,7 +115,7 @@ const CreateVenue = () => {
   return (
     <>
       <div className="container bg-inf py-2">
-        <div
+        <div 
           className="col-md-12 fs-4 fw-medium mb-2 py-2 text-center"
           style={{ background: "#dee2e6" }}
         >
@@ -178,7 +178,7 @@ const CreateVenue = () => {
             />
 
             {errors.State && (
-              <span className="text-danger">This field is required</span>
+              <span className="text-danger">This field is required </span>
             )}
           </div>
 

@@ -5,3 +5,4 @@ const FetchHomeBanners = () => {
 };
 
 export default FetchHomeBanners;
+   
