@@ -57,7 +57,6 @@ const CreateEvent = () => {
           customLabelValue: "",
           uniqueKey: generateDynamicUrl().randomString,
         },
-        
       ],
     },
   });
