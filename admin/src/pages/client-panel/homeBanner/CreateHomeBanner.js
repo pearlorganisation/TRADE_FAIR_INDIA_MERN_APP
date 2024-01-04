@@ -39,6 +39,7 @@ const CreateBanner = () => {
   };
 
   if (isBannerCreationSuccess) {
+    console.log("done");
     navigate("/client/homeBanners");
   }
   return (
