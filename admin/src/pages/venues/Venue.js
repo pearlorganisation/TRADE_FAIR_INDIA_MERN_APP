@@ -182,7 +182,7 @@ const Venue = () => {
                             placement="bottom"
                             overlay={
                               <Popover
-                                id="popover-positioned-bottom"
+                                id="popover-positioned-bottom "
                                 title="Description"
                               >
                                 <strong>{item?.PlaceDescription}</strong>
