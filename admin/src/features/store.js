@@ -13,6 +13,7 @@ import authReducer from "./slices/authSlice";
 import userReducer from "./slices/userSlice";
 import roleReducer from "./slices/roleSlice";
 import permissionReducer from "./slices/permissionSlice";
+import faqReducer from "./slices/faqSlice";
 
 // ---------------------------------------------------------
 
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   user: userReducer,
   role: roleReducer,
   permission: permissionReducer,
+  faq: faqReducer,
   // omitedPart: OmitReducer // not persisting this reducer
 });
 
