@@ -37,7 +37,7 @@ import ViewLoggedInUserDetails from "./pages/users/ViewLoggedInUserDetails";
 import CreateEvent from "./pages/events/CreateEvent";
 import FetchHomeBanners from "./pages/client-panel/homeBanner/FetchHomeBanners";
 import CreateHomeBanner from "./pages/client-panel/homeBanner/CreateHomeBanner";
-import UpdateHomeBanner from "./pages/client-panel/homeBanner/UpdateHomeBanner";
+import { UpdateHomeBanner } from "./pages/client-panel/homeBanner/UpdateHomeBanner";
 import CreateSubBanner from "./pages/client-panel/subBanner/CreateSubBanner";
 import UpdateSubBanner from "./pages/client-panel/subBanner/UpdateSubBanner";
 import FetchSubBanners from "./pages/client-panel/subBanner/FetchSubBanners";
@@ -131,10 +131,7 @@ const App = () => {
 
           <Route path="/client/homeBanners" element={<FetchHomeBanners />} />
           <Route path="/client/addHomeBanner" element={<CreateHomeBanner />} />
-          <Route
-            path="/client/updateHomeBanner/:homeBannerId"
-            element={<UpdateHomeBanner />}
-          />
+          <Route path="/client/updateBanner" element={<UpdateHomeBanner />} />
 
           <Route path="/client/subBanners" element={<FetchSubBanners />} />
           <Route path="/client/addSubBanner" element={<CreateSubBanner />} />

@@ -12,8 +12,11 @@ import eventReducer from "./slices/eventSlice";
 import authReducer from "./slices/authSlice";
 import userReducer from "./slices/userSlice";
 import roleReducer from "./slices/roleSlice";
+import clientSubBanner from "./slices/clientSubBannerSlice";
 import permissionReducer from "./slices/permissionSlice";
 import faqReducer from "./slices/faqSlice";
+import clientSubBannerSlice from "./slices/clientSubBannerSlice";
+import clientBannerSlice from "./slices/clientHomeBannerSlice";
 
 // ---------------------------------------------------------
 
@@ -43,6 +46,8 @@ const reducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   role: roleReducer,
+  clientSubBanner: clientSubBannerSlice,
+  clientBanner: clientBannerSlice,
   permission: permissionReducer,
   faq: faqReducer,
   // omitedPart: OmitReducer // not persisting this reducer

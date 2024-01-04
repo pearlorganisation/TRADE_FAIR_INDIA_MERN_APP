@@ -1,15 +1,14 @@
 import React from "react";
-import { ToastContainer, toast } from "react-toastify";
-import { updateSubBanner } from "../../../features/actions/clientSubBanner";
+import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Container, Row, Col, Form } from "react-bootstrap";
 import LoadingButton from "../../events/LoadingButton";
 import { Controller, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
+import { updateSubBanner } from "../../../../../backend/src/controllers/Banner/clientSubBanner";
 
-const UpdateSubBanner = () => {
+export const UpdateSubBanner = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -59,9 +58,7 @@ const UpdateSubBanner = () => {
     formData.append("banner", bannerFile || bannerImg);
     formData.append("bannerData", bannerData?.bannerData);
     formData.append("buttonLink", bannerData?.buttonLink);
-    id
-      ? dispatch(updateSubBanner({ id, payload: formData }))
-      : toast.error("Sub banner id is required!!");
+    id ? dispatch(updateSubBanner({ id, payload: formData })) : toast;
   }
 
   function handleBannerData(e) {
@@ -194,5 +191,3 @@ const UpdateSubBanner = () => {
     </>
   );
 };
-
-export default UpdateSubBanner;
