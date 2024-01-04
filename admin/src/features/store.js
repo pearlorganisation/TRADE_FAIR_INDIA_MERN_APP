@@ -17,6 +17,7 @@ import permissionReducer from "./slices/permissionSlice";
 import faqReducer from "./slices/faqSlice";
 import clientSubBannerSlice from "./slices/clientSubBannerSlice";
 import clientBannerSlice from "./slices/clientHomeBannerSlice";
+import eventBannerSlice from "./slices/eventBannerSlice";
 
 // ---------------------------------------------------------
 
@@ -50,6 +51,7 @@ const reducer = combineReducers({
   clientBanner: clientBannerSlice,
   permission: permissionReducer,
   faq: faqReducer,
+  eventBanner: eventBannerSlice,
   // omitedPart: OmitReducer // not persisting this reducer
 });
 
