@@ -1,5 +1,5 @@
-const clientPageBanner = require("../../models/Banner/clientPageSubBanner");
-
+const clientPageBanner = require("../../models/Banner/clientPageBanner");
+const { cloudinary } = require("../../configs/cloudinary");
 
 exports.newClientBanner = async (req, res) => {
   try {
@@ -26,15 +26,39 @@ exports.newClientBanner = async (req, res) => {
 };
 
 exports.deleteClientBanner = async (req, res) => {
-  const bannerData = await clientPageBanner.findByIdAndDelete(req?.params?.id);
-  if (!bannerData) {
-    return res
-      .status(400)
-      .json({ status: "FAILURE", message: "No data found with given id!!" });
+  try {
+    const bannerData = await clientPageBanner.findByIdAndDelete(
+      req?.params?.id
+    );
+    const existingData = await clientPageBanner.findById(req?.params?.id);
+
+    let publicId = existingData?.banner?.split("/").pop().split(".")[0];
+
+    if (!bannerData) {
+      return res.status(400).json({
+        status: "FAILURE",
+        message: "No data found with the given id!!",
+      });
+    }
+
+    cloudinary.uploader.destroy(publicId, (error, result) => {
+      if (error) {
+        console.error(error);
+        return res
+          .status(400)
+          .json({ status: "FAILURE", message: error.message });
+      }
+
+      res
+        .status(200)
+        .json({ status: "SUCCESS", message: "Banner deleted successfully!!" });
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ status: "FAILURE", message: "Internal Server Error" });
   }
-  res
-    .status(200)
-    .json({ status: "FAILURE", message: "Banner deleted successfully!!" });
 };
 
 exports.getBanner = async (req, res) => {

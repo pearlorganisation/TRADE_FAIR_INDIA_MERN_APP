@@ -1,6 +1,5 @@
 const clientPageSubBanner = require("../../models/Banner/clientPageSubBanner");
 
-
 exports.newClientSubBanner = async (req, res) => {
   try {
     if (req?.file && !req?.file?.mimetype.includes("image")) {
@@ -42,7 +41,6 @@ exports.deleteSubClientBanner = async (req, res) => {
 
 exports.getSubBanner = async (req, res) => {
   try {
-    console.log("abanner");
     const bannerData = await clientPageSubBanner.find();
     res.status(200).json({ status: "SUCCESS", data: bannerData });
   } catch (err) {
