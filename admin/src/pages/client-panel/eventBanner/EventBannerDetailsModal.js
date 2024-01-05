@@ -32,7 +32,11 @@ const EventBannerDetailsModal = ({ data, show, hide }) => {
                 </tr>
                 <tr>
                   <th>Banner</th>
-                  <td>{data?.banner || "N.A"}</td>
+                  <td>
+                    <div >
+                     <img src={data?.banner || "N.A"} style={{width:"300px", height:"300px"}}/>
+                    </div>
+                    </td>
                 </tr>
                 <tr>
                   <th>Banner data</th>
