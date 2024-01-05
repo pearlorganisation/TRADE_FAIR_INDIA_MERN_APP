@@ -93,6 +93,7 @@ const UpdateEvent = () => {
   } = useForm({
     defaultValues: {
       eventName: state?.eventName,
+      isPopular: state?.isPopular,
       from: new Date(`${state?.eventDate[0]}`).toISOString().split("T")[0],
       to: new Date(`${state?.eventDate[1]}`).toISOString().split("T")[0],
       description: state?.description,
@@ -100,12 +101,10 @@ const UpdateEvent = () => {
       termsConditions: state?.termsConditions,
       attendReason: state?.attendReason,
       website: state?.website,
-      venue: 
-        {
-          label: state?.venue?.PlaceName,
-          value: state?.venue?._id,
-        }
-      ,
+      venue: {
+        label: state?.venue?.PlaceName,
+        value: state?.venue?._id,
+      },
       organiser: state?.organiser?.map((item) => {
         return {
           label: item?.companyName,
@@ -242,8 +241,9 @@ const UpdateEvent = () => {
     const modifiedShopDetails = data?.shopDetails?.map((ele) => {
       return { ...ele, shopName: ele?.shopName?.value };
     });
-    console.log("modifiedVenue",modifiedVenue)
+    console.log("modifiedVenue", modifiedVenue);
     formData.append("eventName", data?.eventName);
+    formData.append("isPopular", data?.isPopular);
     formData.append("venue", modifiedVenue);
     formData.append("randomString", randomString);
     formData.append("eventUrl", dynamicUrl);
@@ -271,9 +271,10 @@ const UpdateEvent = () => {
     Array.from(data?.eventBanner).forEach((banner) => {
       formData.append("eventBanner", banner);
     });
-    shopGalleries.length > 0 && shopGalleries.forEach((shopFile) => {
-      formData.append("shopGalleries", shopFile?.file);
-    });
+    shopGalleries.length > 0 &&
+      shopGalleries.forEach((shopFile) => {
+        formData.append("shopGalleries", shopFile?.file);
+      });
     newImages.forEach((shopImage) => {
       formData.append("shopGalleries", shopImage);
     });
@@ -840,6 +841,28 @@ const UpdateEvent = () => {
                       height="300"
                       ref={eventBannerImgRef}
                     />
+                  )}
+                </div>
+                <div className="col-md-12 my-2">
+                  <div class="form-check">
+                    <input
+                      {...register("isPopular")}
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="flexCheckDefault"
+                    />
+                    <label
+                      class="form-check-label fw-bold"
+                      for="flexCheckDefault"
+                    >
+                      Is Event Popular
+                    </label>
+                  </div>
+                  {errors.isPopular && (
+                    <span className="text-danger">
+                      {errors.website?.message || "This Field is Required"}
+                    </span>
                   )}
                 </div>
                 <Col sm={12} md={12} className="text-center mb-2">

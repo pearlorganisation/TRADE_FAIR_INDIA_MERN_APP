@@ -145,6 +145,8 @@ const CreateEvent = () => {
     });
 
     formData.append("eventName", data?.eventName);
+    formData.append("isPopular", data?.isPopular);
+
     formData.append("venue", modifiedVenue);
     formData.append("randomString", randomString);
     formData.append("eventUrl", dynamicUrl);
@@ -179,7 +181,7 @@ const CreateEvent = () => {
     for (let pair of formData.entries()) {
       console.log(pair[0] + " - " + pair[1]);
     }
-
+    // console.log("data::",data)
     dispatch(addNewEvent(formData));
   };
 
@@ -626,7 +628,29 @@ const CreateEvent = () => {
                     </div>
                   </Form.Group>
                 </div>
-                <div className="col-md-12 mb-3 border">
+                <div className="col-md-12 my-2">
+                  <div class="form-check">
+                    <input
+                      {...register("isPopular")}
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="flexCheckDefault"
+                    />
+                    <label
+                      class="form-check-label fw-bold"
+                      for="flexCheckDefault"
+                    >
+                      Is Event Popular
+                    </label>
+                  </div>
+                  {errors.isPopular && (
+                    <span className="text-danger">
+                      {errors.website?.message || "This Field is Required"}
+                    </span>
+                  )}
+                </div>
+                <div className="col-md-12 mb-3">
                   {eventBannerImg && (
                     <img
                       className="my-2"
