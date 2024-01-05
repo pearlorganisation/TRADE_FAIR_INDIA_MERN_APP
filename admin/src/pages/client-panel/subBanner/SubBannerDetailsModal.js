@@ -15,6 +15,7 @@ const SubBannerDetailsModal = ({ data, show, hide }) => {
         dialogClassName={styles.modalWidth}
         contentClassName={styles.modalHeight}
       >
+        
         <Modal.Header closeButton>
           <Modal.Title id="user-details-modal">
             Sub banner complete Details
