@@ -55,7 +55,7 @@ const CreateEvent = () => {
           hallNumber: "",
           customLabel: {},
           customLabelValue: "",
-          uniqueKey: generateDynamicUrl().randomString ,
+          uniqueKey: generateDynamicUrl().randomString,
         },
       ],
     },
