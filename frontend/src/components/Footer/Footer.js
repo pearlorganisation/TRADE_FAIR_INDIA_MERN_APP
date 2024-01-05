@@ -7,16 +7,15 @@ import { IoLogoInstagram } from "react-icons/io5";
 import { FaFacebookF } from "react-icons/fa";
 
 const Footer = () => {
-
   return (
     <footer className="text-gray-500  px-4 py-5 container mx-auto">
       <div className="gap-6 md:grid md:grid-cols-[20rem_auto]">
         <div className="border">
-          <div className=" grid font-medium  h-full bg-[#00373E] rounded-xl text-white px-8 py-5">
+          <div className="flex flex-col justify-start items-start gap-6 font-medium  h-full bg-[#00373E] rounded-xl text-white px-8 py-5">
             <span className="text-4xl">Wanna list you Event ?</span>
             <span className="text-lg">List Your Event :</span>
             <button
-              className="bg-[#DFFEC8] rounded-2xl px-3 py-1 text-[#00373E]"
+              className="bg-[#DFFEC8] rounded-3xl px-3 w-full py-2 text-[#00373E]"
               type="button"
             >
               List Event
