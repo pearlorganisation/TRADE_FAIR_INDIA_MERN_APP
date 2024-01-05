@@ -17,6 +17,7 @@ import permissionReducer from "./slices/permissionSlice";
 import clientSubBannerSlice from "./slices/clientSubBannerSlice";
 import clientBannerSlice from "./slices/clientHomeBannerSlice";
 import eventBannerSlice from "./slices/eventBannerSlice";
+import eventCategorySlice from "./slices/eventCategorySlice";
 
 // ---------------------------------------------------------
 
@@ -47,6 +48,7 @@ const reducer = combineReducers({
   user: userReducer,
   role: roleReducer,
   clientSubBanner: clientSubBannerSlice,
+  eventCategory: eventCategorySlice,
   clientBanner: clientBannerSlice,
   permission: permissionReducer,
   eventBanner: eventBannerSlice,
