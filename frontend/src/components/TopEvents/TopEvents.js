@@ -30,12 +30,12 @@ const TopEvents = () => {
         <div className="text-center text-[#00373E] font-medium text-4xl pt-[10rem]">
           Top List of events
         </div>
-        <div className="flex justify-center items-center flex-wrap gap-10">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-10 border w-full lg:w-[80%]">
           {Array(5)
             .fill(true)
             .map((item, idx) => {
               return (
-                <div className="bg-white h-[28rem] w-[25rem] rounded-2xl relative overflow-hidden p-3">
+                <div className="bg-white h-[28rem] rounded-2xl relative overflow-hidden p-3">
                   <div className="flex flex-col font-medium text-[#00373E] ">
                     <span className="text-2xl">Trade Show</span>
                     <span className="text-sm">30+Events</span>
