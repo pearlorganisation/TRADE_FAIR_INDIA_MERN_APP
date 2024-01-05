@@ -109,7 +109,10 @@ const FetchSubBanners = () => {
                     </td>
                     <td>{res?.bannerData}</td>
                     <td>{res?.buttonLink}</td>
-                    <Button
+
+                  <td>
+                    <div className="d-flex h-100 justify-content-center gap-3">
+                     <Button
                       variant="info"
                       size="md"
                       title="View Complete Details"
@@ -119,7 +122,7 @@ const FetchSubBanners = () => {
                       }}
                     >
                       <BiSolidShow />
-                    </Button>
+                     </Button>
 
                     {isUserHavePermission(loggedInUserData?.role) && (
                       <>
@@ -146,6 +149,9 @@ const FetchSubBanners = () => {
                         </Button>
                       </>
                     )}
+                    
+                    </div>
+                    </td>
                   </tr>
                 );
               })
