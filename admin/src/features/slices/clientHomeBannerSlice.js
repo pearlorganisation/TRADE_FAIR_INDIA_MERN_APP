@@ -58,7 +58,7 @@ export const clientBannerSlice = createSlice({
         state.isSuccess = true;
         state.isBannerCreationSuccess = true;
         state.errorMessage = "";
-        toast.success("Sub banner created successfully", {
+        toast.success("Banner created successfully", {
           position: "top-right",
         });
       })
@@ -71,7 +71,7 @@ export const clientBannerSlice = createSlice({
           position: "top-right",
         });
       })
-      // Update client sub banner Details Cases
+      // Update client banner Details Cases
       .addCase(updateBanner.pending, (state, action) => {
         state.isLoading = true;
         state.isBannerCreationSuccess = false;
@@ -83,7 +83,7 @@ export const clientBannerSlice = createSlice({
         state.isBannerCreationSuccess = false;
         state.isSuccess = true;
         state.errorMessage = "";
-        toast.success("Sub banner updated successfully", {
+        toast.success("Banner updated successfully", {
           position: "top-right",
         });
       })
@@ -109,12 +109,12 @@ export const clientBannerSlice = createSlice({
         state.isSuccess = true;
         state.errorMessage = "";
 
-        // Removing sub banner details  From redux's store
+        // Removing  banner details  From redux's store
         state.clientBannerList = state.clientBannerList.filter(
-          (subBanner) => subBanner._id !== action?.payload?.payload
+          (banner) => banner._id !== action?.payload?.payload
         );
 
-        toast.success("Sub banner deleted successfully", {
+        toast.success("Banner deleted successfully", {
           position: "top-right",
         });
       })
