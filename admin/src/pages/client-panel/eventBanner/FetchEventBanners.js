@@ -128,9 +128,12 @@ const FetchEventBanners = () => {
                           size="md"
                           title="Edit banner"
                           onClick={() =>
-                            navigate(`/client/updateEventBanner`, {
-                              state: eBanner,
-                            })
+                            navigate(
+                              `/client/updateEventBanner/${eBanner._id}`,
+                              {
+                                state: eBanner,
+                              }
+                            )
                           }
                         >
                           <FaEdit />
