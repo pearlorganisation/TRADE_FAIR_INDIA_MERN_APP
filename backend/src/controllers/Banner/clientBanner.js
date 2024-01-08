@@ -27,14 +27,11 @@ exports.newClientBanner = async (req, res) => {
 
 exports.deleteClientBanner = async (req, res) => {
   try {
-    const bannerData = await clientPageBanner.findByIdAndDelete(
-      req?.params?.id
-    );
     const existingData = await clientPageBanner.findById(req?.params?.id);
 
     let publicId = existingData?.banner?.split("/").pop().split(".")[0];
 
-    if (!bannerData) {
+    if (!existingData) {
       return res.status(400).json({
         status: "FAILURE",
         message: "No data found with the given id!!",
@@ -48,11 +45,11 @@ exports.deleteClientBanner = async (req, res) => {
           .status(400)
           .json({ status: "FAILURE", message: error.message });
       }
-
-      res
-        .status(200)
-        .json({ status: "SUCCESS", message: "Banner deleted successfully!!" });
     });
+    await clientPageBanner.findByIdAndDelete(req?.params?.id);
+    res
+      .status(200)
+      .json({ status: "SUCCESS", message: "Banner deleted successfully!!" });
   } catch (error) {
     console.error(error);
     res
