@@ -75,17 +75,17 @@ const EventCarousel = () => {
         onClick={() => {
           goNext();
         }}
-        className="bg-[#DFFEC8] text-[#00373E] rounded-full p-1 absolute top-[50%] right-0 z-10 cursor-pointer"
+        className="bg-[#DFFEC8] text-xl md:text-2xl lg:text-3xl text-[#00373E] rounded-full p-1 absolute top-[50%] right-0 z-10 cursor-pointer"
       >
-        <FaAngleRight size={30} />
+        <FaAngleRight />
       </div>
       <div
         onClick={() => {
           goPrev();
         }}
-        className="bg-[#DFFEC8] text-[#00373E] rounded-full p-1 absolute top-[50%] z-10 cursor-pointer"
+        className="bg-[#DFFEC8] text-xl md:text-2xl lg:text-3xl text-[#00373E] rounded-full p-1 absolute top-[50%] z-10 cursor-pointer"
       >
-        <FaAngleLeft size={30} />
+        <FaAngleLeft />
       </div>
     </div>
   );

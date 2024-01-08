@@ -18,6 +18,7 @@ import { MdDelete } from "react-icons/md";
 import EventBannerDetailsModal from "./EventBannerDetailsModal";
 import { deleteBanner } from "../../../features/actions/eventBannerAction";
 
+
 const FetchEventBanners = () => {
   // const isLoading=false
   const navigate = useNavigate();
@@ -107,7 +108,8 @@ const FetchEventBanners = () => {
                     </td>
                     <td>{eBanner?.bannerData}</td>
                     <td>{eBanner?.active ? "True" : "False"}</td>
-
+                    <td>
+                    <div className="d-flex h-100 justify-content-center gap-3">
                     <Button
                       variant="info"
                       size="md"
@@ -147,6 +149,8 @@ const FetchEventBanners = () => {
                         </Button>
                       </>
                     )}
+                     </div>
+                    </td>
                   </tr>
                 );
               })

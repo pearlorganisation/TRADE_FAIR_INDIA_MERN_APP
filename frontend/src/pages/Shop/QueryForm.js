@@ -87,7 +87,7 @@ const QueryForm = () => {
       </div>
       <div>
         <button
-          className="px-12 py-2 rounded-3xl active:scale-95 hover:ring-4 ring-[#00373E]/30 transition-all bg-[#00373E] text-white"
+          className="px-12 py-2 w-full sm:w-auto rounded-3xl active:scale-95 hover:ring-4 ring-[#00373E]/30 transition-all bg-[#00373E] text-white"
           type="button"
         >
           Send
