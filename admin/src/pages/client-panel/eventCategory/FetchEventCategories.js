@@ -135,9 +135,12 @@ const FetchEventCategories = () => {
                                   size="md"
                                   title="Edit Role "
                                   onClick={() =>
-                                    navigate("/editRole", {
-                                      state: eCategory,
-                                    })
+                                    navigate(
+                                      `/client/updateEventCategory/${eCategory._id}`,
+                                      {
+                                        state: eCategory,
+                                      }
+                                    )
                                   }
                                 >
                                   <FaEdit />

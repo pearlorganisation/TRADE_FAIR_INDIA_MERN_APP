@@ -10,18 +10,18 @@ const app = express();
 dotenv.config();
 
 // //@@-- For handling uncaught Errors(Other then express errors)------------------------------------
-// process.on("uncaughtException", (error) => {
-//   console.log(
-//     colorette.bold(
-//       colorette.red(`Trade-Fair-India:::: ${error.name}-${error.message}`)
-//     )
-//   );
-//   console.log(
-//     colorette.bold(colorette.red("Unhandled error occured!! shutting down...."))
-//   );
+process.on("uncaughtException", (error) => {
+  console.log(
+    colorette.bold(
+      colorette.red(`Trade-Fair-India:::: ${error.name}-${error.message}`)
+    )
+  );
+  console.log(
+    colorette.bold(colorette.red("Unhandled error occured!! shutting down...."))
+  );
 
-//   process.exit(1);
-// });
+  process.exit(1);
+});
 
 //@@ --------middleware---section----------------------------------------------------------------
 
@@ -134,16 +134,16 @@ mongoose.connect(process.env.MONGO_DB_DATABASE_URL).then(() => {
 });
 
 // // @@----For handling Uncaught rejected promises------------------------------------------------------------
-// process.on("unhandledRejection", (error) => {
-//   console.log(
-//     colorette.bold(
-//       colorette.red(`Trade-Fair-India:::: ${error.name}-${error.message}`)
-//     )
-//   );
-//   console.log(
-//     colorette.bold(colorette.red("Unhandled error occured!! shutting down...."))
-//   );
-//   server.close(() => {
-//     process.exit(1);
-//   });
-// });
+process.on("unhandledRejection", (error) => {
+  console.log(
+    colorette.bold(
+      colorette.red(`Trade-Fair-India:::: ${error.name}-${error.message}`)
+    )
+  );
+  console.log(
+    colorette.bold(colorette.red("Unhandled error occured!! shutting down...."))
+  );
+  server.close(() => {
+    process.exit(1);
+  });
+});

@@ -26,6 +26,7 @@ const EventCategoryDetailsModal = ({ data, show, hide }) => {
               <tbody>
                 <tr>
                   <th>Event Category Id</th>
+
                   <td>
                     <b>{data?._id || "N.A"}</b>
                   </td>

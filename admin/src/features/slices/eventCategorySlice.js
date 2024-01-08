@@ -12,6 +12,7 @@ import {
 const initialState = {
   isLoading: false,
   isEventCategoryCreated: false,
+  isEventCategoryUpdated: false,
   isSuccess: false,
   errorMessage: "",
   eventCategoryList: [],
@@ -28,12 +29,14 @@ export const eventCategorySlice = createSlice({
       // Fetch Event  List Cases
       .addCase(fetchEventCategory.pending, (state, action) => {
         state.isLoading = true;
+        state.isEventCategoryUpdated = false;
         state.isEventCategoryCreated = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
       .addCase(fetchEventCategory.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isEventCategoryUpdated = false;
         state.isEventCategoryCreated = false;
         state.isSuccess = true;
         state.errorMessage = "";
@@ -41,6 +44,7 @@ export const eventCategorySlice = createSlice({
       })
       .addCase(fetchEventCategory.rejected, (state, action) => {
         state.isLoading = false;
+        state.isEventCategoryUpdated = false;
         state.isEventCategoryCreated = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;
@@ -48,12 +52,14 @@ export const eventCategorySlice = createSlice({
       // Create event category List Cases
       .addCase(createEventCategory.pending, (state, action) => {
         state.isLoading = true;
+        state.isEventCategoryUpdated = false;
         state.isEventCategoryCreated = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
       .addCase(createEventCategory.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isEventCategoryUpdated = false;
         state.isEventCategoryCreated = true;
         state.isSuccess = true;
         state.errorMessage = "";
@@ -63,6 +69,7 @@ export const eventCategorySlice = createSlice({
       })
       .addCase(createEventCategory.rejected, (state, action) => {
         state.isLoading = false;
+        state.isEventCategoryUpdated = false;
         state.isEventCategoryCreated = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;
@@ -74,12 +81,15 @@ export const eventCategorySlice = createSlice({
       // Update event ctegory  Details Cases
       .addCase(updateEventCategory.pending, (state, action) => {
         state.isLoading = true;
+        state.isEventCategoryUpdated = false;
         state.isEventCategoryCreated = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
       .addCase(updateEventCategory.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isEventCategoryUpdated = true;
+
         state.isEventCategoryCreated = false;
         state.isSuccess = true;
         state.errorMessage = "";
@@ -91,6 +101,7 @@ export const eventCategorySlice = createSlice({
         state.isLoading = false;
         state.isEventCategoryCreated = false;
         state.isSuccess = false;
+        state.isEventCategoryUpdated = false;
         state.errorMessage = action.payload;
         toast.error(state?.errorMessage, {
           position: "top-right",
@@ -100,6 +111,7 @@ export const eventCategorySlice = createSlice({
       // Delete event category Cases
       .addCase(deleteEventCategory.pending, (state, action) => {
         state.isLoading = true;
+        state.isEventCategoryUpdated = false;
         state.isSuccess = false;
         state.isEventCategoryCreated = false;
         state.errorMessage = "";
@@ -108,6 +120,7 @@ export const eventCategorySlice = createSlice({
         state.isLoading = false;
         state.isEventCategoryCreated = false;
         state.isSuccess = true;
+        state.isEventCategoryUpdated = false;
         state.errorMessage = "";
 
         // Removing event category From redux's store
@@ -122,6 +135,7 @@ export const eventCategorySlice = createSlice({
       .addCase(deleteEventCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.isEventCategoryCreated = false;
+        state.isEventCategoryUpdated = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;
         toast.error(state?.errorMessage, {
