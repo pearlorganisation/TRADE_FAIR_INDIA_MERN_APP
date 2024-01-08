@@ -131,7 +131,10 @@ const App = () => {
 
           <Route path="/client/homeBanners" element={<FetchHomeBanners />} />
           <Route path="/client/addHomeBanner" element={<CreateHomeBanner />} />
-          <Route path="/client/updateBanner" element={<UpdateHomeBanner />} />
+          <Route
+            path="/client/updateBanner/:id"
+            element={<UpdateHomeBanner />}
+          />
 
           <Route path="/client/subBanners" element={<FetchSubBanners />} />
           <Route path="/client/addSubBanner" element={<CreateSubBanner />} />
