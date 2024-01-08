@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchHomeBanner } from "../../features/actions/homeBannerActions";
+import { useNavigate } from "react-router";
 
 const HeroSection = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [activeBanner, setActiveBanner] = useState({});
+  const { isLoading, homeBannerData } = useSelector(
+    (state) => state.homeBanner
+  );
+  useEffect(() => {
+    dispatch(fetchHomeBanner());
+  }, []);
+  useEffect(() => {
+    setActiveBanner((prev) => {
+      const isActive = homeBannerData?.find((item) => item?.active === true);
+      return isActive;
+    });
+  }, [homeBannerData]);
+
   return (
     <div className="h-dvh flex justify-center items-center pt-20">
       <div className="bg-[#00373E] w-[90%] rounded-2xl mx-auto bg-top h-[80dvh] relative overflow-hidden flex flex-col justify-center items-center gap-12">
@@ -55,9 +75,13 @@ const HeroSection = () => {
         </svg>
 
         <div className="text-fluid_font/none text-white w-full md:w-[70%] lg:w-[50%] text-center font-medium">
-          Explore 40+ happening events near you
+          {activeBanner?.bannerData}
+          {/* Explore 40+ happening events near you */}
         </div>
         <button
+          onClick={() => {
+            // navigate(`${activeBanner?.buttonLink}`);
+          }}
           className="bg-[#DFFEC8] hover:ring-[5px] ring-[#DFFEC8]/30 transition-all active:scale-95 px-16 font-medium text-[#00373E] py-3 rounded-3xl"
           type="button"
         >

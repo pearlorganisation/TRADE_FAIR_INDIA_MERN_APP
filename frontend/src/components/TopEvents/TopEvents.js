@@ -30,7 +30,7 @@ const TopEvents = () => {
         <div className="text-center text-[#00373E] font-medium text-4xl pt-[10rem]">
           Top List of events
         </div>
-        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-10 border w-full lg:w-[80%]">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] md:grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-10 w-full lg:w-[80%]">
           {Array(5)
             .fill(true)
             .map((item, idx) => {
