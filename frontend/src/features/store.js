@@ -4,11 +4,13 @@ import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 import faqReducer from "./slices/faqSlice";
+import homeBannerReducer from "./slices/homeBannerSlice";
 
 // Combine your individual reducers here
 const rootReducer = combineReducers({
   // ...
   faq: faqReducer,
+  homeBanner: homeBannerReducer,
 });
 
 // Custom root reducer handling a clear action
