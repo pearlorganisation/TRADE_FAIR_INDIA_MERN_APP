@@ -137,9 +137,12 @@ const FetchBanners = () => {
                                   size="md"
                                   title="Edit banner"
                                   onClick={() =>
-                                    navigate(`/client/updateBanner`, {
-                                      state: res,
-                                    })
+                                    navigate(
+                                      `/client/updateBanner/${res?._id}`,
+                                      {
+                                        state: res,
+                                      }
+                                    )
                                   }
                                 >
                                   <FaEdit />
@@ -158,7 +161,12 @@ const FetchBanners = () => {
                                   <input
                                     onChange={(e) => {
                                       console.log(e.target.checked);
-                                      dispatch(updateBanner({ id:res?._id, payload:{active:e.target.checked} }))
+                                      dispatch(
+                                        updateBanner({
+                                          id: res?._id,
+                                          payload: { active: e.target.checked },
+                                        })
+                                      );
                                     }}
                                     class="form-check-input"
                                     type="checkbox"
