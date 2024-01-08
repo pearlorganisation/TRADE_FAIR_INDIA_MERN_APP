@@ -49,7 +49,7 @@ export const deleteBanner = createAsyncThunk(
   }
 );
 
-export const updateEventBanner = createAsyncThunk(
+export const updateBanner = createAsyncThunk(
   "updateEventBanner",
   async ({ id, payload }, { rejectWithValue }) => {
     try {

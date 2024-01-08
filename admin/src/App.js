@@ -49,7 +49,7 @@ import CreateEventCategory from "./pages/client-panel/eventCategory/CreateEventC
 import UpdateEventCategory from "./pages/client-panel/eventCategory/UpdateEventCategory";
 import FetchEventBanners from "./pages/client-panel/eventBanner/FetchEventBanners";
 import CreateEventBanner from "./pages/client-panel/eventBanner/CreateEventBanner";
-import UpdateEventBanner from "./pages/client-panel/eventBanner/UpdateEventBanner";
+import { UpdateEventBanner } from "./pages/client-panel/eventBanner/UpdateEventBanner";
 // ----------------------------------------------------------------------------------
 const App = () => {
   const { isUserLoggedIn, loggedInUserData, usersList } = useAuth();

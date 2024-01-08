@@ -4,12 +4,13 @@ import {
   createEventBanner,
   deleteBanner,
   fetchEventBanner,
-  updateEventBanner,
+  updateBanner,
 } from "../actions/eventBannerAction";
 
 const initialState = {
   isLoading: false,
   isSuccess: false,
+  isBannerUpdated: false,
   errorMessage: "",
   deleteData: false,
   isDeleted: false,
@@ -26,6 +27,7 @@ export const EventBannerSlice = createSlice({
       // Fetch event banner
       .addCase(fetchEventBanner.pending, (state, action) => {
         state.isLoading = true;
+        state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
@@ -33,6 +35,7 @@ export const EventBannerSlice = createSlice({
       })
       .addCase(fetchEventBanner.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isBannerUpdated = false;
         state.isSuccess = true;
         state.isBannerCreationSuccess = false;
         state.errorMessage = "";
@@ -41,6 +44,7 @@ export const EventBannerSlice = createSlice({
       })
       .addCase(fetchEventBanner.rejected, (state, action) => {
         state.isLoading = false;
+        state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.isDeleted = false;
@@ -49,20 +53,23 @@ export const EventBannerSlice = createSlice({
       // Create event banner List Cases
       .addCase(createEventBanner.pending, (state, action) => {
         state.isLoading = true;
+        state.isBannerUpdated = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
       .addCase(createEventBanner.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isBannerUpdated = false;
         state.isSuccess = true;
         state.isBannerCreationSuccess = true;
         state.errorMessage = "";
-        toast.success("Sub banner created successfully", {
+        toast.success("Event banner created successfully", {
           position: "top-right",
         });
       })
       .addCase(createEventBanner.rejected, (state, action) => {
         state.isLoading = false;
+        state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;
@@ -71,23 +78,26 @@ export const EventBannerSlice = createSlice({
         });
       })
       // Update event banner Details Cases
-      .addCase(updateEventBanner.pending, (state, action) => {
+      .addCase(updateBanner.pending, (state, action) => {
         state.isLoading = true;
+        state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
-      .addCase(updateEventBanner.fulfilled, (state, action) => {
+      .addCase(updateBanner.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isBannerUpdated = true;
         state.isBannerCreationSuccess = false;
         state.isSuccess = true;
         state.errorMessage = "";
-        toast.success("Sub banner updated successfully", {
+        toast.success("Event banner updated successfully", {
           position: "top-right",
         });
       })
-      .addCase(updateEventBanner.rejected, (state, action) => {
+      .addCase(updateBanner.rejected, (state, action) => {
         state.isLoading = false;
+        state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;
@@ -98,12 +108,14 @@ export const EventBannerSlice = createSlice({
       // Delete event banner Cases
       .addCase(deleteBanner.pending, (state, action) => {
         state.isLoading = true;
+        state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
       .addCase(deleteBanner.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = true;
         state.errorMessage = "";
@@ -119,6 +131,7 @@ export const EventBannerSlice = createSlice({
       })
       .addCase(deleteBanner.rejected, (state, action) => {
         state.isLoading = false;
+        state.isBannerUpdated = false;
         state.isSuccess = false;
         state.isBannerCreationSuccess = false;
         state.errorMessage = action.payload;
