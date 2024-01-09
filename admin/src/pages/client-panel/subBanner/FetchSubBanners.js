@@ -6,6 +6,7 @@ import { BiSolidShow } from "react-icons/bi";
 import {
   deleteSubBanner,
   fetchSubBanner,
+  updateSubBanner,
 } from "../../../features/actions/clientSubBanner";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { Container, Row, Col, Button } from "react-bootstrap";
@@ -110,47 +111,72 @@ const FetchSubBanners = () => {
                     <td>{res?.bannerData}</td>
                     <td>{res?.buttonLink}</td>
 
-                  <td>
-                    <div className="d-flex h-100 justify-content-center gap-3">
-                     <Button
-                      variant="info"
-                      size="md"
-                      title="View Complete Details"
-                      onClick={() => {
-                        setSelectedSubBannerDetails(res);
-                        setShowCompleteDetailsModal(true);
-                      }}
-                    >
-                      <BiSolidShow />
-                     </Button>
+                    <td>
+                      <div className="d-flex h-100 justify-content-center gap-3">
+                        <Button
+                          variant="info"
+                          size="md"
+                          title="View Complete Details"
+                          onClick={() => {
+                            setSelectedSubBannerDetails(res);
+                            setShowCompleteDetailsModal(true);
+                          }}
+                        >
+                          <BiSolidShow />
+                        </Button>
 
-                    {isUserHavePermission(loggedInUserData?.role) && (
-                      <>
-                        <Button
-                          variant="warning"
-                          size="md"
-                          title="Edit sub banner"
-                          onClick={() =>
-                            navigate(`/client/updateSubBanner/${res?._id}`, {
-                              state: res,
-                            })
-                          }
-                        >
-                          <FaEdit />
-                        </Button>
-                        <Button
-                          variant="danger"
-                          size="md"
-                          title="Delete sub banner"
-                          onClick={() => handleDeleteSubBanner(res?._id)}
-                        >
-                          {" "}
-                          <MdDelete />
-                        </Button>
-                      </>
-                    )}
-                    
-                    </div>
+                        {isUserHavePermission(loggedInUserData?.role) && (
+                          <>
+                            <Button
+                              variant="warning"
+                              size="md"
+                              title="Edit sub banner"
+                              onClick={() =>
+                                navigate(
+                                  `/client/updateSubBanner/${res?._id}`,
+                                  {
+                                    state: res,
+                                  }
+                                )
+                              }
+                            >
+                              <FaEdit />
+                            </Button>
+                            <Button
+                              variant="danger"
+                              size="md"
+                              title="Delete sub banner"
+                              onClick={() => handleDeleteSubBanner(res?._id)}
+                            >
+                              {" "}
+                              <MdDelete />
+                            </Button>
+                            <div class="form-check">
+                              <input
+                                onChange={(e) => {
+                                  console.log(e.target.checked);
+                                  dispatch(
+                                    updateSubBanner({
+                                      id: res?._id,
+                                      payload: { active: e.target.checked },
+                                    })
+                                  );
+                                }}
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexCheckDefault"
+                                checked={res?.active || false}
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexCheckDefault"
+                              >
+                                Active Banner
+                              </label>
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );
