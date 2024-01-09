@@ -109,6 +109,39 @@ const CreateEventCategory = () => {
                   </span>
                 </Form.Group>
               </Col>
+              {/* <Col>
+                <Form.Label>Event category Image</Form.Label>
+                <div class="input-group mb-3">
+                  <input
+                  {...register("eventCategoryImage", {
+                    required: {
+                      value: true,
+                      message: "Event category Image is required",
+                    },
+
+                    minLength: {
+                      value: 2,
+                      message:
+                        "Event category Image cannot be less than 2 characters.",
+                    },
+                    maxLength: {
+                      value: 20,
+                      message:
+                        "Event category Image cannot be more than 20 characters.",
+                    },
+                  })}
+                    type="file"
+                    class="form-control"
+                    id="inputGroupFile02"
+                  />
+                  <label class="input-group-text" for="inputGroupFile02">
+                    Upload
+                  </label>
+                </div>
+                <span className="fw-normal fs-6 text-danger">
+                    {errors?.eventCategoryImage?.message}
+                  </span>
+              </Col> */}
               <Col
                 sm={12}
                 md={12}
