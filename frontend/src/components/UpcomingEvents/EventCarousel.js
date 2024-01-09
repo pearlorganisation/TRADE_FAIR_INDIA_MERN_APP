@@ -55,7 +55,7 @@ const EventCarousel = () => {
             return (
               <SwiperSlide className="">
                 {" "}
-                <div className="bg-white min-h-[22rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[auto_4rem] mx-auto">
+                <div className="bg-white min-h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[auto_6rem] mx-auto">
                   <div className=" flex justify-center items-center">
                     <img className="w-full h-full" src={sampleImage} alt="" />
                   </div>
