@@ -327,7 +327,7 @@ const UpdateEvent = () => {
               )}
               rules={{ required: true }}
             />
-            {errors.ageGroup && (
+            {errors.ageGroup && ( 
               <span className="text-danger">This field is required</span>
             )}
           </div>

@@ -156,6 +156,7 @@ const FetchBanners = () => {
                                 </Button>
                                 <div class="form-check">
                                   <input
+                                  
                                     onChange={(e) => {
                                       console.log(e.target.checked);
                                       dispatch(updateBanner({ id:res?._id, payload:{active:e.target.checked} }))

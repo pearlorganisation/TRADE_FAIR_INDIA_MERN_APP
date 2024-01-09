@@ -149,7 +149,11 @@ const Events = () => {
                               >
                                 <MdDelete />
                               </Button>
+                              
                             )}
+                            <div>
+                              <input type="checkbox" />
+                            </div>
                           </td>
                         </tr>
                       );
