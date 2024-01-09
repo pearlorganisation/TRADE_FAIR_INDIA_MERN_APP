@@ -3,12 +3,14 @@ import Confrence from "../assets/Confrence.png";
 import ListEvents from "../assets/ListEvents.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSubBanner } from "../../features/actions/subBannerActions";
+import { fetchEventCategoryList } from "../../features/actions/eventCategoryAction";
 
 const TopEvents = () => {
   const dispatch = useDispatch();
   const { isLoading, subBannerData } = useSelector((state) => state.subBanner);
   useEffect(() => {
     dispatch(fetchSubBanner());
+    dispatch(fetchEventCategoryList())
   }, []);
 
   return (
