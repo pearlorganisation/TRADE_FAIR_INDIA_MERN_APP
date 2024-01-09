@@ -158,12 +158,18 @@ const Shop = () => {
             <div className="text-teal-600 font-semibold py-2 border-b-2 border-[#0D948B]">
               Brochures :
             </div>
-            <div className="flex flex-col justify-center items-center gap-6 bg-white rounded-xl h-full">
+            <div className="flex flex-col justify-center items-center gap-6 bg-white rounded-xl h-full p-2">
               <div className="text-slate-700 font-medium flex justify-center items-center">
                 {Array(3)
                   .fill(PdfIcon)
                   .map((item, index) => {
-                    return <img width={120} src={item} alt="" />;
+                    return (
+                      <img
+                        className="w-[5rem] md:w-[6.5rem] lg:w-[8rem]"
+                        src={item}
+                        alt=""
+                      />
+                    );
                   })}
               </div>
               <button

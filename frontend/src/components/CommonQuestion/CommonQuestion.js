@@ -87,7 +87,7 @@ const CommonQuestion = () => {
             Common Questions
           </h1>
         </div>
-        <div className="mt-14 max-w-2xl mx-auto ">
+        <div className="mt-14 max-w-2xl mx-auto">
           {isLoading ? (
             <SkeletonTheme color="#f0f0f0" highlightColor="#e0e0e0">
               {/* Skeleton for each FAQ item */}

@@ -5,12 +5,16 @@ import { combineReducers } from "redux";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 import faqReducer from "./slices/faqSlice";
 import homeBannerReducer from "./slices/homeBannerSlice";
+import subBannerReducer from "./slices/subBannerSlice";
+import evetnsReducer from "./slices/eventsSlice";
 
 // Combine your individual reducers here
 const rootReducer = combineReducers({
   // ...
   faq: faqReducer,
   homeBanner: homeBannerReducer,
+  subBanner: subBannerReducer,
+  events: evetnsReducer,
 });
 
 // Custom root reducer handling a clear action

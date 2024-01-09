@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Confrence from "../assets/Confrence.png";
 import ListEvents from "../assets/ListEvents.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSubBanner } from "../../features/actions/subBannerActions";
 
 const TopEvents = () => {
+  const dispatch = useDispatch();
+  const { isLoading, subBannerData } = useSelector((state) => state.subBanner);
+  useEffect(() => {
+    dispatch(fetchSubBanner());
+  }, []);
+
   return (
     <div className="min-h-dvh">
       <div>
@@ -35,13 +43,13 @@ const TopEvents = () => {
             .fill(true)
             .map((item, idx) => {
               return (
-                <div className="bg-white h-[28rem] rounded-2xl relative overflow-hidden p-3">
+                <div className="bg-white h-[25rem] rounded-2xl relative overflow-hidden p-3">
                   <div className="flex flex-col font-medium text-[#00373E] ">
                     <span className="text-2xl">Trade Show</span>
                     <span className="text-sm">30+Events</span>
                   </div>
                   <img
-                    className="absolute right-0 top-[12rem] z-10"
+                    className="absolute right-0 top-[10.5rem] z-10"
                     width={200}
                     src={Confrence}
                     alt=""
