@@ -8,6 +8,7 @@ import homeBannerReducer from "./slices/homeBannerSlice";
 import subBannerReducer from "./slices/subBannerSlice";
 import evetnsReducer from "./slices/eventsSlice";
 import evetnCategoryReducer from "./slices/eventCategorySlice";
+import showBannerReducer from "./slices/showsBannerSlice";
 
 // Combine your individual reducers here
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   subBanner: subBannerReducer,
   events: evetnsReducer,
   eventCategory: evetnCategoryReducer,
+  showsBanner: showBannerReducer,
 });
 
 // Custom root reducer handling a clear action

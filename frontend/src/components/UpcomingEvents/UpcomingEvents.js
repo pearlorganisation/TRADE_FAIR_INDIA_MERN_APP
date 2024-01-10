@@ -1,15 +1,32 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 
 import EventCarousel from "./EventCarousel";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchShowsBanner } from "../../features/actions/showsBannerAction";
 
 const UpcomingEvents = () => {
+  const dispatch = useDispatch();
+  const { isLoading, showsBannerData } = useSelector(
+    (state) => state.showsBanner
+  );
+
+  const filteredData = useMemo(() => {
+    return showsBannerData.filter((item) => item?.active === true);
+  }, [showsBannerData]);
+  useEffect(() => {
+    dispatch(fetchShowsBanner());
+  }, []);
+
   return (
     <div className="h-dvh space-y-12">
       <div className="bg-white flex container mx-auto rounded-xl h-[12rem] relative overflow-hidden">
-        <div className="w-full h-full z-10 text-4xl font-semibold flex justify-center items-center flex-col text-[#00373E]">
+        <div className="w-full h-full z-10 text-5xl font-semibold flex justify-center items-center flex-col text-[#00373E]">
           {" "}
-          <span className="text-center ">Trade Shows, </span>{" "}
-          <span className="text-center">Exhibitions, Confrence</span>{" "}
+          <p className="text-center w-[35%]">
+            {showsBannerData[0]?.bannerData}
+          </p>
+          {/* <span className="text-center ">Trade Shows, </span>{" "}
+          <span className="text-center">Exhibitions, Confrence</span>{" "} */}
         </div>
         <svg
           className="absolute left-[-12rem] top-[-15rem] rotate-[35deg]"

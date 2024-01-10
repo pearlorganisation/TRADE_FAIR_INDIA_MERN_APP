@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -17,7 +17,10 @@ import { FaCalendarAlt } from "react-icons/fa";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const PopularEventCarousel = () => {
+const PopularEventCarousel = ({ isLoading, eventData }) => {
+  const filteredData = useMemo(() => {
+    return eventData.filter((item) => item?.isPopular === true);
+  }, [eventData]);
   const swiperRef = useRef(null);
   const goNext = () => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -83,42 +86,57 @@ const PopularEventCarousel = () => {
                   </SwiperSlide>
                 );
               })
-          : Array(6)
-              .fill(true)
-              .map((item) => {
-                return (
-                  <SwiperSlide className="">
-                    {" "}
-                    <div className="bg-white h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[10rem_auto] mx-auto">
-                      <div className=" flex justify-center items-center relative">
-                        <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
-                          <span>MeetUp 2023</span> <span>Raipur</span>
-                        </div>
-                        <img
-                          className="w-full h-full"
-                          src={sampleImage}
-                          alt=""
-                        />
+          : Array.isArray(filteredData) &&
+            filteredData?.length > 0 &&
+            filteredData?.map((item) => {
+              return (
+                <SwiperSlide className="">
+                  {" "}
+                  <div className="bg-white h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[10rem_auto] mx-auto">
+                    <div className=" flex justify-center items-center relative">
+                      <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
+                        <span>MeetUp 2023</span> <span>Raipur</span>
                       </div>
-                      <div className="     divide-y-2 p-2">
-                        <div className="font-medium text-lg">
-                          All Inida Meetup 2023 ft. 50 Cent | Mumbai
-                        </div>
-                        <div className="font-medium text-sm text-[#00373E]">
-                          <span className="text-xs">By Bombay inc</span>
-                          <span className="flex justify-start items-center gap-1">
-                            <FaCalendarAlt /> November 25
-                          </span>
-                          <span className="flex justify-start items-center gap-1">
-                            {" "}
-                            <HiOutlineLocationMarker /> D Y Patil Stadium Raipur
-                          </span>
-                        </div>
+                      <img className="w-full h-full" src={sampleImage} alt="" />
+                    </div>
+                    <div className="     divide-y-2 p-2">
+                      <div className="font-medium text-lg">
+                        {item?.eventName ||
+                          "All Inida Meetup 2023 ft. 50 Cent | Mumbai"}
+                      </div>
+                      <div className="font-medium text-sm text-[#00373E]">
+                        <span className="text-xs">By Bombay inc</span>
+                        <span className="flex justify-start items-center gap-1">
+                          <FaCalendarAlt />{" "}
+                          {new Date(item?.eventDate[1]).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          ) +
+                            " - " +
+                            new Date(item?.eventDate[0]).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
+                        </span>
+                        <span className="flex justify-start items-center gap-1">
+                          {" "}
+                          <HiOutlineLocationMarker />{" "}
+                          {item?.venue?.Address || "D Y Patil Stadium Raipur"}
+                        </span>
                       </div>
                     </div>
-                  </SwiperSlide>
-                );
-              })}
+                  </div>
+                </SwiperSlide>
+              );
+            })}
       </Swiper>
       {/* Custom next and prev buttons */}
       <div
