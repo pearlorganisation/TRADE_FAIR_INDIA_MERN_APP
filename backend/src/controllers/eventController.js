@@ -114,7 +114,7 @@ exports.getEvent = async (req, res) => {
   try {
     const allEvents = await Event.find()
       .populate("organiser", ["_id", "companyName"])
-      .populate("venue", ["_id", "PlaceName"])
+      .populate("venue", ["_id", "PlaceName","Address"])
       .populate("category", ["_id", "category"])
       .populate("shopDetails.shopName")
       .populate("createdBy", ["_id", "email", "name"])
