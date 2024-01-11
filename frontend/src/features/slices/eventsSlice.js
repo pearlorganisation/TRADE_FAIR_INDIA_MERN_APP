@@ -2,7 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchFaqList } from "../actions/faqActions";
-import { fetchEventList } from "../actions/eventActions";
+import { fetchEventById, fetchEventList } from "../actions/eventActions";
 
 const initialState = {
   isLoading: false,
@@ -35,7 +35,8 @@ export const eventsSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;
-      });
+      })
+
   },
 });
 

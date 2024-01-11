@@ -16,6 +16,7 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FaCalendarAlt } from "react-icons/fa";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Link } from "react-router-dom";
 
 const FeatureEventCarousel = ({ isLoading, eventsData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -99,51 +100,57 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
               const isActive = idx === activeIndex + 1;
               return (
                 <SwiperSlide className="">
-                  {" "}
-                  <div
-                    className={`bg-white h-[30rem] max-w-[25rem] px-3 pt-3 rounded-lg grid grid-rows-[15rem_auto] mx-auto`}
-                  >
-                    <div className=" flex justify-center items-center relative">
-                      <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
-                        <span>MeetUp 2023</span> <span>Raipur</span>
+                  <Link to={`/event/${item?._id}`} state={item}>
+                    {" "}
+                    <div
+                      className={`bg-white h-[30rem] max-w-[25rem] px-3 pt-3 rounded-lg grid grid-rows-[15rem_auto] mx-auto`}
+                    >
+                      <div className=" flex justify-center items-center relative">
+                        <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
+                          <span>MeetUp 2023</span> <span>Raipur</span>
+                        </div>
+                        <img
+                          className="w-full h-full"
+                          src={sampleImage}
+                          alt=""
+                        />
                       </div>
-                      <img className="w-full h-full" src={sampleImage} alt="" />
-                    </div>
-                    <div className="divide-y-2 p-2">
-                      <div className="font-medium text-lg line-clamp-1 mb-2">
-                        {item?.eventName ||
-                          "All Inida Meetup 2023 ft. 50 Cent | Mumbai"}
-                      </div>
-                      <div className="font-medium text-sm text-[#00373E] space-y-2 py-1">
-                        <span className="text-xs">By Bombay inc</span>
-                        <span className="flex justify-start items-center gap-1">
-                          <FaCalendarAlt />{" "}
-                          {new Date(item?.eventDate[1]).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "long",
-                              day: "numeric",
-                              year: "numeric",
-                            }
-                          ) +
-                            " - " +
-                            new Date(item?.eventDate[0]).toLocaleDateString(
+                      <div className="divide-y-2 p-2">
+                        <div className="font-medium text-lg line-clamp-1 mb-2">
+                          {item?.eventName ||
+                            "All Inida Meetup 2023 ft. 50 Cent | Mumbai"}
+                        </div>
+                        <div className="font-medium text-sm text-[#00373E] space-y-2 py-1">
+                          <span className="text-xs">By Bombay inc</span>
+                          <span className="flex justify-start items-center gap-1">
+                            <FaCalendarAlt />{" "}
+                            {new Date(item?.eventDate[1]).toLocaleDateString(
                               "en-US",
                               {
                                 month: "long",
                                 day: "numeric",
                                 year: "numeric",
                               }
-                            )}
-                        </span>
-                        <span className="flex justify-start items-center gap-1">
-                          {" "}
-                          <HiOutlineLocationMarker />{" "}
-                          {item?.venue?.Address || "D Y Patil Stadium Raipur"}
-                        </span>
+                            ) +
+                              " - " +
+                              new Date(item?.eventDate[0]).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "long",
+                                  day: "numeric",
+                                  year: "numeric",
+                                }
+                              )}
+                          </span>
+                          <span className="flex justify-start items-center gap-1">
+                            {" "}
+                            <HiOutlineLocationMarker />{" "}
+                            {item?.venue?.Address || "D Y Patil Stadium Raipur"}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </SwiperSlide>
               );
             })}

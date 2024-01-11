@@ -16,10 +16,11 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FaCalendarAlt } from "react-icons/fa";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Link } from "react-router-dom";
 
 const PopularEventCarousel = ({ isLoading, eventData }) => {
   const filteredData = useMemo(() => {
-    return eventData.filter((item) => item?.isPopular === true);
+    return eventData?.filter((item) => item?.isPopular === true);
   }, [eventData]);
   const swiperRef = useRef(null);
   const goNext = () => {
@@ -92,7 +93,8 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
               return (
                 <SwiperSlide className="">
                   {" "}
-                  <div className="bg-white h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[10rem_auto] mx-auto">
+                  <Link to={`/event/${item?._id}`} state={item}>
+                  <div className="bg-white h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[10rem_auto] mx-auto ">
                     <div className=" flex justify-center items-center relative">
                       <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
                         <span>MeetUp 2023</span> <span>Raipur</span>
@@ -134,6 +136,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
                       </div>
                     </div>
                   </div>
+                  </Link>
                 </SwiperSlide>
               );
             })}
