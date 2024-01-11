@@ -14,7 +14,7 @@ function App() {
       <div className="min-h-dvh">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/event" element={<Event />} />
+          <Route path="/event/:eventId" element={<Event />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/photos" element={<ShopPhotos />} />
         </Routes>

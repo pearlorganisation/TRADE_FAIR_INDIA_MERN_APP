@@ -8,7 +8,7 @@ import { FaFacebookF } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="text-gray-500  px-4 py-5 container mx-auto">
+    <footer className="text-gray-500  px-4 py-5 container mx-auto border-t-2">
       <div className="gap-6 md:grid md:grid-cols-[20rem_auto]">
         <div className="border">
           <div className="flex flex-col justify-start items-start gap-6 font-medium  h-full bg-[#00373E] rounded-xl text-white px-8 py-5">

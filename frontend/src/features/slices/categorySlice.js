@@ -6,7 +6,7 @@ import { fetchCategoryList } from "../actions/categoryAction";
 const initialState = {
   isLoading: false,
   isSuccess: false,
-  category: [],
+  categoryData: [],
   errorMessage: "",
 };
 
@@ -28,7 +28,7 @@ export const categorySlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.errorMessage = "";
-        state.category = action.payload.data;
+        state.categoryData = action.payload.data;
       })
       .addCase(fetchCategoryList.rejected, (state, action) => {
         state.isLoading = false;

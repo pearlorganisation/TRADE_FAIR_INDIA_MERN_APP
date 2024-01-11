@@ -21,7 +21,7 @@ const UpcomingEvents = () => {
     <div className="h-dvh space-y-12">
       <div className="bg-white flex container mx-auto rounded-xl h-[12rem] relative overflow-hidden">
         <div className="w-full h-full z-10 text-5xl font-semibold flex justify-center items-center flex-col text-[#00373E]">
-          {" "}va
+          {" "}
           <p className="text-center w-[35%]">
             {showsBannerData[0]?.bannerData}
           </p>

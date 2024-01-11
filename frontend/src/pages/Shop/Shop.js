@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ShopImage from "../../components/assets/ShopI.jpg";
 import ShopsImage from "../../components/assets/ShopsI.avif";
 import CatProfile from "../../components/assets/CatProfile.jpeg";
@@ -16,8 +16,18 @@ import { BsTwitterX } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
 import QueryForm from "./QueryForm";
+import { useNavigate } from "react-router";
 
 const Shop = () => {
+  const navigate = useNavigate();
+  // Automatically scrolls to top whenever pathname changes
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+      left: 0,
+    });
+  }, []);
   return (
     <div className="min-h-dvh pb-12">
       <div className="relative">
@@ -85,7 +95,12 @@ const Shop = () => {
                 return (
                   <div className="relative">
                     {idx === 4 ? (
-                      <div className="absolute cursor-pointer w-full h-full bg-black/70 flex flex-col justify-center items-center gap-1 text-white font-medium">
+                      <div
+                        onClick={() => {
+                          navigate("/shop/photos");
+                        }}
+                        className="absolute cursor-pointer w-full h-full bg-black/70 flex flex-col justify-center items-center gap-1 text-white font-medium"
+                      >
                         {" "}
                         <span className="text-4xl">30 +</span>{" "}
                         <span className="text-sm">See All</span>
