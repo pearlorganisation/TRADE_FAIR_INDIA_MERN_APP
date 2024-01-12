@@ -40,7 +40,7 @@ const Event = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen p-[8rem] ">
+    <div className="relative min-h-screen px-[0.8rem] sm:px-[1rem] py-[5rem] md:py-[7rem]  md:px-[2rem] lg:p-[8rem] ">
       {!state ? (
         <div className="grid place-items-center">
           <img className="w-[40rem] h-[40rem]" src={NoData} alt="" srcset="" />

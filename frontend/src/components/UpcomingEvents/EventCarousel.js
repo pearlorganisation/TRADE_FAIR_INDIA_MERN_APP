@@ -13,6 +13,7 @@ import { Pagination, Navigation } from "swiper/modules";
 import sampleImage from "../assets/UpEvents.png";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const EventCarousel = () => {
   const swiperRef = useRef(null);
@@ -62,24 +63,26 @@ const EventCarousel = () => {
         modules={[Pagination, Navigation]}
         className={styles.swiper}
       >
-        {Array.isArray(filteredData) && filteredData?.length > 0 && 
-         filteredData
-          ?.map((item) => {
+        {Array.isArray(filteredData) &&
+          filteredData?.length > 0 &&
+          filteredData?.map((item) => {
             return (
               <SwiperSlide className="">
                 {" "}
-                <div className="bg-white min-h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[auto_6rem] mx-auto">
-                  <div className=" flex justify-center items-center">
-                    <img className="w-full h-full" src={sampleImage} alt="" />
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div className="font-medium text-xl w-[60%]">
-                      {item?.eventName || 'Startup Tour 2023 ft. 50 Cent | Mumbai'}
-                      
+                <Link to={`/event/${item?._id}`} state={item}>
+                  <div className="bg-white min-h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[auto_6rem] mx-auto">
+                    <div className=" flex justify-center items-center">
+                      <img className="w-full h-full" src={sampleImage} alt="" />
                     </div>
-                    <FaAngleRight className="cursor-pointer" size={25} />
+                    <div className="flex justify-between items-center">
+                      <div className="font-medium text-xl w-[60%] line-clamp-2">
+                        {item?.eventName ||
+                          "Startup Tour 2023 ft. 50 Cent | Mumbai"}
+                      </div>
+                      <FaAngleRight className="cursor-pointer" size={25} />
+                    </div>
                   </div>
-                </div>
+                </Link>
               </SwiperSlide>
             );
           })}

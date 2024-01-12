@@ -16,12 +16,7 @@ const Header = () => {
     } else {
       setShowNav(false);
     }
-    // if(window.scrollY > 100){
-    //   setShowNav(true)
-    //   console.log("Greater than 100")}
-    //   else {
-    //     setShowNav(false)
-    //   }
+
     prevScroll = currScroll;
   };
   useEffect(() => {
@@ -32,14 +27,12 @@ const Header = () => {
     };
   }, []);
 
-
-
   return (
-    <nav className={`bg-[#00373E]  ${
-      showNav
-        ? "translate-y-[-100%] opacity-0"
-        : "translate-y-0 opacity-100"
-    } transition-all duration-200 fixed border-b w-full md:text-sm md:border-none z-20`}>
+    <nav
+      className={`bg-[#00373E]  ${
+        showNav ? "translate-y-[-100%] opacity-0" : "translate-y-0 opacity-100"
+      } transition-all duration-200 fixed border-b w-full md:text-sm md:border-none z-20`}
+    >
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <Link to="/">
@@ -51,10 +44,7 @@ const Header = () => {
             </div>
           </Link>
           <div className="md:hidden">
-            <button
-              className="text-gray-500 hover:text-gray-800"
-              onClick={() => setState(!state)}
-            >
+            <button className="text-white " onClick={() => setState(!state)}>
               {state ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -88,8 +78,10 @@ const Header = () => {
           </div>
         </div>
         <div
-          className={`flex-1 pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-            state ? "block" : "hidden"
+          className={`flex-1 pb-3 mt-8 md:block md:pb-0 md:mt-0 absolute w-full h-full  left-0  md:static md:h-auto transition-all bg-[#00373E] ${
+            state
+              ? "block h-[90vh] p-2 md:p-0 top-[2rem]"
+              : "h-[0vh] overflow-hidden pb-0 mt-0 top-[4rem]"
           }`}
         >
           <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">

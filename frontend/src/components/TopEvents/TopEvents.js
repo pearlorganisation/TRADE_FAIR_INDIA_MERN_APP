@@ -4,6 +4,8 @@ import ListEvents from "../assets/ListEvents.png";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSubBanner } from "../../features/actions/subBannerActions";
 import { fetchEventCategoryList } from "../../features/actions/eventCategoryAction";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const TopEvents = () => {
   const dispatch = useDispatch();
@@ -39,18 +41,45 @@ const TopEvents = () => {
       </div>
 
       <div className=" container mx-auto bg-transparent space-y-12 p-5 relative grid place-items-center text-[#00373E]">
-        <div className="bg-[#DFFEC8] h-[23.5rem] w-[90%] mx-auto p-8 grid place-items-center absolute top-[-15rem] rounded-2xl">
-          <div className="text-3xl/tight md:text-4xl/tight lg:text-5xl/tight max-w-[40rem] text-center">
-            {active?.bannerData ||
-              "Trade Shows, Exhibitions, Conferences & Business Events India"}
+        {isLoading ? (
+          <div className="bg-white h-[23.5rem] w-[90%] mx-auto p-8  absolute top-[-15rem] rounded-2xl space-y-12">
+            <div className="flex flex-col justify-center gap-3">
+              <p className="w-[70%] mx-auto">
+                <span className="block h-[3rem]">
+                  <Skeleton height="100%" />
+                </span>
+              </p>
+              <p className="w-[30%] mx-auto">
+                <span className="block h-[3rem]">
+                  <Skeleton height="100%" />
+                </span>
+              </p>
+              <p className="w-[40%] mx-auto">
+                <span className="block h-[3rem]">
+                  <Skeleton height="100%" />
+                </span>
+              </p>
+            </div>
+            <p className="w-[20%] mx-auto">
+              <span className="block h-[3rem]">
+                <Skeleton height="100%" />
+              </span>
+            </p>
           </div>
-          <button
-            className="bg-[#00373E] hover:ring-[5px] ring-[#00373E]/50 transition-all active:scale-95 px-16 font-medium text-white py-3 rounded-3xl"
-            type="button"
-          >
-            Explore Now
-          </button>
-        </div>
+        ) : (
+          <div className="bg-[#DFFEC8] h-[23.5rem] w-[90%] mx-auto p-8 grid place-items-center absolute top-[-15rem] rounded-2xl">
+            <div className="text-3xl/tight md:text-4xl/tight lg:text-5xl/tight max-w-[40rem] text-center">
+              {active?.bannerData ||
+                "Trade Shows, Exhibitions, Conferences & Business Events India"}
+            </div>
+            <button
+              className="bg-[#00373E] hover:ring-[5px] ring-[#00373E]/50 transition-all active:scale-95 px-16 font-medium text-white py-3 rounded-3xl"
+              type="button"
+            >
+              Explore Now
+            </button>
+          </div>
+        )}
 
         {/* <----------------------Top List of events-------------------------------> */}
 
