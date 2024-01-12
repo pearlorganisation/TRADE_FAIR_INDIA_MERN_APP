@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -12,9 +12,22 @@ import styles from "./styles.module.css";
 import { Pagination, Navigation } from "swiper/modules";
 import sampleImage from "../assets/UpEvents.png";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 const EventCarousel = () => {
   const swiperRef = useRef(null);
+  const { isLoading, eventData } = useSelector((state) => state.events);
+
+  const filteredData = useMemo(() => {
+    return eventData?.filter((item) => {
+      const dates = item?.eventDate;
+      const currentDate = new Date();
+
+      const startDate = new Date(dates[1]);
+      const endDate = new Date(dates[0]);
+      return currentDate < startDate;
+    });
+  }, [eventData]);
   const goNext = () => {
     if (swiperRef.current && swiperRef.current.swiper) {
       swiperRef.current.swiper.slideNext();
@@ -49,9 +62,9 @@ const EventCarousel = () => {
         modules={[Pagination, Navigation]}
         className={styles.swiper}
       >
-        {Array(6)
-          .fill(true)
-          .map((item) => {
+        {Array.isArray(filteredData) && filteredData?.length > 0 && 
+         filteredData
+          ?.map((item) => {
             return (
               <SwiperSlide className="">
                 {" "}
@@ -61,7 +74,8 @@ const EventCarousel = () => {
                   </div>
                   <div className="flex justify-between items-center">
                     <div className="font-medium text-xl w-[60%]">
-                      Startup Tour 2023 ft. 50 Cent | Mumbai
+                      {item?.eventName || 'Startup Tour 2023 ft. 50 Cent | Mumbai'}
+                      
                     </div>
                     <FaAngleRight className="cursor-pointer" size={25} />
                   </div>

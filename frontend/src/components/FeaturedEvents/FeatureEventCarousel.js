@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -32,6 +32,22 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
       swiperRef.current.swiper.slidePrev();
     }
   };
+
+  const filteredData = useMemo(() => {
+    return eventsData?.filter((item) => {
+      const dates = item?.eventDate;
+      const currentDate = new Date();
+
+      const startDate = new Date(dates[1]);
+      const endDate = new Date(dates[0]);
+      return currentDate >= startDate && currentDate <= endDate;
+    });
+  }, [eventsData]);
+
+  useEffect(() => {
+    console.log("eventsData::", eventsData);
+    // console.log(filteredData);
+  }, [eventsData, filteredData]);
   return (
     <div className="container mx-auto relative">
       <Swiper
@@ -92,9 +108,9 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
                   </SwiperSlide>
                 );
               })
-          : Array.isArray(eventsData) &&
-            eventsData.length > 0 &&
-            eventsData?.map((item, idx) => {
+          : Array.isArray(filteredData) &&
+            filteredData.length > 0 &&
+            filteredData?.map((item, idx) => {
               const isPrev = idx === activeIndex - 1;
               const isNext = idx === activeIndex + 1;
               const isActive = idx === activeIndex + 1;
