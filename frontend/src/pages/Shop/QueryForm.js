@@ -1,16 +1,25 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 
 const QueryForm = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {/* Component: Rounded large input with helper text  */}
       <div className="flex flex-wrap items-end gap-3">
-        <div class="relative my-6 flex-grow basis-[550px]">
+        <div class="relative my-6 flex-grow basis-[550px] relative">
           <input
             id="id-l03"
             type="text"
-            name="id-l03"
             placeholder="Name"
+            {...register("Name", { required: true })}
             class="relative w-full h-12 px-4 placeholder-transparent transition-all border rounded outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           />
           <label
@@ -19,12 +28,17 @@ const QueryForm = () => {
           >
             Name
           </label>
+          {errors.Name && (
+            <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
+              This field is required
+            </div>
+          )}
         </div>
-        <div class="relative my-6 flex-grow basis-[550px]">
+        <div class="relative my-6 flex-grow basis-[550px] relative">
           <input
+            {...register("ContactNumber", { required: true })}
             id="id-l03"
             type="text"
-            name="id-l03"
             placeholder="Contact Number"
             class="relative w-full h-12 px-4 placeholder-transparent transition-all border rounded outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           />
@@ -34,13 +48,18 @@ const QueryForm = () => {
           >
             Contact Number
           </label>
+          {errors.ContactNumber && (
+            <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
+              This field is required
+            </div>
+          )}
         </div>
 
-        <div class="relative my-6 flex-grow basis-[550px]">
+        <div class="relative my-6 flex-grow basis-[550px] absolute">
           <input
+            {...register("Email", { required: true })}
             id="id-l03"
             type="text"
-            name="id-l03"
             placeholder="Email"
             class="relative w-full h-12 px-4 placeholder-transparent transition-all border rounded outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           />
@@ -50,13 +69,18 @@ const QueryForm = () => {
           >
             Email
           </label>
+          {errors.Email && (
+            <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
+              This field is required
+            </div>
+          )}
         </div>
 
-        <div class="relative my-6 flex-grow basis-[550px]">
+        <div class="relative my-6 flex-grow basis-[550px] relative">
           <input
+            {...register("City_State", { required: true })}
             id="id-l03"
             type="text"
-            name="id-l03"
             placeholder="City/State"
             class="relative w-full h-12 px-4 placeholder-transparent transition-all border rounded outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           />
@@ -66,14 +90,19 @@ const QueryForm = () => {
           >
             City/State
           </label>
+          {errors.City_State && (
+            <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
+              This field is required
+            </div>
+          )}
         </div>
 
-        <div class="relative my-6 w-full">
+        <div class="relative my-6 w-full relative">
           <textarea
+            {...register("City_State", { required: true })}
             cols="30"
             rows="10"
             id="id-l03"
-            name="id-l03"
             placeholder="Would love to hear something from you...."
             class="relative w-full resize-none px-4 placeholder-transparent transition-all border rounded outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           />
@@ -83,12 +112,17 @@ const QueryForm = () => {
           >
             Would love to hear something from you....
           </label>
+          {errors.City_State && (
+            <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
+              This field is required
+            </div>
+          )}
         </div>
       </div>
       <div>
         <button
           className="px-12 py-2 w-full sm:w-auto rounded-3xl active:scale-95 hover:ring-4 ring-[#00373E]/30 transition-all bg-[#00373E] text-white"
-          type="button"
+          type="submit"
         >
           Send
         </button>

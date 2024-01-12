@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 const ShopPhotos = () => {
+  
   const posts = [
     {
       title: "What is SaaS? Software as a Service Explained",
