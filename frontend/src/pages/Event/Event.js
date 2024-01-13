@@ -156,24 +156,91 @@ const Event = () => {
               <div className="text-slate-700 font-medium space-y-1">
                 <span className="p-1">Tap To Download</span>
                 <div className="flex justify-start items-center">
-                  {Array(4)
-                    .fill(true)
-                    .map((item) => {
+                  {Array.isArray(state?.eventBrochure) &&
+                    state?.eventBrochure.length > 0 &&
+                    state?.eventBrochure?.map((item) => {
                       return (
-                        <div className="relative group cursor-pointer">
-                          <div className="overflow-hidden transition-all w-full h-[0%] group-hover:h-[100%] bg-white/30 absolute grid place-items-center">
-                            <MdFileDownload
-                              className="text-black/70"
-                              size={40}
+                        <a
+                          href={`${item?.path}`}
+                          color="transparent"
+                          target="_blank"
+                          download={`${item?.path}`}
+                        >
+                          <div className="relative group cursor-pointer">
+                            {/* popup starts */}
+                            {/* <div class=" group-hover:visible absolute top-[-13rem] left-[-5rem] invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600">
+                              <div class="p-3">
+                                <div class="flex items-center justify-between mb-2">
+                                  <a href="#">
+                                    <img
+                                      class="w-10 h-10 rounded-full"
+                                      src="https://ui-avatars.com/api/?name=Abhishek+Bahuguna"
+                                      alt="Jese Leos"
+                                    />
+                                  </a>
+                                  <div>
+                                    <button
+                                      type="button"
+                                      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                                    >
+                                      Follow
+                                    </button>
+                                  </div>
+                                </div>
+                                <p class="text-base font-semibold leading-none text-gray-900 dark:text-white">
+                                  <a href="#">Abhishek Bahuguna</a>
+                                </p>
+                                <p class="mb-3 text-sm font-normal">
+                                  <a href="#" class="hover:underline">
+                                    @jeseleos
+                                  </a>
+                                </p>
+                                <p class="mb-4 text-sm">
+                                  Open-source contributor. Building{" "}
+                                  <a
+                                    href="#"
+                                    class="text-blue-600 dark:text-blue-500 hover:underline"
+                                  >
+                                    flowbite.com
+                                  </a>
+                                  .
+                                </p>
+                                <ul class="flex text-sm">
+                                  <li class="me-2">
+                                    <a href="#" class="hover:underline">
+                                      <span class="font-semibold text-gray-900 dark:text-white">
+                                        799
+                                      </span>
+                                      <span>Following</span>
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="#" class="hover:underline">
+                                      <span class="font-semibold text-gray-900 dark:text-white">
+                                        3,758
+                                      </span>
+                                      <span>Followers</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div data-popper-arrow></div>
+                            </div> */}
+                            {/* popup ends */}
+                            <div className="overflow-hidden transition-all w-full h-[0%] group-hover:h-[100%] bg-white/30 absolute grid place-items-center">
+                              <MdFileDownload
+                                className="text-black/70"
+                                size={40}
+                              />
+                            </div>
+                            <img
+                              className=""
+                              height={70}
+                              width={70}
+                              src={PdfIcon}
                             />
                           </div>
-                          <img
-                            className=""
-                            height={70}
-                            width={70}
-                            src={PdfIcon}
-                          />
-                        </div>
+                        </a>
                       );
                     })}
                 </div>
@@ -198,7 +265,7 @@ const Event = () => {
                 Shops in Event :
               </div>
               <div className="text-slate-700 font-medium flex gap-3">
-                <ShopCarousel />
+                <ShopCarousel shopDetails={state?.shopDetails} />
               </div>
             </div>
 

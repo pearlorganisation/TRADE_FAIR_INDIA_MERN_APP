@@ -16,10 +16,11 @@ import { BsTwitterX } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
 import QueryForm from "./QueryForm";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 const Shop = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
   // Automatically scrolls to top whenever pathname changes
   useEffect(() => {
     window.scrollTo({
@@ -28,6 +29,10 @@ const Shop = () => {
       left: 0,
     });
   }, []);
+  useEffect(() => {
+    console.log("state:::", state);
+  }, [state]);
+
   return (
     <div className="min-h-dvh pb-12">
       <div className="relative">

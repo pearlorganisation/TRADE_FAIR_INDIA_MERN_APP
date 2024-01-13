@@ -78,10 +78,10 @@ const Header = () => {
           </div>
         </div>
         <div
-          className={`flex-1 pb-3 mt-8 md:block md:pb-0 md:mt-0 absolute w-full h-full  left-0  md:static md:h-auto transition-all bg-[#00373E] ${
+          className={`flex-1 md:pb-3 md:mt-8 md:block pb-0 mt-0 absolute left-0 w-full top-[4rem] md:static md:h-auto md:w-auto transition-all bg-[#00373E] ${
             state
-              ? "block h-[90vh] p-2 md:p-0 top-[2rem]"
-              : "h-[0vh] overflow-hidden pb-0 mt-0 top-[4rem]"
+              ? "h-[100vh] px-3 md:px-0"
+              : "h-[0vh] px-3 md:px-0 overflow-hidden"
           }`}
         >
           <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">

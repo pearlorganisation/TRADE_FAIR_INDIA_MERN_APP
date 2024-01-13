@@ -16,7 +16,7 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const ShopCarousel = () => {
+const ShopCarousel = ({ shopDetails }) => {
   const swiperRef = useRef(null);
   const goNext = () => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -52,28 +52,21 @@ const ShopCarousel = () => {
         modules={[Pagination, Navigation]}
         className={styles.swiper}
       >
-        {Array(6)
-          .fill(true)
-          .map((item) => {
+        {Array.isArray(shopDetails) &&
+          shopDetails?.length > 0 &&
+          shopDetails?.map((item) => {
             return (
               <SwiperSlide className="">
-                <Link to="/shop">
-                  <div className="bg-white h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[10rem_auto] mx-auto">
+                <Link to="/shop" state={item}>
+                  <div className="bg-white max-h-[20rem] max-w-[22rem] rounded-lg grid grid-rows-[13rem_auto] mx-auto">
                     <div className=" flex justify-center items-center relative">
-                      <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
-                        <span>MeetUp 2023</span> <span>Raipur</span>
-                      </div>
                       <img className="w-full h-full" src={sampleImage} alt="" />
                     </div>
-                    <div className="     divide-y-2 p-2">
-                      <div className="font-medium text-lg">
-                        All Inida Meetup 2023 ft. 50 Cent | Mumbai
+                    <div className="divide-y-2 p-2">
+                      <div className="font-medium text-lg py-1">
+                        {item?.shopName?.shopName || ""}
                       </div>
-                      <div className="font-medium text-sm text-[#00373E]">
-                        <span className="text-xs">By Bombay inc</span>
-                        <span className="flex justify-start items-center gap-1">
-                          <FaCalendarAlt /> November 25
-                        </span>
+                      <div className="font-medium text-sm text-[#00373E] py-1">
                         <span className="flex justify-start items-center gap-1">
                           {" "}
                           <HiOutlineLocationMarker /> D Y Patil Stadium Raipur
