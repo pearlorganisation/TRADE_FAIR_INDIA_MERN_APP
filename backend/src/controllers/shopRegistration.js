@@ -250,23 +250,23 @@ exports.updateShopRegistration = async (req, res) => {
       return item.path.split("/").pop().split(".")[0];
     });
 
-    publicIds.forEach((publicId) => {
-      cloudinary.uploader.destroy(publicId, (err, res) => {
-        if (err) {
-          throw err;
-        }
-      });
-    });
+    // publicIds.forEach((publicId) => {
+    //   cloudinary.uploader.destroy(publicId, (err, res) => {
+    //     if (err) {
+    //       throw err;
+    //     }
+    //   });
+    // });
 
-    mediaData.forEach((item) => {
-      cloudinary.uploader.upload(item, (err, res) => {
-        if (err) {
-          throw err;
-          console.log(err, "error of clodinary");
-        }
-        console.log(res, "Image uploaded successfully!!");
-      });
-    });
+    // mediaData.forEach((item) => {
+    //   cloudinary.uploader.upload(item, (err, res) => {
+    //     if (err) {
+    //       throw err;
+    //       console.log(err, "error of clodinary");
+    //     }
+    //     console.log(res, "Image uploaded successfully!!");
+    //   });
+    // });
 
     // cloudinary.uploader.destroy(
     //   publicId,
