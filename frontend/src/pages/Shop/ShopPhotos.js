@@ -1,7 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { FaEye } from "react-icons/fa";
+import ViewImage from "./ViewImage";
 
 const ShopPhotos = () => {
-  
+  const { state } = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState("");
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
   const posts = [
     {
       title: "What is SaaS? Software as a Service Explained",
@@ -37,8 +46,7 @@ const ShopPhotos = () => {
       img: "https://images.unsplash.com/photo-1556125574-d7f27ec36a06?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       date: "Jan 4 2022",
       href: "javascript:void(0)",
-    }
-    ,
+    },
     {
       title: "7 Promising VS Code Extensions Introduced in 2022",
       desc: "I hope I remembered all the stuff that they needed to know. They're like, 'okay,' and write it in their little reading notebooks.",
@@ -58,19 +66,30 @@ const ShopPhotos = () => {
   return (
     <div className="min-h-dvh grid place-items-center container mx-auto py-[8rem] px-3">
       <ul className="grid gap-x-8 gap-y-10 mt-16 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((items, key) => (
-          <li className="w-full mx-auto group sm:max-w-sm" key={key}>
-            <a href={items.href}>
-              <img
-                src={items.img}
-                loading="lazy"
-                alt={items.title}
-                className="w-full rounded-lg"
-              />
-            </a>
+        {state?.map((items, key) => (
+          <li
+            className="w-full mx-auto group sm:max-w-sm relative group cursor-pointer h-[20rem]"
+            key={key}
+          >
+            <div
+              onClick={() => {
+                setIsOpen(true);
+                setImage(items?.path);
+              }}
+              className="absolute w-full h-full text-base md:text-3xl md:h-0 bg-black/30 text-white md:group-hover:h-full transition-all overflow-hidden grid place-items-center"
+            >
+              <FaEye />
+            </div>
+            <img
+              src={items?.path}
+              loading="lazy"
+              alt={items.title}
+              className="w-full h-full object-cover object-center rounded-lg"
+            />
           </li>
         ))}
       </ul>
+      <ViewImage isOpen={isOpen} setIsOpen={setIsOpen} image={image} />
     </div>
   );
 };
