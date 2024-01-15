@@ -59,17 +59,7 @@ const Shop = () => {
             About
           </div>
           <div className="text-slate-700 font-medium">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. Lorem Ipsum is simply dummy text of
-            the printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type
-            specimen book. It has survived not only five centuries, but also the
-            leap into electronic typesetting, remaining essentially unchanged.
+            {state?.shopName?.aboutUs}
           </div>
         </div>
         <div className="space-y-2">
@@ -94,44 +84,49 @@ const Shop = () => {
             Images from Recent Events :
           </div>
           <div className="text-slate-700 font-medium grid grid-cols-[repeat(_auto-fit,_minmax(450px,_1fr))] gap-3">
-            {Array(5)
+            {/* {Array(5)
               .fill(ShopsImage)
-              .map((item, idx) => {
-                return (
-                  <div className="relative">
-                    {idx === 4 ? (
-                      <div
-                        onClick={() => {
-                          navigate("/shop/photos");
-                        }}
-                        className="absolute cursor-pointer w-full h-full bg-black/70 flex flex-col justify-center items-center gap-1 text-white font-medium"
-                      >
-                        {" "}
-                        <span className="text-4xl">30 +</span>{" "}
-                        <span className="text-sm">See All</span>
-                      </div>
-                    ) : null}
-                    {idx < 4 ? (
-                      <div className="absolute w-full h-full bg-gradient-to-b to-black/30 from-black/0 flex items-end p-3">
-                        <div className="flex justify-between items-center text-white w-full">
-                          <span>📍 Uttarakhand</span>
-                          <button
-                            type="button"
-                            className="border border-white/10 hover:ring-2 ring-white/30 active:scale-95 transition-all bg-white/10 px-3 py-1 rounded-2xl font-normal"
-                          >
-                            See Photos
-                          </button>
+              .map((item, idx) => { */}
+            {Array.isArray(state?.gallery) &&
+              state?.gallery?.length > 0 &&
+              state?.gallery
+                ?.filter((item, index) => index < 5)
+                ?.map((item, idx) => {
+                  return (
+                    <div className="relative">
+                      {idx === 4 ? (
+                        <div
+                          onClick={() => {
+                            navigate("/shop/photos", { state: state?.gallery });
+                          }}
+                          className="absolute cursor-pointer w-full h-full bg-black/70 flex flex-col justify-center items-center gap-1 text-white font-medium"
+                        >
+                          {" "}
+                          <span className="text-4xl">30 +</span>{" "}
+                          <span className="text-sm">See All</span>
                         </div>
-                      </div>
-                    ) : null}
-                    <img
-                      className="w-full h-[20rem] object-cover object-top"
-                      src={item}
-                      alt=""
-                    />
-                  </div>
-                );
-              })}
+                      ) : null}
+                      {idx < 4 ? (
+                        <div className="absolute w-full h-full bg-gradient-to-b to-black/30 from-black/0 flex items-end p-3">
+                          <div className="flex justify-between items-center text-white w-full">
+                            <span>📍 Uttarakhand</span>
+                            <button
+                              type="button"
+                              className="border border-white/10 hover:ring-2 ring-white/30 active:scale-95 transition-all bg-white/10 px-3 py-1 rounded-2xl font-normal"
+                            >
+                              See Photos
+                            </button>
+                          </div>
+                        </div>
+                      ) : null}
+                      <img
+                        className="w-full h-[20rem] object-cover object-top"
+                        src={item?.path}
+                        alt=""
+                      />
+                    </div>
+                  );
+                })}
           </div>
         </div>
 
@@ -141,37 +136,43 @@ const Shop = () => {
               Key Person :
             </div>
             <div className="text-slate-700 font-medium bg-white p-3 space-y-3 rounded-xl">
-              <div>
-                <img
-                  className="rounded-xl"
-                  width={110}
-                  height={110}
-                  src={CatProfile}
-                  alt=""
-                />
-              </div>
-              <div className="flex flex-col justify-start items-start gap-3">
-                <span>Abhishek Bahuguna</span>
-                <span>Web Developer</span>
-                <span className="flex justify-start items-center gap-1">
-                  <IoCall /> 9876543210
-                </span>
-                <div className="space-x-3">
-                  {" "}
-                  <button
-                    className="px-6 py-2 border rounded-2xl"
-                    type="button"
-                  >
-                    Save Details
-                  </button>
-                  <button
-                    className="px-6 py-2 rounded-2xl bg-[#00373E] text-white"
-                    type="button"
-                  >
-                    Contact Now
-                  </button>{" "}
-                </div>
-              </div>
+              {state?.shopName?.keyPersonsDetails?.map((item) => {
+                return (
+                  <div>
+                    <div>
+                      <img
+                        className="rounded-xl"
+                        width={110}
+                        height={110}
+                        src={CatProfile}
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex flex-col justify-start items-start gap-3">
+                      <span>{item?.name || "Abhishek Bahuguna"}</span>
+                      <span>{item?.designation || "Web Developer"}</span>
+                      <span className="flex justify-start items-center gap-1">
+                        <IoCall /> {item?.mobileNo}
+                      </span>
+                      <div className="space-x-3">
+                        {" "}
+                        <button
+                          className="px-6 py-2 border rounded-2xl"
+                          type="button"
+                        >
+                          Save Details
+                        </button>
+                        <button
+                          className="px-6 py-2 rounded-2xl bg-[#00373E] text-white"
+                          type="button"
+                        >
+                          Contact Now
+                        </button>{" "}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="space-y-2 flex flex-col">
@@ -180,17 +181,18 @@ const Shop = () => {
             </div>
             <div className="flex flex-col justify-center items-center gap-6 bg-white rounded-xl h-full p-2">
               <div className="text-slate-700 font-medium flex justify-center items-center">
-                {Array(3)
-                  .fill(PdfIcon)
-                  .map((item, index) => {
-                    return (
+                {state?.shopName?.pdfList?.map((item, index) => {
+                  return (
+                    <a href={item?.path} download target="_blank">
+                      {" "}
                       <img
                         className="w-[5rem] md:w-[6.5rem] lg:w-[8rem]"
-                        src={item}
+                        src={PdfIcon}
                         alt=""
                       />
-                    );
-                  })}
+                    </a>
+                  );
+                })}
               </div>
               <button
                 type="button"
