@@ -90,7 +90,7 @@ const Header = () => {
             </li>
             <li className="text-white border-2 border-white py-1 px-3 rounded-2xl flex justify-evenly items-center gap-1">
               <FaMapMarkerAlt />{" "}
-              <span className="font-medium text-nowrap">Deahradun</span>
+              <span className="font-medium text-nowrap">Dehradun</span>
               <FaChevronDown />
             </li>
 
