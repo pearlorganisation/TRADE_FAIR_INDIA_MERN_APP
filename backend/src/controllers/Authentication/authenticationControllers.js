@@ -15,7 +15,7 @@ const {
 // @access - PUBLIC
 exports.login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+ const { username, password, type } = req.body;
 
     if (!username || !password) {
       return res
@@ -28,6 +28,19 @@ exports.login = async (req, res) => {
       .populate("permissions", ["permission", "_id"])
       .populate("role", ["role", "_id"])
       .select("-__v"); //checking for the user in db
+
+    if (type === "CLIENT" && user?.role?.role !== "USER") {
+      return res.status(400).json({
+        status: "FALURE",
+        message: "Only user can log in client panel!!",
+      });
+    }
+    if (type === "ADMIN" && user?.role?.role === "USER") {
+      return res.status(400).json({
+        status: 400,
+        message: "Only vendor and admin can login in admin panel !! ",
+      });
+    }
 
     if (!user) {
       return res
