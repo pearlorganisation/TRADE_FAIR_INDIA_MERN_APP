@@ -97,3 +97,20 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
+
+{/* <img
+        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw"
+        srcset="
+    https://res.cloudinary.com/dnixhctcf/image/upload/w_320,h_180,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg 320w,
+    https://res.cloudinary.com/dnixhctcf/image/upload/w_640,h_360,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg 640w,
+    https://res.cloudinary.com/dnixhctcf/image/upload/w_768,h_432,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg 768w,
+    https://res.cloudinary.com/dnixhctcf/image/upload/w_1024,h_576,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg 1024w,
+    https://res.cloudinary.com/dnixhctcf/image/upload/w_1280,h_720,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg 1280w,
+    https://res.cloudinary.com/dnixhctcf/image/upload/w_1920,h_1080,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg 1920w,
+    https://res.cloudinary.com/dnixhctcf/image/upload/w_2560,h_1440,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg 2560w
+  "
+        src="https://res.cloudinary.com/dnixhctcf/image/upload/w_2560,h_1440,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg"
+        alt="Description of your image"
+        className="h-auto w-auto"
+      /> */}

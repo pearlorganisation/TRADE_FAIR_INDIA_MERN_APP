@@ -1,6 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp } from "../../../features/actions/authAction";
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa6";
+import { useEffect, useState } from "react";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [toggle, setToggle] = useState(false);
+  const { authData } = useSelector((state) => state.auth);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("name", data?.name);
+    formData.append("email", data?.email);
+    formData.append("password", data?.password);
+
+    dispatch(signUp(formData));
+  };
+
+  useEffect(() => {
+    if (authData?.status === "SUCCESS") {
+      navigate("/");
+    }
+  }, [authData]);
+
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center bg-gray-50 sm:px-4">
       <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
@@ -27,32 +59,52 @@ const SignUp = () => {
           </div>
         </div>
         <div className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg">
-          <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div>
               <label className="font-medium">Name</label>
               <input
                 type="text"
-                required
+                {...register("name", { required: true })}
                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-[#00373E] shadow-sm rounded-lg"
               />
+              {errors.name && (
+                <span className="text-red-500">Name field is required</span>
+              )}
             </div>
             <div>
               <label className="font-medium">Email</label>
               <input
                 type="email"
-                required
+                {...register("email", { required: true })}
                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-[#00373E] shadow-sm rounded-lg"
               />
+              {errors.email && (
+                <span className="text-red-500">Email field is required</span>
+              )}
             </div>
-            <div>
+            <div className="relative">
               <label className="font-medium">Password</label>
               <input
-                type="password"
-                required
+                type={`${toggle ? "text" : "password"}`}
+                {...register("password", { required: true })}
                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-[#00373E] shadow-sm rounded-lg"
               />
+              <span
+                onClick={() => {
+                  setToggle(!toggle);
+                }}
+                className="absolute right-[1rem] top-[2.9rem] cursor-pointer"
+              >
+                {toggle ? <FaEye /> : <FaEyeSlash />}
+              </span>
+              {errors.password && (
+                <span className="text-red-500">Password field is required</span>
+              )}
             </div>
-            <button className="w-full px-4 py-2 text-white font-medium bg-[#00373E] hover:bg-[#00373E]/90 active:bg-[#00373E]/80 rounded-lg duration-150">
+            <button
+              type="submit"
+              className="w-full px-4 py-2 text-white font-medium bg-[#00373E] hover:bg-[#00373E]/90 active:bg-[#00373E]/80 rounded-lg duration-150"
+            >
               Create account
             </button>
           </form>

@@ -8,6 +8,7 @@ import Shop from "./pages/Shop/Shop";
 import ShopPhotos from "./pages/Shop/ShopPhotos";
 import Login from "./pages/Auth/login/Login";
 import SignUp from "./pages/Auth/signUp/SignUp";
+import { Toaster } from 'sonner'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      <Toaster  position="top-center" richColors />
     </div>
   );
 }

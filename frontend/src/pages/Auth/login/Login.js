@@ -1,4 +1,14 @@
+import { useForm } from "react-hook-form";
+
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
       <div className="max-w-sm w-full text-gray-600 space-y-5">
@@ -15,22 +25,28 @@ const Login = () => {
             </h3>
           </div>
         </div>
-        <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div>
             <label className="font-medium">Email</label>
             <input
               type="email"
-              required
+              {...register("email", { required: true })}
               className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
             />
+            {errors.email && (
+              <span className="text-red-500">Email field is required</span>
+            )}
           </div>
           <div>
             <label className="font-medium">Password</label>
             <input
               type="password"
-              required
+              {...register("password", { required: true })}
               className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
             />
+            {errors.password && (
+              <span className="text-red-500">Password field is required</span>
+            )}
           </div>
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-x-3">
@@ -52,7 +68,10 @@ const Login = () => {
               Forgot password?
             </a>
           </div>
-          <button className="w-full px-4 py-2 text-white font-medium bg-[#00373E] hover:bg-[#00373E]/90 active:bg-[#00373E]/80 rounded-lg duration-150">
+          <button
+            type="submit"
+            className="w-full px-4 py-2 text-white font-medium bg-[#00373E] hover:bg-[#00373E]/90 active:bg-[#00373E]/80 rounded-lg duration-150"
+          >
             Sign in
           </button>
         </form>

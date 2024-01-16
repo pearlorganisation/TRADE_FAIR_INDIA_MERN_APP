@@ -10,10 +10,12 @@ import evetnsReducer from "./slices/eventsSlice";
 import evetnCategoryReducer from "./slices/eventCategorySlice";
 import showBannerReducer from "./slices/showsBannerSlice";
 import categoryReducer from "./slices/categorySlice";
+import authReducer from "./slices/authSlice";
 
 // Combine your individual reducers here
 const rootReducer = combineReducers({
   // ...
+  auth: authReducer,
   faq: faqReducer,
   homeBanner: homeBannerReducer,
   subBanner: subBannerReducer,
