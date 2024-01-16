@@ -77,12 +77,6 @@ exports.deleteUser = async (req, res) => {
 
     const userRole = await roleModel.findById(existingUser?.role);
 
-    if (!userRole) {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "Please enter a valid role for further steps",
-      });
-    }
 
     if (
       userRole?.role == "SUPER_ADMIN" &&
