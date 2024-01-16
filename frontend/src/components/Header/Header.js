@@ -97,20 +97,21 @@ const Header = () => {
             <span className="hidden w-px h-6 bg-gray-300 md:block"></span>
             <div className="space-y-3 items-center gap-x-6 md:flex md:space-y-0">
               <li>
-                <a
-                  href="javascript:void(0)"
+                <Link
+                  to="/login"
                   className="block py-3 text-center text-white  border rounded-lg md:border-none"
                 >
                   Log in
-                </a>
+                </Link>
               </li>
               <li>
-                <a
+                <Link
+                  to="/signUp"
                   href="javascript:void(0)"
                   className="block py-3 px-4 font-medium text-center bg-white text-[#00373E]  active:shadow-none rounded-lg shadow md:inline"
                 >
-                  Sign in
-                </a>
+                  Sign up
+                </Link>
               </li>
             </div>
           </ul>
