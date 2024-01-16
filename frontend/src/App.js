@@ -6,6 +6,8 @@ import Home from "./pages/Home/Home";
 import Event from "./pages/Event/Event";
 import Shop from "./pages/Shop/Shop";
 import ShopPhotos from "./pages/Shop/ShopPhotos";
+import Login from "./pages/Auth/login/Login";
+import SignUp from "./pages/Auth/signUp/SignUp";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/event/:eventId" element={<Event />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/photos" element={<ShopPhotos />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signUp" element={<SignUp />} />
         </Routes>
       </div>
       <Footer />
