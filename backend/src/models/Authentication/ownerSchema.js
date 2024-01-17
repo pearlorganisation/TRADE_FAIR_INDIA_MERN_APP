@@ -61,5 +61,5 @@ const ownerSchema = new mongoose.Schema(
 //   });
 // };
 
-const ownerModel = mongoose.model("Owner", ownerSchema, "Owner");
+const ownerModel = mongoose.model("owner-auth", ownerSchema, "owner-auth");
 module.exports = ownerModel;

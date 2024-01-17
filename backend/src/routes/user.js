@@ -26,6 +26,7 @@ router
     upload.single("profilePic"),
     createUser
   );
+router.route("/client/register");
 router
   .route("/:id")
   .patch(
