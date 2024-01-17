@@ -77,7 +77,6 @@ exports.deleteUser = async (req, res) => {
 
     const userRole = await roleModel.findById(existingUser?.role);
 
-
     if (
       userRole?.role == "SUPER_ADMIN" &&
       existingUser?.isUserActivate == "Activate"

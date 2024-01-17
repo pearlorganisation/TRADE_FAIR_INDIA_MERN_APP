@@ -4,6 +4,10 @@ let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
 const authSchema = new mongoose.Schema(
   {
     name: { type: String, required: [true, "Name is required"] },
+    emailVerified: {
+      type: Boolean,
+      default: false,
+    },
     email: { type: String, required: [true, "Email is required"] },
     profilePic: {
       type: String,
@@ -32,5 +36,9 @@ const authSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const authModel = mongoose.model("auth", authSchema, "auth");
+const authModel = mongoose.model(
+  "admin-client-auth",
+  authSchema,
+  "admin-client-auth"
+);
 module.exports = authModel;

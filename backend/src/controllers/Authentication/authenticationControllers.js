@@ -1,5 +1,6 @@
 // ------------------------------------------Imports---------------------------------------------------------
 const authModel = require("../../models/Authentication/authenticationModel.js");
+// const sendToken=require("../")
 const shopOwner = require("../../models/Authentication/ownerSchema.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -8,6 +9,8 @@ const {
   accessTokenValidity,
   refreshTokenValidity,
 } = require("../../utils/index.js");
+const { sendTokenMail } = require("../../utils/sendTokenMail.js");
+const roleModel = require("../../models/Authentication/roles.js");
 // -----------------------------------------------------------------------------------------------------------
 
 // @desc - to fetch the users data
@@ -15,7 +18,7 @@ const {
 // @access - PUBLIC
 exports.login = async (req, res) => {
   try {
- const { username, password, type } = req.body;
+    const { username, password, type } = req.body;
 
     if (!username || !password) {
       return res
@@ -235,4 +238,88 @@ exports.resetPassword = async (req, res) => {
       message: `Internal Server Error! ${error.message}`,
     });
   }
+};
+
+exports.signup = async (req, res) => {
+  try {
+    const { password, email, name } = req?.body;
+
+    if (req?.file && req?.file?.size > 2 * 1024 * 1024) {
+      return res.status(400).json({
+        status: "FAILURE",
+        message: "profile pic size must be smaller than 2MB",
+      });
+    }
+
+    const role = await roleModel.findOne({ role: "USER" });
+    const hashPassword = await bcrypt.hash(req?.body?.password, 10);
+
+    let existingPermissions = [];
+    role &&
+      role?.permissions?.forEach((item) => {
+        existingPermissions.push({
+          _id: item?._id,
+          permission: item?.permission,
+        });
+      });
+    const savedUser = await authModel.create({
+      name,
+      email,
+      permissions: existingPermissions,
+      password: hashPassword,
+      role: role?._id,
+    });
+
+    const url =
+      process.env.NODE_ENV === "production"
+        ? process.env.FRONTEND_LIVE_URL
+        : process.env.FRONTEND_LOCAL_URL;
+
+    const token = jwt.sign({}, process.env.VERIFY_EMAIL_SECRET, {
+      expiresIn: "5m",
+    });
+
+    const finalUrl = `${url}${token}/${savedUser?._id}`;
+    sendTokenMail(req?.body?.email, finalUrl).then((data) => {
+      res.status(200).json({
+        status: "SUCCESS",
+        message: "please open the url,sent in your mail",
+        data: savedUser,
+      });
+    });
+  } catch (e) {
+    res.status(400).json({
+      status: "FAILURE",
+      message: e?.message || "Internal server error!!",
+    });
+  }
+};
+
+exports.verifyEmail = async (req, res) => {
+  try {
+    const { token, id } = req?.params;
+
+    const isValidToken = await jwt.verify(
+      token,
+      process.env.VERIFY_EMAIL_SECRET
+    );
+
+    if (!isValidToken) {
+      return res.status(400).json({
+        status: "FAILURE",
+        message: "Email not verified/Invalid token",
+      });
+    }
+    res.status(200).json({ status: "SUCCESS", message: "EMAIL VERIFIED" });
+  } catch (e) {
+    res.status(400).json({
+      status: "SUCCESS",
+      message: `${e?.message} -Invalid Email!!`,
+    });
+  }
+};
+
+exports.clientLogin = async (req, res) => {
+  try {
+  } catch (e) {}
 };
