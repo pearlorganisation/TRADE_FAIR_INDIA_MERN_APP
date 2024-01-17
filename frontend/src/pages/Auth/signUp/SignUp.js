@@ -11,12 +11,14 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
   const { authData } = useSelector((state) => state.auth);
+  const [passStrength, setPassStrength] = useState({});
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+  const password = watch("password", "");
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -27,11 +29,41 @@ const SignUp = () => {
     dispatch(signUp(formData));
   };
 
-  useEffect(() => {
-    if (authData?.status === "SUCCESS") {
-      navigate("/");
+  function checkPasswordStrength(password) {
+    if (/^[a-z0-9!@#$%^&*]{1,}$/.test(password)) {
+      return { strength: "Weak", color: "red" };
     }
-  }, [authData]);
+
+    if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{1,}$/.test(password)) {
+      return { strength: "Good", color: "orange" };
+    }
+
+    if (
+      /^(?=.*[a-z\d])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{1,}$/.test(
+        password
+      )
+    ) {
+      return { strength: "Strong", color: "green" };
+    }
+
+    return { strength: "", color: "" };
+  }
+
+  useEffect(() => {
+    const checkPasswordStren = checkPasswordStrength(password);
+    console.log(password);
+    setPassStrength(checkPasswordStren);
+  }, [password]);
+
+  useEffect(() => {
+    console.log("passStrength::", passStrength);
+  }, [passStrength]);
+
+  // useEffect(() => {
+  //   if (authData?.status === "SUCCESS") {
+  //     navigate("/");
+  //   }
+  // }, [authData]);
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center bg-gray-50 sm:px-4">
@@ -97,6 +129,24 @@ const SignUp = () => {
               >
                 {toggle ? <FaEye /> : <FaEyeSlash />}
               </span>
+
+              {passStrength?.strength && (
+                <span
+                  className={`absolute right-[2.5rem] top-[2.6rem] cursor-pointer`}
+                >
+                  <div
+                    className={`w-6 h-6 border-dashed border-4 rounded-full ${
+                      passStrength?.strength === "Weak"
+                        ? "border-b-red-500"
+                        : passStrength?.strength === "Good"
+                        ? "border-b-yellow-400 border-r-yellow-400"
+                        : "border-green-500"
+                    }`}
+                  ></div>
+                </span>
+              )}
+
+              {passStrength?.strength && <span>{passStrength?.strength}</span>}
               {errors.password && (
                 <span className="text-red-500">Password field is required</span>
               )}

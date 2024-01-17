@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../../features/actions/authAction";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -8,7 +11,11 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const modified  = {...data,type:'CLIENT'}
+    console.log("modified::", modified);
+    // dispatch(signIn(data))
+  };
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
       <div className="max-w-sm w-full text-gray-600 space-y-5">

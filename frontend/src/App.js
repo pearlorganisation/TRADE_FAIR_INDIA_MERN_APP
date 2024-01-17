@@ -8,7 +8,8 @@ import Shop from "./pages/Shop/Shop";
 import ShopPhotos from "./pages/Shop/ShopPhotos";
 import Login from "./pages/Auth/login/Login";
 import SignUp from "./pages/Auth/signUp/SignUp";
-import { Toaster } from 'sonner'
+import { Toaster } from "sonner";
+import EmailVerification from "./pages/EmailVerification/EmailVerification";
 
 function App() {
   return (
@@ -22,10 +23,14 @@ function App() {
           <Route path="/shop/photos" element={<ShopPhotos />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
+          <Route
+            path="/emailVerification/:token/:id"
+            element={<EmailVerification />}
+          />
         </Routes>
       </div>
       <Footer />
-      <Toaster  position="top-center" richColors />
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
