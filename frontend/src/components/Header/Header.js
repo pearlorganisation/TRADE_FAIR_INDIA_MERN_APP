@@ -4,10 +4,11 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa6";
 import GoogleMapsLocationForHeader from "../GoogleMap/GoogleMapsLocationForHeader";
 import { fetchEventList } from "../../features/actions/eventActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { authData, isAuthenticated } = useSelector((state) => state.auth);
   const [state, setState] = useState(false);
   const [showNav, setShowNav] = useState(false);
   const [cityName, setCityName] = useState("");
@@ -145,25 +146,54 @@ const Header = () => {
               </li>
 
               <span className="hidden w-px h-6 bg-gray-300 md:block"></span>
-              <div className="space-y-3 items-center gap-x-6 md:flex md:space-y-0">
-                <li>
-                  <Link
-                    to="/login"
-                    className="block py-3 text-center text-white  border rounded-lg md:border-none"
-                  >
-                    Log in
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/signUp"
-                    href="javascript:void(0)"
-                    className="block py-3 px-4 font-medium text-center bg-white text-[#00373E]  active:shadow-none rounded-lg shadow md:inline"
-                  >
-                    Sign up
-                  </Link>
-                </li>
-              </div>
+              {isAuthenticated ? (
+                <div className="space-y-3 items-center gap-x-6 md:flex md:space-y-0">
+                  <li>
+                    <div class="flex items-center space-x-3">
+                      <img
+                        class="w-12 h-12 rounded-full object-cover"
+                        src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e"
+                        alt=""
+                      />{" "}
+                      <div>
+                        <span class="text-white text-sm font-medium">
+                          {authData?.user?.name}
+                        </span>
+                        <span class="block text-white text-xs">
+                          {authData?.user?.email}
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <Link
+                      to="#"
+                      className="block py-3 px-4 font-medium text-center bg-white active:scale-95 transition-all text-[#00373E]  active:shadow-none rounded-lg shadow md:inline"
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                </div>
+              ) : (
+                <div className="space-y-3 items-center gap-x-6 md:flex md:space-y-0">
+                  <li>
+                    <Link
+                      to="/login"
+                      className="block py-3 text-center text-white  border rounded-lg md:border-none"
+                    >
+                      Log in
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/signUp"
+                      className="block py-3 px-4 font-medium text-center bg-white text-[#00373E]  active:shadow-none rounded-lg shadow md:inline"
+                    >
+                      Sign up
+                    </Link>
+                  </li>
+                </div>
+              )}
             </ul>
           </div>
         </div>
