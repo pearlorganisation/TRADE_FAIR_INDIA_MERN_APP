@@ -30,21 +30,27 @@ exports.login = async (req, res) => {
       .findOne({ $or: [{ email: username }] })
       .populate("permissions", ["permission", "_id"])
       .populate("role", ["role", "_id"])
-      .select("-__v"); //checking for the user in db
+      .select("-__v");
 
     if (type === "CLIENT" && user?.role?.role !== "USER") {
       return res.status(400).json({
-        status: "FALURE",
+        status: "FALIURE",
         message: "Only user can log in client panel!!",
       });
     }
     if (type === "ADMIN" && user?.role?.role === "USER") {
       return res.status(400).json({
-        status: 400,
+        status: "FAILURE",
         message: "Only vendor and admin can login in admin panel !! ",
       });
     }
 
+    if (type === "CLIENT" && !user?.emailVerified) {
+      return res.status(400).json({
+        status: "FAILURE",
+        message: "Please verify your email first!!",
+      });
+    }
     if (!user) {
       return res
         .status(404)
@@ -91,7 +97,7 @@ exports.login = async (req, res) => {
         email: user?.email,
         name: user?.name,
         permissions: permissionArray,
-        role: user?.role?.role || "",
+        role: user?.role?.role,
         profilePic: user?.profilePic,
       },
     });
@@ -280,7 +286,8 @@ exports.signup = async (req, res) => {
     });
 
     const finalUrl = `${url}${token}/${savedUser?._id}`;
-    sendTokenMail(req?.body?.email, finalUrl).then((data) => {
+    console.log("hello");
+    sendTokenMail(savedUser?.email, finalUrl, savedUser?.name).then((data) => {
       res.status(200).json({
         status: "SUCCESS",
         message: "please open the url,sent in your mail",
@@ -304,12 +311,15 @@ exports.verifyEmail = async (req, res) => {
       process.env.VERIFY_EMAIL_SECRET
     );
 
-    if (!isValidToken) {
+    const isValidUserId = await authModel.findById(id);
+
+    if (!isValidToken || !isValidUserId) {
       return res.status(400).json({
         status: "FAILURE",
         message: "Email not verified/Invalid token",
       });
     }
+    await authModel.findByIdAndUpdate(id, { emailVerified: true });
     res.status(200).json({ status: "SUCCESS", message: "EMAIL VERIFIED" });
   } catch (e) {
     res.status(400).json({
@@ -317,9 +327,4 @@ exports.verifyEmail = async (req, res) => {
       message: `${e?.message} -Invalid Email!!`,
     });
   }
-};
-
-exports.clientLogin = async (req, res) => {
-  try {
-  } catch (e) {}
 };
