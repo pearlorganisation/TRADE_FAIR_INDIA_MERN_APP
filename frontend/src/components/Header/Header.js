@@ -38,14 +38,42 @@ const Header = () => {
 
   const receiveGeolocationData = (data) => {
     console.log("receiveGeolocationData:::::", data);
-    if (data?.cityName) setCityName(data?.cityName);
+    if (data?.cityName) {
+      setCityName(data?.cityName);
+    }
   };
+
+  const [showLocationAlert, setShowLocationAlert] = useState(false);
+
+  useEffect(() => {
+    if (cityName) {
+      setShowLocationAlert(true);
+      setTimeout(() => {
+        setShowLocationAlert(false);
+      }, 3000);
+    }
+  }, [cityName]);
 
   return (
     <>
       <GoogleMapsLocationForHeader
         sendCurrentLocationData={receiveGeolocationData}
       />
+      {cityName && showLocationAlert && (
+        <div class="bg-indigo-900 text-center py-4 lg:px-4">
+          <div
+            class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+            role="alert"
+          >
+            <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">
+              Location Alert
+            </span>
+            <span class="font-semibold mr-2 text-left flex-auto">
+              You are in {cityName}
+            </span>
+          </div>
+        </div>
+      )}
       <nav
         className={`bg-[#00373E]  ${
           showNav
@@ -111,9 +139,9 @@ const Header = () => {
               <li className="text-white border-2 border-white py-1 px-3 rounded-2xl flex justify-evenly items-center gap-1">
                 <FaMapMarkerAlt />{" "}
                 <span className="font-medium text-nowrap">
-                  {cityName || "Dehradun"}
+                  {cityName || "Loading..."}
                 </span>
-                <FaChevronDown />
+                {/* <FaChevronDown /> */}
               </li>
 
               <span className="hidden w-px h-6 bg-gray-300 md:block"></span>
