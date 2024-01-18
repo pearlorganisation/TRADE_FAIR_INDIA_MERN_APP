@@ -246,6 +246,8 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+// @desc -signup for client panel
+// @route - POST /auth/signup
 exports.signup = async (req, res) => {
   try {
     const { password, email, name } = req?.body;
@@ -302,6 +304,8 @@ exports.signup = async (req, res) => {
   }
 };
 
+// @desc - to verify user email and update email verify key
+// @route - PATCH /auth/emailVerify
 exports.verifyEmail = async (req, res) => {
   try {
     const { token, id } = req?.params;

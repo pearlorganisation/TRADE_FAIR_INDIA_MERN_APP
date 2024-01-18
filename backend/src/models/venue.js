@@ -9,7 +9,7 @@ const VenueSchema = new Schema(
     },
     createdBy: {
       type: mongoose.Schema.ObjectId,
-      ref: "auth",
+      ref: "admin-client-auth",
     },
     State: {
       type: String,
