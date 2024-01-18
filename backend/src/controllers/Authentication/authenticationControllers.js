@@ -198,6 +198,7 @@ exports.logout = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const { email, password, confirmPassword } = req.body;
+
     if (!email || !password || !confirmPassword) {
       return res.status(400).json({
         status: "FAILURE",
@@ -251,6 +252,7 @@ exports.resetPassword = async (req, res) => {
 exports.signup = async (req, res) => {
   try {
     const { password, email, name } = req?.body;
+    // const existingUser=await
 
     if (req?.file && req?.file?.size > 2 * 1024 * 1024) {
       return res.status(400).json({
