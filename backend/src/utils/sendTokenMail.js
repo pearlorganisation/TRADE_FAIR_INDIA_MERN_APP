@@ -22,7 +22,7 @@ exports.sendTokenMail = async (email, url, name) => {
   mailOptions = {
     from: process.env.NODEMAILER_MAIL,
     to: email,
-    subject: "Link for signup",
+    subject: "TRADE_FAIR_INDIA - EMAIL VERIFICATION",
     html: data,
   };
 
