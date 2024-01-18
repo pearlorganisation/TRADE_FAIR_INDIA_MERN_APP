@@ -6,13 +6,13 @@ import { emailVerification } from "../../features/actions/authAction";
 
 const EmailVerification = () => {
   const { token, id } = useParams();
-  const { authData } = useSelector((state) => state.auth);
+  const { authData, isEmailVerified } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log("token::", token);
   console.log("id::", id);
   useEffect(() => {
-    if (authData?.status === "SUCCESS") {
+    if (isEmailVerified) {
       navigate("/login");
     }
   }, [authData]);

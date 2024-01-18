@@ -8,6 +8,7 @@ import { toast } from "sonner";
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
+  isEmailVerified: false,
   authData: [],
   errorMessage: "",
 };
@@ -66,6 +67,7 @@ export const authSlice = createSlice({
       .addCase(emailVerification.fulfilled, (state, action) => {
         state.isLoading = false;
         state.errorMessage = "";
+        state.isEmailVerified = true;
         state.authData = action.payload;
         toast.success("Success! 🎉 Email verified.");
       })
