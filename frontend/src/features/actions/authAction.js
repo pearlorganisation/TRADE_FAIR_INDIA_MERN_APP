@@ -21,7 +21,7 @@ export const signIn = createAsyncThunk(
   "auth/signIn",
   async (payload, { rejectWithValue }) => {
     try {
-      const { data } = await instance.post("/login", payload, {
+      const { data } = await instance.post("/auth/login", payload, {
         withCredentials: true,
       });
       return data;
@@ -33,9 +33,9 @@ export const signIn = createAsyncThunk(
 
 export const emailVerification = createAsyncThunk(
   "auth/emailVerification",
-  async (payload, { rejectWithValue }) => {
+  async ({ token, id }, { rejectWithValue }) => {
     try {
-      const { data } = await instance.post("/emailVerification", payload, {
+      const { data } = await instance.patch(`/auth/verifyEmail/${token}/${id}`, {
         withCredentials: true,
       });
       return data;

@@ -1,11 +1,21 @@
 import React, { useEffect } from "react";
 import EmailImage from "../../components/assets/EmailVerification.svg";
-import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { emailVerification } from "../../features/actions/authAction";
 
 const EmailVerification = () => {
-  const { token } = useParams();
-  const {authData} = useSelector(state => state.auth)
+  const { token, id } = useParams();
+  const { authData } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  console.log("token::", token);
+  console.log("id::", id);
+  useEffect(() => {
+    if (authData?.status === "SUCCESS") {
+      navigate("/login");
+    }
+  }, [authData]);
 
   return (
     <div className="w-full min-h-dvh grid place-items-center">
@@ -13,9 +23,12 @@ const EmailVerification = () => {
         <img className="w-[10rem]" src={EmailImage} alt="" />
         <p className="text-center">
           Thanks for Signing up.
-          <br/> Please Click Verify button to verify your email.
+          <br /> Please Click Verify button to verify your email.
         </p>
         <button
+          onClick={() => {
+            dispatch(emailVerification({ token, id }));
+          }}
           className="px-5 py-2 bg-[#00373E] text-white rounded hover:bg-[#00373E]/90 active:bg-[#00373E]/80 active:scale-95 transition-all"
           type="button"
         >
