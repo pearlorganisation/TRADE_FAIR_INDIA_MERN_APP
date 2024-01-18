@@ -10,7 +10,7 @@ const organiserSchema = new mongoose.Schema(
     },
     createdBy: {
       type: mongoose.Schema.ObjectId,
-      ref: "auth",
+      ref: "admin-client-auth",
     },
 
     enquiries: {

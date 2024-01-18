@@ -90,7 +90,7 @@ const eventSchema = new Schema(
     },
     createdBy: {
       type: mongoose.Schema.ObjectId,
-      ref: "auth",
+      ref: "admin-client-auth",
     },
     eventDate: {
       type: [Date],

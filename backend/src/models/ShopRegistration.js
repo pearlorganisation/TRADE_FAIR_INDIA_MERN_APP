@@ -104,7 +104,7 @@ const shopRegistration = new Schema(
     pdfList: {
       type: [{}],
     },
-    createdBy: { type: mongoose.Schema.ObjectId, ref: "auth" },
+    createdBy: { type: mongoose.Schema.ObjectId, ref: "admin-client-auth" },
 
     category: {
       type: [{ type: mongoose.Schema.ObjectId, ref: "category" }],
