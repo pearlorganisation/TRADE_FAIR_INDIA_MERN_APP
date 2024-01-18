@@ -114,7 +114,7 @@ exports.getEvent = async (req, res) => {
   try {
     const allEvents = await Event.find()
       .populate("organiser", ["_id", "companyName"])
-      .populate("venue", ["_id", "PlaceName","Address","city"])
+      .populate("venue", ["_id", "PlaceName", "Address", "City"])
       .populate("category", ["_id", "category"])
       .populate("shopDetails.shopName")
       .populate("createdBy", ["_id", "email", "name"])
@@ -190,7 +190,7 @@ exports.getSingleEvent = async (req, res) => {
       randomString: req?.params?.id,
     })
       .populate("organiser", ["_id", "companyName", "logo"])
-      .populate("venue", ["_id", "PlaceName", "Address", "GeoLocation"])
+      .populate("venue", ["_id", "PlaceName", "Address", "GeoLocation", "City"])
       .populate("category", ["_id", "category"])
       .populate("shopDetails.shopName")
       .populate("createdBy", ["_id", "email", "name"])
