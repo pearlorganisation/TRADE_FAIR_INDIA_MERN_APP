@@ -17,9 +17,15 @@ export const fetchEventList = createAsyncThunk(
       const filteredData =
         Array.isArray(data?.data) &&
         data?.data?.length > 0 &&
-        data?.data?.filter((val) => val?.venue?.City === cityName);
+        data?.data?.filter(
+          (val) =>
+            val?.venue?.City?.toString()?.toLowerCase() ===
+            cityName?.toString()?.toLowerCase()
+        );
       console.log("filteredData:: ", filteredData);
-      return filteredData ? filteredData : actualData;
+      return Array.isArray(filteredData) && filteredData?.length > 0
+        ? filteredData
+        : actualData;
     } catch (error) {
       return rejectWithValue(error);
     }

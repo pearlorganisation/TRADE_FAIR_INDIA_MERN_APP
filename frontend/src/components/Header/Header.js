@@ -33,7 +33,7 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchEventList(cityName));
+    dispatch(fetchEventList(cityName || "Dehradun"));
   }, [cityName]);
 
   const receiveGeolocationData = (data) => {
@@ -111,7 +111,7 @@ const Header = () => {
               <li className="text-white border-2 border-white py-1 px-3 rounded-2xl flex justify-evenly items-center gap-1">
                 <FaMapMarkerAlt />{" "}
                 <span className="font-medium text-nowrap">
-                  {cityName || "N.A"}
+                  {cityName || "Dehradun"}
                 </span>
                 <FaChevronDown />
               </li>
