@@ -29,14 +29,15 @@ export const eventsSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.errorMessage = "";
-        state.eventData = action.payload.data;
+        state.eventData = action?.payload?.data
+          ? action?.payload?.data
+          : action?.payload;
       })
       .addCase(fetchEventList.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;
-      })
-
+      });
   },
 });
 

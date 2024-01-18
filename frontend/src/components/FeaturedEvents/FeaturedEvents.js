@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEventList } from "../../features/actions/eventActions";
 
 const FeaturedEvents = () => {
-  const {isLoading,eventData} = useSelector(state => state.events)
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchEventList())
-  }, [])
-  
+  const { isLoading, eventData } = useSelector((state) => state.events);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(fetchEventList());
+  // }, []);
+
   return (
     <div className="min-h-dvh bg-[#FFFEF1] flex flex-col justify-center items-center ">
       <div className="container mx-auto space-y-12">

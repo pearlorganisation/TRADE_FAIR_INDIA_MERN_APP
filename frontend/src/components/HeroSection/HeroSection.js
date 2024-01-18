@@ -98,8 +98,8 @@ const HeroSection = () => {
 
 export default HeroSection;
 
-
-{/* <img
+{
+  /* <img
         sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw"
         srcset="
     https://res.cloudinary.com/dnixhctcf/image/upload/w_320,h_180,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg 320w,
@@ -113,4 +113,5 @@ export default HeroSection;
         src="https://res.cloudinary.com/dnixhctcf/image/upload/w_2560,h_1440,c_fill,dpr_auto/v1705394505/kzuhyhxbovd0cujx8vnm.jpg"
         alt="Description of your image"
         className="h-auto w-auto"
-      /> */}
+      /> */
+}
