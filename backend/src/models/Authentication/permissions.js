@@ -6,7 +6,7 @@ const permissionSchema = new mongoose.Schema(
       type: String,
       required: [true, "Permission field is required"],
     },
-    createdBy: { type: mongoose.Schema.ObjectId, ref: "auth" },
+    createdBy: { type: mongoose.Schema.ObjectId, ref: "admin-client-auth" },
   },
   { timestamps: true }
 );

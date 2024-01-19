@@ -6,7 +6,7 @@ const roleSchema = new mongoose.Schema(
       type: String,
       required: [true, "Role field is required"],
     },
-    createdBy: { type: mongoose.Schema.ObjectId, ref: "auth" },
+    createdBy: { type: mongoose.Schema.ObjectId, ref: "admin-client-auth" },
 
     permissions: {
       type: [mongoose.Schema.ObjectId],
