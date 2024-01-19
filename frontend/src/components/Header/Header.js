@@ -5,6 +5,7 @@ import { FaChevronDown } from "react-icons/fa6";
 import GoogleMapsLocationForHeader from "../GoogleMap/GoogleMapsLocationForHeader";
 import { fetchEventList } from "../../features/actions/eventActions";
 import { useDispatch, useSelector } from "react-redux";
+import SpringModal from "../LogoutModal/LogoutModal";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,8 @@ const Header = () => {
   const [state, setState] = useState(false);
   const [showNav, setShowNav] = useState(false);
   const [cityName, setCityName] = useState("");
+
+  const [isOpen, setIsOpen] = useState(false); // modal
 
   let prevScroll = window.scrollY;
   let currScroll = 0;
@@ -166,12 +169,13 @@ const Header = () => {
                     </div>
                   </li>
                   <li>
-                    <Link
-                      to="#"
+                    <button
+                    type="button"
                       className="block py-3 px-4 font-medium text-center bg-white active:scale-95 transition-all text-[#00373E]  active:shadow-none rounded-lg shadow md:inline"
+                      onClick={() => setIsOpen(true)}
                     >
                       Logout
-                    </Link>
+                    </button>
                   </li>
                 </div>
               ) : (
@@ -198,6 +202,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      <SpringModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };
