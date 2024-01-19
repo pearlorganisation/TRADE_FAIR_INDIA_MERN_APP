@@ -2,7 +2,12 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCategoryList } from "../actions/categoryAction";
-import { emailVerification, signIn, signUp } from "../actions/authAction";
+import {
+  emailVerification,
+  signIn,
+  signUp,
+  userLogout,
+} from "../actions/authAction";
 import { toast } from "sonner";
 
 const initialState = {
@@ -18,7 +23,15 @@ const initialState = {
 export const authSlice = createSlice({
   name: "category",
   initialState,
-  reducers: {},
+  reducers: {
+    resetFields: (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = false;
+      state.isEmailVerified = false;
+      state.authData = [];
+      state.errorMessage = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       //  user signUp
@@ -72,6 +85,23 @@ export const authSlice = createSlice({
         toast.success("Success! 🎉 Email verified.");
       })
       .addCase(emailVerification.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = action.payload;
+        toast.error("Uh-oh! ⏳ Email verification link expired.");
+      })
+
+      .addCase(userLogout.pending, (state, action) => {
+        state.isLoading = true;
+        state.errorMessage = "";
+      })
+      .addCase(userLogout.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = "";
+        state.isEmailVerified = true;
+        state.authData = action.payload;
+        toast.success("Success! 🎉 Email verified.");
+      })
+      .addCase(userLogout.rejected, (state, action) => {
         state.isLoading = false;
         state.errorMessage = action.payload;
         toast.error("Uh-oh! ⏳ Email verification link expired.");

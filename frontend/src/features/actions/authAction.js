@@ -45,4 +45,18 @@ export const emailVerification = createAsyncThunk(
   }
 );
 
+export const userLogout = createAsyncThunk(
+  "auth/userLogout",
+  async ({ token, id }, { rejectWithValue }) => {
+    try {
+      const { data } = await instance.patch("/auth/logout", {
+        withCredentials: true,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 // ================================================== THE END ==================================================
