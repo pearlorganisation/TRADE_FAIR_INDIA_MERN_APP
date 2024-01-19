@@ -10,7 +10,13 @@ const {
 } = require("../../controllers/Banner/clientBanner");
 const router = express.Router();
 
-router.route("/").post(upload.single("banner"), newClientBanner).get(getBanner);
+router
+  .route("/")
+  .post(
+    upload.fields([{ name: "banner" }, { name: "mobileBanner" }]),
+    newClientBanner
+  )
+  .get(getBanner);
 router
   .route("/:id")
   .patch(upload.single("banner"), updateBanner)

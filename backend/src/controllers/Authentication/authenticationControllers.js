@@ -19,6 +19,7 @@ const roleModel = require("../../models/Authentication/roles.js");
 exports.login = async (req, res) => {
   try {
     const { username, password, type } = req.body;
+    console.log(req?.body);
 
     if (!username || !password) {
       return res
@@ -32,12 +33,14 @@ exports.login = async (req, res) => {
       .populate("role", ["role", "_id"])
       .select("-__v");
 
+    console.log(user);
     if (type === "CLIENT" && user?.role?.role !== "USER") {
       return res.status(400).json({
         status: "FALIURE",
         message: "Only user can log in client panel!!",
       });
     }
+
     if (type === "ADMIN" && user?.role?.role === "USER") {
       return res.status(400).json({
         status: "FAILURE",
@@ -73,6 +76,7 @@ exports.login = async (req, res) => {
 
     //matching password using bcrypt
     const matchPassword = await bcrypt.compare(password, user.password);
+    console.log(matchPassword);
 
     if (!matchPassword)
       return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -87,8 +91,9 @@ exports.login = async (req, res) => {
     );
 
     // Saving accessToken to the httpOnly Cookie
+    console.log("1");
     saveAccessTokenToCookie(res, accessToken);
-
+    console.log("2");
     return res.status(200).json({
       success: true,
       message: "Logged in Successfully",
@@ -194,7 +199,6 @@ exports.logout = async (req, res) => {
 // @desc - to update the users password
 // @route - PUT /auth/resetPassword
 // @access - PRIVATE
-
 exports.resetPassword = async (req, res) => {
   try {
     const { email, password, confirmPassword } = req.body;
@@ -252,7 +256,7 @@ exports.resetPassword = async (req, res) => {
 exports.signup = async (req, res) => {
   try {
     const { password, email, name } = req?.body;
-    // const existingUser=await
+    const isUserExists = await authModel.findOne({ email });
 
     if (req?.file && req?.file?.size > 2 * 1024 * 1024) {
       return res.status(400).json({
@@ -290,8 +294,12 @@ exports.signup = async (req, res) => {
     });
 
     const finalUrl = `${url}${token}/${savedUser?._id}`;
-    console.log("hello");
+
     sendTokenMail(savedUser?.email, finalUrl, savedUser?.name).then((data) => {
+      setTimeout(async () => {
+        await authModel.findByIdAndDelete(id);
+      }, 300000);
+
       res.status(200).json({
         status: "SUCCESS",
         message: "please open the url,sent in your mail",
