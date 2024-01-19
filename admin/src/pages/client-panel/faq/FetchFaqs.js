@@ -41,8 +41,8 @@ const FetchFaqs = () => {
   // This method is used to delete shop.
   const handleDeleteVenue = (faqId) => {
     confirmAlert({
-      title: "Venue Delete Confirmation",
-      message: "Are you sure you want to delete this venue?",
+      title: "Faq Delete Confirmation",
+      message: "Are you sure you want to delete this Faq?",
       buttons: [
         {
           label: "Yes",
@@ -133,10 +133,13 @@ const FetchFaqs = () => {
                                   variant="warning"
                                   size="md"
                                   title="Edit Shop Details"
-                                  onClick={() =>{}
-                                    // navigate("/venue/updateVenue", {
-                                    //   state: item,
-                                    // })
+                                  onClick={
+                                    () => {
+                                      navigate(`/client/updateFaq/${item?._id}`, {
+                                        state: item,
+                                      })
+                                    }
+                                   
                                   }
                                 >
                                   <FaEdit />

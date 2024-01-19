@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
-  createBanner,
-  deleteBanner,
-  fetchBanner,
-  updateBanner,
+  createHomeBanner,
+  deleteHomeBanner,
+  fetchHomeBanner,
+  updateHomeBanner,
 } from "../actions/clientHomeBanner";
 
 const initialState = {
@@ -24,14 +24,14 @@ export const clientBannerSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Fetch client sub banner
-      .addCase(fetchBanner.pending, (state, action) => {
+      .addCase(fetchHomeBanner.pending, (state, action) => {
         state.isLoading = true;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
         state.isDeleted = false;
       })
-      .addCase(fetchBanner.fulfilled, (state, action) => {
+      .addCase(fetchHomeBanner.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isBannerCreationSuccess = false;
@@ -39,7 +39,7 @@ export const clientBannerSlice = createSlice({
         state.isDeleted = false;
         state.clientBannerList = action.payload;
       })
-      .addCase(fetchBanner.rejected, (state, action) => {
+      .addCase(fetchHomeBanner.rejected, (state, action) => {
         state.isLoading = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
@@ -47,13 +47,13 @@ export const clientBannerSlice = createSlice({
         state.errorMessage = action?.payload;
       })
       // Create sub banner List Cases
-      .addCase(createBanner.pending, (state, action) => {
+      .addCase(createHomeBanner.pending, (state, action) => {
         state.isLoading = true;
         // state.deleteDataisBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
-      .addCase(createBanner.fulfilled, (state, action) => {
+      .addCase(createHomeBanner.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isBannerCreationSuccess = true;
@@ -62,7 +62,7 @@ export const clientBannerSlice = createSlice({
           position: "top-right",
         });
       })
-      .addCase(createBanner.rejected, (state, action) => {
+      .addCase(createHomeBanner.rejected, (state, action) => {
         state.isLoading = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
@@ -72,13 +72,13 @@ export const clientBannerSlice = createSlice({
         });
       })
       // Update client banner Details Cases
-      .addCase(updateBanner.pending, (state, action) => {
+      .addCase(updateHomeBanner.pending, (state, action) => {
         state.isLoading = true;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
-      .addCase(updateBanner.fulfilled, (state, action) => {
+      .addCase(updateHomeBanner.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = true;
@@ -87,7 +87,7 @@ export const clientBannerSlice = createSlice({
           position: "top-right",
         });
       })
-      .addCase(updateBanner.rejected, (state, action) => {
+      .addCase(updateHomeBanner.rejected, (state, action) => {
         state.isLoading = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
@@ -97,13 +97,13 @@ export const clientBannerSlice = createSlice({
         });
       })
       // Delete Role Cases
-      .addCase(deleteBanner.pending, (state, action) => {
+      .addCase(deleteHomeBanner.pending, (state, action) => {
         state.isLoading = true;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
-      .addCase(deleteBanner.fulfilled, (state, action) => {
+      .addCase(deleteHomeBanner.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = true;
@@ -118,7 +118,7 @@ export const clientBannerSlice = createSlice({
           position: "top-right",
         });
       })
-      .addCase(deleteBanner.rejected, (state, action) => {
+      .addCase(deleteHomeBanner.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isBannerCreationSuccess = false;

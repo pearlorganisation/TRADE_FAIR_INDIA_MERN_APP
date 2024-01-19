@@ -5,9 +5,9 @@ import { MdDelete } from "react-icons/md";
 import HomeBannerDetailsModal from "./HomeBannerDetailsModal";
 import { BiSolidShow } from "react-icons/bi";
 import {
-  deleteBanner,
-  fetchBanner,
-  updateBanner,
+  deleteHomeBanner,
+  fetchHomeBanner,
+  updateHomeBanner,
 } from "../../../features/actions/clientHomeBanner";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { Container, Row, Col, Button } from "react-bootstrap";
@@ -16,6 +16,7 @@ import TableSkeletonLoading from "../../../components/common/TableSkeletonLoadin
 import { FaEdit } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
 import { isUserHavePermission } from "../../../utils";
+import { updateEventBanner } from "../../../features/actions/eventBannerAction";
 // import HomeBannerDetailsModal
 const FetchBanners = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const FetchBanners = () => {
       buttons: [
         {
           label: "Yes",
-          onClick: () => dispatch(deleteBanner(id)),
+          onClick: () => dispatch(deleteHomeBanner(id)),
         },
         {
           label: "No",
@@ -51,7 +52,7 @@ const FetchBanners = () => {
   // @@END---------------------------------------------------
 
   useEffect(() => {
-    dispatch(fetchBanner());
+    dispatch(fetchHomeBanner());
   }, []);
 
   return (
@@ -138,7 +139,7 @@ const FetchBanners = () => {
                                   title="Edit banner"
                                   onClick={() =>
                                     navigate(
-                                      `/client/updateBanner/${res?._id}`,
+                                      `/client/updateHomeBanner/${res?._id}`,
                                       {
                                         state: res,
                                       }
@@ -162,7 +163,7 @@ const FetchBanners = () => {
                                     onChange={(e) => {
                                       console.log(e.target.checked);
                                       dispatch(
-                                        updateBanner({
+                                        updateEventBanner({
                                           id: res?._id,
                                           payload: { active: e.target.checked },
                                         })

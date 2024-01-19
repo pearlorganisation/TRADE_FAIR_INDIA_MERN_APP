@@ -12,12 +12,14 @@ import ViewLoggedInUserDetails from "../../users/ViewLoggedInUserDetails";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import TableSkeletonLoading from "../../../components/common/TableSkeletonLoading";
-import { fetchEventBanner } from "../../../features/actions/eventBannerAction";
+import {
+  fetchEventBanner,
+  updateEventBanner,
+} from "../../../features/actions/eventBannerAction";
 import { useDispatch } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import EventBannerDetailsModal from "./EventBannerDetailsModal";
 import { deleteBanner } from "../../../features/actions/eventBannerAction";
-
 
 const FetchEventBanners = () => {
   // const isLoading=false
@@ -29,7 +31,7 @@ const FetchEventBanners = () => {
 
   const [selectedBannerDetails, setSelectedBannerDetails] = useState({});
 
-  const { isLoading, eventBannerList } = useSelector(
+  const { isLoading, eventBannerList, isBannerUpdated } = useSelector(
     (state) => state.eventBanner
   );
 
@@ -54,7 +56,7 @@ const FetchEventBanners = () => {
 
   useEffect(() => {
     dispatch(fetchEventBanner());
-  }, []);
+  }, [isBannerUpdated]);
   return (
     <section>
       <Container className="my-5">
@@ -88,11 +90,12 @@ const FetchEventBanners = () => {
               <th>Event banner</th>
               <th>Event Banner Data</th>
               <th>Active</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody className="text-center">
             {isLoading ? (
-              <TableSkeletonLoading thCount={7} />
+              <TableSkeletonLoading thCount={6} />
             ) : Array.isArray(eventBannerList) && eventBannerList.length > 0 ? (
               eventBannerList?.map((eBanner, i) => {
                 return (
@@ -109,47 +112,70 @@ const FetchEventBanners = () => {
                     <td>{eBanner?.bannerData}</td>
                     <td>{eBanner?.active ? "True" : "False"}</td>
                     <td>
-                    <div className="d-flex h-100 justify-content-center gap-3">
-                    <Button
-                      variant="info"
-                      size="md"
-                      title="View Complete Details"
-                      onClick={() => {
-                        setSelectedBannerDetails(eBanner);
-                        setShowCompleteDetailsModal(true);
-                      }}
-                    >
-                      <BiSolidShow />
-                    </Button>
-                    {isUserHavePermission(loggedInUserData?.role) && (
-                      <>
+                      <div className="d-flex h-100 justify-content-center gap-3">
                         <Button
-                          variant="warning"
+                          variant="info"
                           size="md"
-                          title="Edit banner"
-                          onClick={() =>
-                            navigate(
-                              `/client/updateEventBanner/${eBanner._id}`,
-                              {
-                                state: eBanner,
+                          title="View Complete Details"
+                          onClick={() => {
+                            setSelectedBannerDetails(eBanner);
+                            setShowCompleteDetailsModal(true);
+                          }}
+                        >
+                          <BiSolidShow />
+                        </Button>
+                        {isUserHavePermission(loggedInUserData?.role) && (
+                          <>
+                            <Button
+                              variant="warning"
+                              size="md"
+                              title="Edit banner"
+                              onClick={() =>
+                                navigate(
+                                  `/client/updateEventBanner/${eBanner._id}`,
+                                  {
+                                    state: eBanner,
+                                  }
+                                )
                               }
-                            )
-                          }
-                        >
-                          <FaEdit />
-                        </Button>
-                        <Button
-                          variant="danger"
-                          size="md"
-                          title="Delete Banner"
-                          onClick={() => handleDeleteBanner(eBanner?._id)}
-                        >
-                          {" "}
-                          <MdDelete />
-                        </Button>
-                      </>
-                    )}
-                     </div>
+                            >
+                              <FaEdit />
+                            </Button>
+                            <Button
+                              variant="danger"
+                              size="md"
+                              title="Delete Banner"
+                              onClick={() => handleDeleteBanner(eBanner?._id)}
+                            >
+                              {" "}
+                              <MdDelete />
+                            </Button>
+                            <div class="form-check">
+                              <input
+                                onChange={(e) => {
+                                  console.log(e.target.checked);
+                                  dispatch(
+                                    updateEventBanner({
+                                      id: eBanner?._id,
+                                      payload: { active: e.target.checked },
+                                    })
+                                  );
+                                }}
+                                class="form-check-input"
+                                type="checkbox"
+                                id="flexCheckDefault"
+                                checked={eBanner?.active}
+                              />
+                              <label
+                                class="form-check-label"
+                                for="flexCheckDefault"
+                              >
+                                Active Banner
+                              </label>
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );

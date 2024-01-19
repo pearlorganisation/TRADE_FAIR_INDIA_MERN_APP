@@ -5,6 +5,7 @@ import {
   deleteBanner,
   fetchEventBanner,
   updateBanner,
+  updateEventBanner,
 } from "../actions/eventBannerAction";
 
 const initialState = {
@@ -78,14 +79,14 @@ export const EventBannerSlice = createSlice({
         });
       })
       // Update event banner Details Cases
-      .addCase(updateBanner.pending, (state, action) => {
+      .addCase(updateEventBanner.pending, (state, action) => {
         state.isLoading = true;
         state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
-      .addCase(updateBanner.fulfilled, (state, action) => {
+      .addCase(updateEventBanner.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isBannerUpdated = true;
         state.isBannerCreationSuccess = false;
@@ -95,7 +96,7 @@ export const EventBannerSlice = createSlice({
           position: "top-right",
         });
       })
-      .addCase(updateBanner.rejected, (state, action) => {
+      .addCase(updateEventBanner.rejected, (state, action) => {
         state.isLoading = false;
         state.isBannerUpdated = false;
         state.isBannerCreationSuccess = false;
