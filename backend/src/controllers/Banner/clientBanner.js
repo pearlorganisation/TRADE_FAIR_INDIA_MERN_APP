@@ -3,15 +3,17 @@ const { cloudinary } = require("../../configs/cloudinary");
 
 exports.newClientBanner = async (req, res) => {
   try {
-    if (req?.file && !req?.file?.mimetype.includes("image")) {
-      return res
-        .status(400)
-        .json({ status: "FAILURE", message: "Only images are allowed!!" });
-    }
+    // if (req?.files && !req?.file?.mimetype.includes("image")) {
+    //   return res
+    //     .status(400)
+    //     .json({ status: "FAILURE", message: "Only images are allowed!!" });
+    // }
     const newDoc = new clientPageBanner({
       ...req?.body,
-      banner: req?.file?.path,
+      banner: req?.files?.banner[0]?.path,
+      mobileBanner: req?.files?.mobileBanner[0]?.path,
     });
+    console.log(newDoc);
     await newDoc.save();
 
     res
