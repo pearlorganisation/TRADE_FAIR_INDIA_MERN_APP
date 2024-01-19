@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createBanner } from "../../../features/actions/clientHomeBanner";
+import { createHomeBanner } from "../../../features/actions/clientHomeBanner";
 import LoadingButton from "../../events/LoadingButton";
 
 const CreateBanner = () => {
@@ -24,7 +24,7 @@ const CreateBanner = () => {
     formData.append("banner", bannerData?.banner[0]);
     formData.append("bannerData", bannerData?.bannerData);
     formData.append("buttonLink", bannerData?.buttonLink);
-    dispatch(createBanner(formData));
+    dispatch(createHomeBanner(formData));
   };
 
   if (isBannerCreationSuccess) {

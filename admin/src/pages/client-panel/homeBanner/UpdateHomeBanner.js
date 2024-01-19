@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import LoadingButton from "../../events/LoadingButton";
 import { Controller, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
-import { updateBanner } from "../../../features/actions/clientHomeBanner";
+import { updateBanner, updateHomeBanner } from "../../../features/actions/clientHomeBanner";
 
 export const UpdateHomeBanner = () => {
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ export const UpdateHomeBanner = () => {
     formData.append("bannerData", bannerData?.bannerData);
     formData.append("buttonLink", bannerData?.buttonLink);
     id
-      ? dispatch(updateBanner({ id, payload: formData }))
+      ? dispatch(updateHomeBanner({ id, payload: formData }))
       : toast.error("Banner id is required!!");
   }
 

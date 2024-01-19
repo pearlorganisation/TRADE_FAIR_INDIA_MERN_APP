@@ -83,6 +83,7 @@ export const clientSubBannerSlice = createSlice({
         state.isSubBannerCreationSuccess = false;
         state.isSuccess = true;
         state.errorMessage = "";
+        state.clientSubBannerList = action.payload;
         toast.success("Sub banner updated successfully", {
           position: "top-right",
         });

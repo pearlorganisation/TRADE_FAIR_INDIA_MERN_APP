@@ -38,9 +38,8 @@ const UpdateSubBanner = () => {
     },
   });
 
-  const { isLoading, isSuccess, errorMessage } = useSelector(
-    (state) => state?.clientSubBanner
-  );
+  const { isLoading, isSuccess, errorMessage, clientSubBannerList } =
+    useSelector((state) => state?.clientSubBanner);
   const [isSubBannerUpdationApiCalled, setIssubBannerUpdationApiCalled] =
     useState(false);
   const [modifiedSubBanner, setModifiedSubBannerList] = useState([]);
@@ -69,6 +68,12 @@ const UpdateSubBanner = () => {
     setBannerImg(URL.createObjectURL(bannerImg));
     setBannerFile(bannerImg);
   }
+
+  useEffect(() => {
+    if (clientSubBannerList?.status === "SUCCESS") {
+      navigate("/client/subBanners");
+    }
+  }, [clientSubBannerList]);
 
   return (
     <>

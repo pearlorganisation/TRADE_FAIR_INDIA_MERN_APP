@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import LoadingButton from "../../events/LoadingButton";
 import { Controller, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
-import { updateBanner } from "../../../features/actions/eventBannerAction";
+import { updateEventBanner } from "../../../features/actions/eventBannerAction";
 
 export const UpdateEventBanner = () => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ export const UpdateEventBanner = () => {
     formData.append("banner", bannerFile || bannerImg);
     formData.append("bannerData", bannerData?.bannerData);
     id
-      ? dispatch(updateBanner({ id, payload: formData }))
+      ? dispatch(updateEventBanner({ id, payload: formData }))
       : toast.error("Banner id is required!!");
   }
 
@@ -80,7 +80,7 @@ export const UpdateEventBanner = () => {
             className="col-md-12 fs-4 fw-medium py-2 text-center"
             style={{ background: "rgb(71 76 114)", color: "white" }}
           >
-            Create sub banner
+            Update Event Banner
           </div>
           <form
             onSubmit={handleSubmit(handleBanner)}

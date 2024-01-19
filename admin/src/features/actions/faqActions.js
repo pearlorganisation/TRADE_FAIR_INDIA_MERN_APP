@@ -34,7 +34,7 @@ export const updateFaqDetails = createAsyncThunk(
   "faq/updateFaqDetails",
   async ({ faqId, payload }, { rejectWithValue }) => {
     try {
-      const { data } = await instance.put(`/faq/${faqId}`, payload, {
+      const { data } = await instance.patch(`/faq/${faqId}`, payload, {
         withCredentials: true,
       });
       return data;
@@ -46,7 +46,7 @@ export const updateFaqDetails = createAsyncThunk(
 
 export const deleteFaq = createAsyncThunk(
   "faq/deleteFaq",
-  async (faqId , { rejectWithValue }) => {
+  async (faqId, { rejectWithValue }) => {
     try {
       const { data } = await instance.delete(`faq/${faqId}`, {
         withCredentials: true,

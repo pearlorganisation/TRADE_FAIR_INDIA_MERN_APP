@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "../../services/axiosInterceptor";
 
-export const fetchBanner = createAsyncThunk(
+export const fetchHomeBanner = createAsyncThunk(
   "fetchBanner",
   async (payload, { rejectWithValue }) => {
     try {
@@ -18,7 +18,7 @@ export const fetchBanner = createAsyncThunk(
   }
 );
 
-export const createBanner = createAsyncThunk(
+export const createHomeBanner = createAsyncThunk(
   "createBanner",
   async (payload, { rejectWithValue }) => {
     try {
@@ -35,7 +35,7 @@ export const createBanner = createAsyncThunk(
   }
 );
 
-export const deleteBanner = createAsyncThunk(
+export const deleteHomeBanner = createAsyncThunk(
   "deleteBanner",
   async (payload, { rejectWithValue }) => {
     try {
@@ -49,7 +49,7 @@ export const deleteBanner = createAsyncThunk(
   }
 );
 
-export const updateBanner = createAsyncThunk(
+export const updateHomeBanner = createAsyncThunk(
   "updateBanner",
   async ({ id, payload }, { rejectWithValue }) => {
     try {

@@ -76,7 +76,7 @@ export const faqSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.errorMessage = "";
-        state.faqData = [action.payload];
+        state.faqData = action.payload;
         toast.success("Faq details updated successfully", {
           position: "top-right",
         });
