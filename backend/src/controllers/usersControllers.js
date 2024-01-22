@@ -9,7 +9,7 @@ const roleModel = require("../models/Authentication/roles");
 exports.viewUsers = async (req, res) => {
   try {
     const existingUsers = await User.find()
-      .populate("permissions", ["permission", "_id"])
+      .populate("permissions")
       .populate("role", ["role", "_id"])
       .populate("createdBy");
 
