@@ -6,7 +6,10 @@ import { useDispatch } from "react-redux";
 import LoadingButton from "../../events/LoadingButton";
 import { Controller, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router";
-import { updateBanner, updateHomeBanner } from "../../../features/actions/clientHomeBanner";
+import {
+  updateBanner,
+  updateHomeBanner,
+} from "../../../features/actions/clientHomeBanner";
 
 export const UpdateHomeBanner = () => {
   const navigate = useNavigate();
@@ -37,22 +40,13 @@ export const UpdateHomeBanner = () => {
     },
   });
 
-  const { isLoading, isSuccess, errorMessage } = useSelector(
-    (state) => state?.clientBanner
-  );
-  const [isBannerUpdationApiCalled, setIsBannerUpdationApiCalled] =
-    useState(false);
-  const [modifiedBanner, setModifiedBannerList] = useState([]);
+  const { isLoading, isSuccess, errorMessage, isHomeBannerUpdated } =
+    useSelector((state) => state?.clientBanner);
+
   const [bannerImg, setBannerImg] = useState(state?.banner);
   const [bannerFile, setBannerFile] = useState();
 
-  useEffect(() => {
-    errorMessage &&
-      isBannerUpdationApiCalled &&
-      toast.error(errorMessage, {
-        position: "bottom-center",
-      });
-  }, [errorMessage, isBannerUpdationApiCalled]);
+
 
   function handleBanner(bannerData) {
     formData.append("banner", bannerFile || bannerImg);
@@ -68,16 +62,21 @@ export const UpdateHomeBanner = () => {
     setBannerImg(URL.createObjectURL(bannerImg));
     setBannerFile(bannerImg);
   }
+  useEffect(() => {
+    if (isHomeBannerUpdated) {
+      navigate("/client/homeBanners");
+    }
+  }, [isHomeBannerUpdated]);
 
   return (
     <>
-      <div style={{ paddingBottom: "5rem" }} className="container">
+      <div style={{ padding: "5rem" }} className="container">
         <div className="row">
           <div
             className="col-md-12 fs-4 fw-medium py-2 text-center"
             style={{ background: "rgb(71 76 114)", color: "white" }}
           >
-            Create sub banner
+            Update Home Banner
           </div>
           <form
             onSubmit={handleSubmit(handleBanner)}

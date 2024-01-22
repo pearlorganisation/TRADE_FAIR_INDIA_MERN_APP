@@ -36,7 +36,7 @@ export const createHomeBanner = createAsyncThunk(
 );
 
 export const deleteHomeBanner = createAsyncThunk(
-  "deleteBanner",
+  "deleteHomeBanner",
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await instance.delete(`/clientBanner/${payload}`, {

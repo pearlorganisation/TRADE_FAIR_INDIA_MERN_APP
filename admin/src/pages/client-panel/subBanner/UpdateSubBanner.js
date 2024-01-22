@@ -77,13 +77,13 @@ const UpdateSubBanner = () => {
 
   return (
     <>
-      <div style={{ paddingBottom: "5rem" }} className="container">
+      <div style={{ padding: "5rem" }} className="container">
         <div className="row">
           <div
             className="col-md-12 fs-4 fw-medium py-2 text-center"
             style={{ background: "rgb(71 76 114)", color: "white" }}
           >
-            Create sub banner
+            Update Sub Banner
           </div>
           <form
             onSubmit={handleSubmit(handleSubBanner)}
