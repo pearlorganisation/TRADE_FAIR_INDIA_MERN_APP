@@ -29,7 +29,7 @@ const authSchema = new mongoose.Schema(
       enum: ["Activate", "Deactivate"],
       default: "Activate",
     },
-    createdBy: { type: mongoose.Schema.ObjectId, ref: "auth" },
+    createdBy: { type: mongoose.Schema.ObjectId, ref: "admin-client-auth" },
     createdAtTime: String,
     createdAtDate: String,
   },
