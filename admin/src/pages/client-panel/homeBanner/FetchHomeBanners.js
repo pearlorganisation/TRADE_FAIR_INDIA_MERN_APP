@@ -16,12 +16,11 @@ import TableSkeletonLoading from "../../../components/common/TableSkeletonLoadin
 import { FaEdit } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
 import { isUserHavePermission } from "../../../utils";
-import { updateEventBanner } from "../../../features/actions/eventBannerAction";
 // import HomeBannerDetailsModal
 const FetchBanners = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { clientBannerList, isLoading } = useSelector(
+  const { clientBannerList, isLoading, isHomeBannerUpdated } = useSelector(
     (state) => state?.clientBanner
   );
 
@@ -35,8 +34,8 @@ const FetchBanners = () => {
   // @@delete  banner function----------------------
   const handleDeleteBanner = (id) => {
     confirmAlert({
-      title: "Banner Delete Confirmation",
-      message: "Are you sure you want to delete this Banner?",
+      title: "Home Banner Delete Confirmation",
+      message: "Are you sure you want to delete this Home Banner?",
       buttons: [
         {
           label: "Yes",
@@ -53,7 +52,7 @@ const FetchBanners = () => {
 
   useEffect(() => {
     dispatch(fetchHomeBanner());
-  }, []);
+  }, [isHomeBannerUpdated]);
 
   return (
     <section>
@@ -87,12 +86,13 @@ const FetchBanners = () => {
           <Col>
             <Table striped bordered hover responsive className="text-center">
               <thead>
-                <tr className="text-center">
-                  <th>S.NO</th>
-                  <th>banner id</th>
-                  <th>Banner</th>
-                  <th>Banner data</th>
-                  <th>Button Link</th>
+                <tr className="">
+                  <th className="text-center align-middle">S.NO</th>
+                  <th className="text-center align-middle">banner id</th>
+                  <th className="text-center align-middle">Banner</th>
+                  <th className="text-center align-middle">Banner data</th>
+                  <th className="text-center align-middle">Button Link</th>
+                  <th className="text-center align-middle">Actions</th>
                 </tr>
               </thead>
 
@@ -163,7 +163,7 @@ const FetchBanners = () => {
                                     onChange={(e) => {
                                       console.log(e.target.checked);
                                       dispatch(
-                                        updateEventBanner({
+                                        updateHomeBanner({
                                           id: res?._id,
                                           payload: { active: e.target.checked },
                                         })

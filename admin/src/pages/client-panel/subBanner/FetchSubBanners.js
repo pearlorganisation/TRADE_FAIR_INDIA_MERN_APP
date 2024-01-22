@@ -20,7 +20,7 @@ import SubBannerDetailsModal from "./SubBannerDetailsModal";
 const FetchSubBanners = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, clientSubBannerList } = useSelector(
+  const { isLoading, clientSubBannerList,isSubBannerUpdated } = useSelector(
     (state) => state?.clientSubBanner
   );
 
@@ -34,8 +34,8 @@ const FetchSubBanners = () => {
   // @@delete sub banner function----------------------
   const handleDeleteSubBanner = (id) => {
     confirmAlert({
-      title: "Role Delete Confirmation",
-      message: "Are you sure you want to delete this role?",
+      title: "Sub Banner Delete Confirmation",
+      message: "Are you sure you want to delete this Sub Banner?",
       buttons: [
         {
           label: "Yes",
@@ -52,7 +52,7 @@ const FetchSubBanners = () => {
 
   useEffect(() => {
     dispatch(fetchSubBanner());
-  }, []);
+  }, [isSubBannerUpdated]);
 
   return (
     <section>
@@ -89,11 +89,12 @@ const FetchSubBanners = () => {
               <th>Banner</th>
               <th>Banner data</th>
               <th>Button Link</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody className="text-center">
             {isLoading ? (
-              <TableSkeletonLoading thCount={7} />
+              <TableSkeletonLoading thCount={6} />
             ) : Array.isArray(clientSubBannerList) &&
               clientSubBannerList?.length > 0 ? (
               clientSubBannerList?.map((res, i) => {

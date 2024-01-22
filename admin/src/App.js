@@ -132,7 +132,7 @@ const App = () => {
           <Route path="/client/homeBanners" element={<FetchHomeBanners />} />
           <Route path="/client/addHomeBanner" element={<CreateHomeBanner />} />
           <Route
-            path="/client/updateBanner/:id"
+            path="/client/updateHomeBanner/:id"
             element={<UpdateHomeBanner />}
           />
 

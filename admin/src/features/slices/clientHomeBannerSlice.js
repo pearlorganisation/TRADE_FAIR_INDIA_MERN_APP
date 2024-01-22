@@ -12,6 +12,7 @@ const initialState = {
   isSuccess: false,
   errorMessage: "",
   deleteData: false,
+  isHomeBannerUpdated: false,
   isDeleted: false,
   isBannerCreationSuccess: false,
   clientBannerList: [],
@@ -27,6 +28,7 @@ export const clientBannerSlice = createSlice({
       .addCase(fetchHomeBanner.pending, (state, action) => {
         state.isLoading = true;
         state.isBannerCreationSuccess = false;
+        state.isHomeBannerUpdated = false;
         state.isSuccess = false;
         state.errorMessage = "";
         state.isDeleted = false;
@@ -45,6 +47,7 @@ export const clientBannerSlice = createSlice({
         state.isSuccess = false;
         state.isDeleted = false;
         state.errorMessage = action?.payload;
+        toast.error(action?.payload, { position: "top-center" });
       })
       // Create sub banner List Cases
       .addCase(createHomeBanner.pending, (state, action) => {
@@ -83,6 +86,7 @@ export const clientBannerSlice = createSlice({
         state.isBannerCreationSuccess = false;
         state.isSuccess = true;
         state.errorMessage = "";
+        state.isHomeBannerUpdated = true;
         toast.success("Banner updated successfully", {
           position: "top-right",
         });
@@ -114,7 +118,7 @@ export const clientBannerSlice = createSlice({
           (banner) => banner._id !== action?.payload?.payload
         );
 
-        toast.success("Banner deleted successfully", {
+        toast.success("Banner deleted successfully0", {
           position: "top-right",
         });
       })

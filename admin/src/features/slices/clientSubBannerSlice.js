@@ -11,6 +11,7 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   errorMessage: "",
+  isSubBannerUpdated: false,
   deleteData: false,
   isDeleted: false,
   isSubBannerCreationSuccess: false,
@@ -37,6 +38,7 @@ export const clientSubBannerSlice = createSlice({
         state.isSubBannerCreationSuccess = false;
         state.errorMessage = "";
         state.isDeleted = false;
+
         state.clientSubBannerList = action.payload;
       })
       .addCase(fetchSubBanner.rejected, (state, action) => {
@@ -49,7 +51,6 @@ export const clientSubBannerSlice = createSlice({
       // Create sub banner List Cases
       .addCase(createSubBanner.pending, (state, action) => {
         state.isLoading = true;
-        state.deleteDataisSubBannerCreationSuccess = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
@@ -75,6 +76,7 @@ export const clientSubBannerSlice = createSlice({
       .addCase(updateSubBanner.pending, (state, action) => {
         state.isLoading = true;
         state.isSubBannerCreationSuccess = false;
+        state.isSubBannerUpdated = false;
         state.isSuccess = false;
         state.errorMessage = "";
       })
@@ -84,6 +86,7 @@ export const clientSubBannerSlice = createSlice({
         state.isSuccess = true;
         state.errorMessage = "";
         state.clientSubBannerList = action.payload;
+        state.isSubBannerUpdated = true;
         toast.success("Sub banner updated successfully", {
           position: "top-right",
         });

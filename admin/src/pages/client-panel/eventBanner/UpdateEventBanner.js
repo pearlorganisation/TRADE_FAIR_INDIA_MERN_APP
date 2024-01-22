@@ -74,10 +74,10 @@ export const UpdateEventBanner = () => {
 
   return (
     <>
-      <div style={{ paddingBottom: "5rem" }} className="container">
+      <div style={{ padding: "5rem" }} className="container">
         <div className="row">
           <div
-            className="col-md-12 fs-4 fw-medium py-2 text-center"
+            className="col-md-12 fs-4 fw-medium py-2 text-center my-2"
             style={{ background: "rgb(71 76 114)", color: "white" }}
           >
             Update Event Banner
@@ -153,7 +153,7 @@ export const UpdateEventBanner = () => {
                 </div>
               </div>
 
-              <div className="col-12 d-flex justify-content-end align-items-end">
+              <div className="col-12 d-flex justify-content-end align-items-end p-3">
                 {isLoading ? (
                   <LoadingButton />
                 ) : (
