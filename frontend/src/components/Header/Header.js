@@ -6,6 +6,7 @@ import GoogleMapsLocationForHeader from "../GoogleMap/GoogleMapsLocationForHeade
 import { fetchEventList } from "../../features/actions/eventActions";
 import { useDispatch, useSelector } from "react-redux";
 import SpringModal from "../LogoutModal/LogoutModal";
+import { userLogout } from "../../features/actions/authAction";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -170,9 +171,11 @@ const Header = () => {
                   </li>
                   <li>
                     <button
-                    type="button"
+                      type="button"
                       className="block py-3 px-4 font-medium text-center bg-white active:scale-95 transition-all text-[#00373E]  active:shadow-none rounded-lg shadow md:inline"
-                      onClick={() => setIsOpen(true)}
+                      onClick={() => {
+                        setIsOpen(true);
+                      }}
                     >
                       Logout
                     </button>
@@ -202,7 +205,8 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <SpringModal isOpen={isOpen} setIsOpen={setIsOpen} />
+                        
+      <SpringModal isOpen={isOpen} setIsOpen={setIsOpen}/>
     </>
   );
 };
