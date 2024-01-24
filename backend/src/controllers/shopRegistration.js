@@ -281,7 +281,7 @@ exports.updateShopRegistration = async (req, res) => {
 
     const updatedData = await Registration.findByIdAndUpdate(req?.params?.id, {
       ...req?.body,
-      searchKexywords: parseSearchKeyword,
+      searchKeywords: parseSearchKeyword,
       category: parseCategoryData,
       productCategories: parseProductCategory,
       keyPersonsDetails: parseKeyPersonsDetails,
