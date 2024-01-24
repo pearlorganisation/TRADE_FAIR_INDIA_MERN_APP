@@ -127,7 +127,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
                         </div>
                         <img
                           className="w-full h-full"
-                          src={sampleImage}
+                          src={item?.eventBanner?.path}
                           alt=""
                         />
                       </div>

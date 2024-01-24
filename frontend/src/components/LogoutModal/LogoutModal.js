@@ -1,7 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { FiAlertCircle } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../../features/actions/authAction";
 
-const SpringModal = ({ isOpen, setIsOpen }) => {
+const SpringModal = ({ isOpen, setIsOpen, logOut }) => {
+  const dispatch = useDispatch();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -38,7 +41,10 @@ const SpringModal = ({ isOpen, setIsOpen }) => {
                   Nah, go back
                 </button>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    dispatch(userLogout());
+                    setIsOpen(false);
+                  }}
                   className="bg-white hover:opacity-90 transition-opacity text-[#00373E] font-semibold w-full py-2 rounded"
                 >
                   Understood!

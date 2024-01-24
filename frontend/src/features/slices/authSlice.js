@@ -97,14 +97,18 @@ export const authSlice = createSlice({
       .addCase(userLogout.fulfilled, (state, action) => {
         state.isLoading = false;
         state.errorMessage = "";
-        state.isEmailVerified = true;
-        state.authData = action.payload;
-        toast.success("Success! 🎉 Email verified.");
+        state.isEmailVerified = false;
+        state.isAuthenticated = false;
+        state.authData = [];
+        localStorage.removeItem("persist:TradeFairIndiaClientPanle");
+        localStorage.clear();
+        sessionStorage.clear();
+        toast.success("🎉 Logout successful!");
       })
       .addCase(userLogout.rejected, (state, action) => {
         state.isLoading = false;
         state.errorMessage = action.payload;
-        toast.error("Uh-oh! ⏳ Email verification link expired.");
+        toast.error(`Uh-oh! ${action.payload}`);
       });
   },
 });

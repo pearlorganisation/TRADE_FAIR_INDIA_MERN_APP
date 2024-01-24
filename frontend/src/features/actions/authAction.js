@@ -35,9 +35,12 @@ export const emailVerification = createAsyncThunk(
   "auth/emailVerification",
   async ({ token, id }, { rejectWithValue }) => {
     try {
-      const { data } = await instance.patch(`/auth/verifyEmail/${token}/${id}`, {
-        withCredentials: true,
-      });
+      const { data } = await instance.patch(
+        `/auth/verifyEmail/${token}/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       return data;
     } catch (error) {
       return rejectWithValue(error);
@@ -47,7 +50,7 @@ export const emailVerification = createAsyncThunk(
 
 export const userLogout = createAsyncThunk(
   "auth/userLogout",
-  async ({ token, id }, { rejectWithValue }) => {
+  async (payload, { rejectWithValue }) => {
     try {
       const { data } = await instance.patch("/auth/logout", {
         withCredentials: true,

@@ -6,6 +6,7 @@ import GoogleMapsLocationForHeader from "../GoogleMap/GoogleMapsLocationForHeade
 import { fetchEventList } from "../../features/actions/eventActions";
 import { useDispatch, useSelector } from "react-redux";
 import SpringModal from "../LogoutModal/LogoutModal";
+import { userLogout } from "../../features/actions/authAction";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -85,7 +86,7 @@ const Header = () => {
             : "translate-y-0 opacity-100"
         } transition-all duration-200 fixed border-b w-full md:text-sm md:border-none z-20`}
       >
-        <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
+        <div className="items-center px-4 max-w-screen-xl mx-auto md:flex  md:px-8">
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
             <Link to="/">
               <div className="font-medium text-lg flex justify-content items-center gap-2">
@@ -130,7 +131,7 @@ const Header = () => {
             </div>
           </div>
           <div
-            className={`flex-1 md:pb-3 md:mt-8 md:block pb-0 mt-0 absolute left-0 w-full top-[4rem] md:static md:h-auto md:w-auto transition-all bg-[#00373E] ${
+            className={`flex-1  md:block pb-0 mt-0 absolute left-0 w-full top-[4rem] md:static md:h-auto md:w-auto transition-all bg-[#00373E] ${
               state
                 ? "h-[100vh] px-3 md:px-0"
                 : "h-[0vh] px-3 md:px-0 overflow-hidden"
@@ -154,15 +155,15 @@ const Header = () => {
                   <li>
                     <div class="flex items-center space-x-3">
                       <img
-                        class="w-12 h-12 rounded-full object-cover"
+                        class="md:w-10 w-8 md:h-10 h-8 lg:w-12 lg:h-12 rounded-full object-cover"
                         src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e"
                         alt=""
                       />{" "}
                       <div>
-                        <span class="text-white text-sm font-medium">
+                        <span class="text-white text-sm font-medium ">
                           {authData?.user?.name}
                         </span>
-                        <span class="block text-white text-xs">
+                        <span class="block text-white text-xs   ">
                           {authData?.user?.email}
                         </span>
                       </div>
@@ -170,9 +171,11 @@ const Header = () => {
                   </li>
                   <li>
                     <button
-                    type="button"
-                      className="block py-3 px-4 font-medium text-center bg-white active:scale-95 transition-all text-[#00373E]  active:shadow-none rounded-lg shadow md:inline"
-                      onClick={() => setIsOpen(true)}
+                      type="button"
+                      className="block py-2 px-3 font-medium text-center bg-white active:scale-95 transition-all text-[#00373E]  active:shadow-none rounded-lg shadow md:inline"
+                      onClick={() => {
+                        setIsOpen(true);
+                      }}
                     >
                       Logout
                     </button>
@@ -202,6 +205,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
+
       <SpringModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
