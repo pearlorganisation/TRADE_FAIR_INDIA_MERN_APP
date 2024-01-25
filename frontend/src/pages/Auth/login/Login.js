@@ -55,7 +55,7 @@ const Login = () => {
               {...register("username", { required: true })}
               className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
             />
-            {errors.email && (
+            {errors.username && (
               <span className="text-red-500">Email field is required</span>
             )}
           </div>
@@ -91,12 +91,6 @@ const Login = () => {
               ></label>
               <span>Remember me</span>
             </div>
-            <a
-              href="#"
-              className="text-center text-[#00373E] hover:text-[#00373E]/80"
-            >
-              Forgot password?
-            </a>
           </div>
           {isLoading ? (
             <button
@@ -148,15 +142,6 @@ const Login = () => {
           </svg>
           Continue with Google
         </button> */}
-        <p className="text-center">
-          Don't have an account?{" "}
-          <a
-            href="javascript:void(0)"
-            className="font-medium text-[#00373E] hover:text-[#00373E]/80"
-          >
-            Sign up
-          </a>
-        </p>
       </div>
     </main>
   );

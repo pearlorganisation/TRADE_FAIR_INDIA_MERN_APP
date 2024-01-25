@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import ProfileS from '../assets/ProfileS.png'
+import ProfileS from "../assets/ProfileS.png";
 import { createPortal } from "react-dom";
 import LogoutAlert from "../LogoutAlert/LogoutAlert";
 import { logout } from "../../features/actions/authAction";
@@ -11,7 +11,7 @@ const ProfileDropDown = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState(false);
   const profileRef = useRef(null);
-  const {loggedInUserData} = useSelector(state => state.auth)
+  const { loggedInUserData } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigation = [
@@ -49,7 +49,9 @@ const ProfileDropDown = (props) => {
         </button>
         <div className="lg:hidden">
           <span className="block">User</span>
-          <span className="block text-sm text-gray-500">{loggedInUserData?.email || 'user@gmail.com'}</span>
+          <span className="block text-sm text-gray-500">
+            {loggedInUserData?.email || "user@gmail.com"}
+          </span>
         </div>
       </div>
       <ul
@@ -68,24 +70,19 @@ const ProfileDropDown = (props) => {
             </a>
           </li>
         ))} */}
-        <li
-          className="flex justify-start items-center gap-1 cursor-pointer text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
-        
-        >
-          Profile
-        </li>
+
         <li
           className="flex justify-start items-center gap-1 cursor-pointer text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
           onClick={() => {
-            setIsOpen(true)
+            setIsOpen(true);
           }}
         >
-          Logout 
+          Logout
         </li>
       </ul>
       {isOpen &&
         createPortal(
-          <LogoutAlert setIsOpen={setIsOpen} isOpen={isOpen}/>,
+          <LogoutAlert setIsOpen={setIsOpen} isOpen={isOpen} />,
           document.body
         )}
     </div>
