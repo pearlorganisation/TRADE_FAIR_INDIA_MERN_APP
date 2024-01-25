@@ -284,7 +284,6 @@ exports.updateEvent = async (req, res) => {
         shopDetails: [...parseShop, ...parseNewShopDetails],
         eventLogo: logo || existingData?.eventLogo,
         eventBanner: banner || existingData?.eventBanner,
-
         eventDate: parseEventDate,
       },
       { new: true }
