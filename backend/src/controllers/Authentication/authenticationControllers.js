@@ -91,9 +91,7 @@ exports.login = async (req, res) => {
     );
 
     // Saving accessToken to the httpOnly Cookie
-    console.log("1");
     saveAccessTokenToCookie(res, accessToken);
-    console.log("2");
     return res.status(200).json({
       success: true,
       message: "Logged in Successfully",
