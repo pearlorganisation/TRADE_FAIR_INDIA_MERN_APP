@@ -40,7 +40,7 @@ const UpdateEvent = () => {
 
   const [existingData, setExistingData] = useState(state.shopDetails);
   useEffect(() => {
-    console.log(existingData);
+    console.log("ExistingData:::", existingData);
   }, [existingData]);
 
   const { venueList } = useSelector((state) => state.venue);
@@ -72,7 +72,7 @@ const UpdateEvent = () => {
         shopName: { label: item.shopName?.shopName, value: item.shopName?._id },
       };
     });
-    console.log(temp);
+    // console.log(temp);
     setPreviousShopDetails(temp);
   }, [state]);
 
@@ -190,7 +190,7 @@ const UpdateEvent = () => {
 
   // This method is used to fetch uploaded shop's gallery images
   const receiveShopImages = (imageData) => {
-    console.log("imageData::: ", imageData);
+    // console.log("imageData::: ", imageData);
     const { ind, images, uniqueKeyValue } = imageData;
 
     const imagesData = [...images];
@@ -224,6 +224,10 @@ const UpdateEvent = () => {
 
   const onSubmit = (data) => {
     console.log("PEARL ORGANISATION - CREATE EVENT FORM DATA::: ", data);
+    const newShopData = data?.shopDetails?.filter((item) => {
+      return existingData.every((exist) => item?.uniqueKey != exist?.uniqueKey);
+    });
+    console.log("newShopData::", newShopData);
 
     const { randomString, dynamicUrl } = generateDynamicUrl("event");
 
@@ -259,6 +263,7 @@ const UpdateEvent = () => {
     formData.append("category", modifiedCategory);
 
     formData.append("shopDetails", JSON.stringify(existingData));
+    formData.append("newShopDetails", JSON.stringify(newShopData));
 
     Array.from(data?.eventLogo).forEach((photo) => {
       formData.append("eventLogo", photo);
@@ -281,7 +286,6 @@ const UpdateEvent = () => {
     for (let pair of formData.entries()) {
       // console.log(pair[0] + " - " + pair[1]);
     }
-
     dispatch(updateEventDetails({ eventId: state?._id, payload: formData }));
   };
 
@@ -340,7 +344,7 @@ const UpdateEvent = () => {
 
   //handle edit image
   const handleImage = (files) => {
-    console.log(files[0]);
+    // console.log(files[0]);
     const image = window.URL.createObjectURL(files[0]);
 
     setSelectedLogo((prev) => {
@@ -349,7 +353,7 @@ const UpdateEvent = () => {
   };
 
   const handleEventBrochure = (files) => {
-    console.log(files[0]);
+    // console.log(files[0]);
     const pdf = window.URL.createObjectURL(files[0]);
 
     setSelectedPdf((prev) => {
@@ -358,7 +362,7 @@ const UpdateEvent = () => {
   };
 
   const handleEventBanner = (files) => {
-    console.log(files[0]);
+    // console.log(files[0]);
     const image = window.URL.createObjectURL(files[0]);
 
     setSelectedEventBanner((prev) => {
@@ -909,7 +913,7 @@ const UpdateEvent = () => {
                 </Col>
 
                 {fields.map((field, index) => {
-                  console.log("index::::::: ", index);
+                  // console.log("index::::::: ", index);
                   return (
                     <div className="row p-3 my-3" key={field.id}>
                       <Form.Group className="mb-3" controlId="shopName">
