@@ -1010,7 +1010,7 @@ const UpdateEvent = () => {
                           <label className="fw-bold text-center p-2 w-100">
                             Existing Media
                           </label>
-                          <div className="d-flex">
+                          <div className="d-flex flex-wrap">
                             {field.gallery &&
                               field.gallery?.map((itm, im) => {
                                 return (
