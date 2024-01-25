@@ -1,10 +1,19 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { FiAlertCircle } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../features/actions/authAction";
+import styles from "./LogoutAlert.module.css";
+import { useEffect } from "react";
 
 const SpringModal = ({ isOpen, setIsOpen, logOut }) => {
   const dispatch = useDispatch();
+  const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setIsOpen(false);
+    }
+  }, [isAuthenticated]);
   return (
     <AnimatePresence>
       {isOpen && (
@@ -24,9 +33,13 @@ const SpringModal = ({ isOpen, setIsOpen, logOut }) => {
           >
             <FiAlertCircle className="text-white/10 rotate-12 text-[250px] absolute z-0 -top-24 -left-24" />
             <div className="relative z-10">
-              <div className="bg-white w-16 h-16 mb-2 rounded-full text-3xl text-[#00373E] grid place-items-center mx-auto">
-                <FiAlertCircle />
-              </div>
+              {isLoading ? (
+                <div className={`${styles.progress} mx-auto border-4`}></div>
+              ) : (
+                <div className="bg-white w-16 h-16 mb-2 rounded-full text-3xl text-indigo-600 grid place-items-center mx-auto">
+                  <FiAlertCircle />
+                </div>
+              )}
               <h3 className="text-3xl font-bold text-center mb-2">
                 Logout Alert
               </h3>
@@ -41,9 +54,10 @@ const SpringModal = ({ isOpen, setIsOpen, logOut }) => {
                   Nah, go back
                 </button>
                 <button
+                  disabled={isLoading}
                   onClick={() => {
                     dispatch(userLogout());
-                    setIsOpen(false);
+                    // setIsOpen(false);
                   }}
                   className="bg-white hover:opacity-90 transition-opacity text-[#00373E] font-semibold w-full py-2 rounded"
                 >

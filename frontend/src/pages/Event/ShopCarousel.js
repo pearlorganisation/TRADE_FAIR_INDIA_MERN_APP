@@ -60,7 +60,11 @@ const ShopCarousel = ({ shopDetails }) => {
                 <Link to="/shop" state={item}>
                   <div className="bg-white max-h-[20rem] max-w-[22rem] rounded-lg grid grid-rows-[13rem_auto] mx-auto">
                     <div className=" flex justify-center items-center relative">
-                      <img className="w-full h-full" src={sampleImage} alt="" />
+                      <img
+                        className="w-full h-full"
+                        src={item?.shopName?.logo?.path || sampleImage}
+                        alt=""
+                      />
                     </div>
                     <div className="divide-y-2 p-2">
                       <div className="font-medium text-lg py-1">
