@@ -242,7 +242,7 @@ const UpdateEvent = () => {
     const modifiedCategory = data?.category?.map((item) => item?.value);
     const modifiedCycle = data?.cycle?.label;
 
-    const modifiedShopDetails = data?.shopDetails?.map((ele) => {
+    const modifiedNewShopDataDetails = newShopData?.map((ele) => {
       return { ...ele, shopName: ele?.shopName?.value };
     });
     console.log("modifiedVenue", modifiedVenue);
@@ -263,7 +263,10 @@ const UpdateEvent = () => {
     formData.append("category", modifiedCategory);
 
     formData.append("shopDetails", JSON.stringify(existingData));
-    formData.append("newShopDetails", JSON.stringify(newShopData));
+    formData.append(
+      "newShopDetails",
+      JSON.stringify(modifiedNewShopDataDetails)
+    );
 
     Array.from(data?.eventLogo).forEach((photo) => {
       formData.append("eventLogo", photo);
@@ -286,6 +289,7 @@ const UpdateEvent = () => {
     for (let pair of formData.entries()) {
       // console.log(pair[0] + " - " + pair[1]);
     }
+    console.log("modifiedNewShopDataDetails::", modifiedNewShopDataDetails);
     dispatch(updateEventDetails({ eventId: state?._id, payload: formData }));
   };
 
