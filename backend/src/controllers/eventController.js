@@ -213,10 +213,20 @@ exports.getSingleEvent = async (req, res) => {
 
 exports.updateEvent = async (req, res) => {
   try {
-    const { shopDetails, eventDate, ageGroup, organiser, existingShopGallery } =
-      req?.body;
-    console.log(req?.files, "filess");
+    const {
+      shopDetails,
+      eventDate,
+      ageGroup,
+      organiser,
+      existingShopGallery,
+      newShopDetails,
+    } = req?.body;
+
     const { shopGalleries } = req?.files;
+    let parseNewShopDetails = [];
+    if (newShopDetails) {
+      parseNewShopDetails = JSON.parse(newShopDetails);
+    }
 
     let parseAgeGroup = JSON.parse(ageGroup);
     let parseEventDate = JSON.parse(eventDate);
@@ -243,6 +253,14 @@ exports.updateEvent = async (req, res) => {
     if (shopGalleries && shopGalleries.length >= 1) {
       shopGalleries?.forEach((imgItem, i) => {
         parseShop?.forEach((shopItem) => {
+          if (newShopDetails && parseNewShopDetails) {
+            parseNewShopDetails?.forEach((pItem) => {
+              if (imgItem?.originalname?.includes(pItem?.uniqueKey)) {
+                pItem.gallery = [];
+                pItem?.gallery.push(imgItem);
+              }
+            });
+          }
           if (imgItem?.originalname?.includes(shopItem?.uniqueKey)) {
             shopItem?.gallery.push(imgItem);
           }
@@ -254,30 +272,6 @@ exports.updateEvent = async (req, res) => {
 
     let existingData = await Event.findById(req?.params?.id);
 
-    if (existingShopGallery) {
-      parseShopMedia = JSON.parse(existingShopGallery);
-    }
-
-    if (!shopDetails || typeof shopDetails !== "string") {
-      return res.status(400).json({
-        status: true,
-        message: "shops details field is required and Please stringify it",
-      });
-    }
-
-    // if (!eventDate || typeof shoeventDateps !== "string") {
-    //   return res.status(400).json({
-    //     status: true,
-    //     message: "event date field is required and Please stringify it",
-    //   });
-    // }
-
-    if (!ageGroup || typeof ageGroup !== "string") {
-      return res.status(400).json({
-        status: true,
-        message: "age group field is required and Please stringify it",
-      });
-    }
     // @@--------------------------------------------------------------@@End---------------------------------------------------
     const eventData = await Event.findByIdAndUpdate(
       req.params.id,
@@ -287,10 +281,9 @@ exports.updateEvent = async (req, res) => {
         ageGroup: parseAgeGroup,
         eventPdf: req?.files?.files,
         gallery: req?.files?.gallery,
-        shopDetails: parseShop,
+        shopDetails: [...parseShop, ...parseNewShopDetails],
         eventLogo: logo || existingData?.eventLogo,
         eventBanner: banner || existingData?.eventBanner,
-
         eventDate: parseEventDate,
       },
       { new: true }

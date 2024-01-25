@@ -219,10 +219,8 @@ exports.createUser = async (req, res) => {
 
 // @desc  activated user
 // @route   patch  /api/v1/users/status/:id
-
 exports.userStatus = async (req, res) => {
   try {
-    console.log(req?.body?.isUserActivate);
     let result = req?.body?.isUserActivate ? "Activate" : "Deactivate";
     let updatedresult = await User.findByIdAndUpdate(req?.params?.id, {
       isUserActivate: result,
