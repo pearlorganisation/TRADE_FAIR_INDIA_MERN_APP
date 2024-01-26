@@ -18,15 +18,6 @@ const OtpVerification = () => {
   );
   const dispatch = useDispatch();
   const [minutes, seconds, resetTimer] = useOTPTimer();
-  // const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  // const inputRefs = [
-  //   useRef(),
-  //   useRef(),
-  //   useRef(),
-  //   useRef(),
-  //   useRef(),
-  //   useRef(),
-  // ];
   const [otp, setOtp] = useState(["", "", "", "", "", ""]); // Array to store OTP digits
   const inputRefs = useRef([...Array(6)].map(() => React.createRef())); // Refs for each input
 
