@@ -212,7 +212,7 @@ const UpdateEvent = () => {
     // console.log("selectedPdf:::: ", selectedPdf);
   }, [selectedPdf]);
   useEffect(() => {
-    // console.log("existingData:::: ", existingData);
+    console.log("existingData:::: ", existingData);
     // console.log("newImages:::: ", newImages);
   }, [existingData, newImages]);
 
@@ -228,6 +228,20 @@ const UpdateEvent = () => {
       return existingData.every((exist) => item?.uniqueKey != exist?.uniqueKey);
     });
     console.log("newShopData::", newShopData);
+    console.log("existingData::", existingData);
+
+    // this modified if user updates the data of existing shop
+    const temp = existingData?.map((item) => {
+      const prev = data?.shopDetails?.find(
+        (ex) => ex?.uniqueKey == item?.uniqueKey
+      );
+      console.log("prev", prev);
+      return {
+        ...prev,
+        gallery: item?.gallery,
+      };
+    });
+    console.log("temp::", temp);
 
     const { randomString, dynamicUrl } = generateDynamicUrl("event");
 
@@ -262,7 +276,14 @@ const UpdateEvent = () => {
     formData.append("eventDate", JSON.stringify(dateArrays));
     formData.append("category", modifiedCategory);
 
-    formData.append("shopDetails", JSON.stringify(existingData));
+    formData.append(
+      "shopDetails",
+      JSON.stringify(
+        temp?.map((ele) => {
+          return { ...ele, shopName: ele?.shopName?.value };
+        })
+      )
+    );
     formData.append(
       "newShopDetails",
       JSON.stringify(modifiedNewShopDataDetails)
