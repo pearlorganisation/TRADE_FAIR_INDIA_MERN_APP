@@ -32,15 +32,11 @@ const CreateBanner = () => {
   }
 
   return (
-    <div className="container py-5"> 
+    <div className="container py-5">
       <div className="row">
-         <div
-            className="col-md-12 fs-4 fw-medium py-2 text-center"
-            
-          >
-             <h1 className="text-center text-danger"> Create Home banner</h1>
-            
-          </div>
+        <div className="col-md-12 fs-4 fw-medium py-2 text-center">
+          <h1 className="text-center text-danger"> Create Home banner</h1>
+        </div>
 
         <form
           onSubmit={handleSubmit(handleBanner)}
@@ -51,7 +47,7 @@ const CreateBanner = () => {
               <label htmlFor="banner" className="form-label">
                 Banner image
               </label>
-               <Controller
+              <Controller
                 control={control}
                 name="banner"
                 render={({ field: { onChange } }) => (

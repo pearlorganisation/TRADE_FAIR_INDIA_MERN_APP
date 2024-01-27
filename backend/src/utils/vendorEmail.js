@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 // async..await is not allowed in global scope, must use a wrapper
 const mailer = async (otp) => {
-  console.log("Inside mailer");
+
   //assumption is that mail is getting sent all the time so check it
   // send mail with defined transport object
   const info = await transporter.sendMail({
@@ -22,7 +22,7 @@ const mailer = async (otp) => {
     html: otp.toString(), // html body
   });
 
-  console.log("Message sent: %s", info.messageId);
+
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
   //

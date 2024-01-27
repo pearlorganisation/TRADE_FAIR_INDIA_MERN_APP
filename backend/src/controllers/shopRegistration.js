@@ -12,35 +12,6 @@ exports.createRegistration = async (req, res, next) => {
     console.log(userId);
     const { category, productCategories, searchKeywords, keyPersonsDetails } =
       req.body;
-    //--------------------------------------@@validations for formdata  and parsing formdata section----------------------------
-
-    if (!category || typeof category != "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "category field is required and Please stringify it!!",
-      });
-    }
-
-    if (!productCategories || typeof productCategories != "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "Product category field is required and please stringify it!!",
-      });
-    }
-    if (!searchKeywords || typeof searchKeywords !== "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "Search keywords field is required and Please stringify it!!",
-      });
-    }
-
-    if (!keyPersonsDetails || typeof keyPersonsDetails !== "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message:
-          "key person details field is required and Please stringify it!!",
-      });
-    }
 
     let parseCategoryData = JSON.parse(category);
     let parseProductCategory = JSON.parse(productCategories);
@@ -110,7 +81,7 @@ exports.getRegistration = async (req, res) => {
 exports.deleteRegistration = async (req, res) => {
   try {
     const existingShopData = await Registration.findById(req?.params?.id);
-    // const deletedData = await Registration.findByIdAndDelete(req?.params?.id);
+    const deletedData = await Registration.findByIdAndDelete(req?.params?.id);
     const shopMedia = existingShopData.pdfList;
     const logo = existingShopData.logo;
     shopMedia.push(logo);
@@ -197,41 +168,6 @@ exports.updateShopRegistration = async (req, res) => {
 
     //--------------------------------------@@validations for formdata  and parsing formdata section----------------------------
 
-    if (!existingMedia && typeof existingMedia === "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "Please stringify existingMedia field!!",
-      });
-    }
-
-    if (!category || typeof category != "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "category field is required and Please stringify it!!",
-      });
-    }
-
-    if (!productCategories || typeof productCategories != "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "Product category field is required and please stringify it!!",
-      });
-    }
-    if (!searchKeywords || typeof searchKeywords !== "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "Search keywords field is required and Please stringify it!!",
-      });
-    }
-
-    if (!keyPersonsDetails || typeof keyPersonsDetails !== "string") {
-      return res.status(400).json({
-        status: "FAILURE",
-        message:
-          "key person details field is required and Please stringify it!!",
-      });
-    }
-
     let parseCategoryData = JSON.parse(category);
     let parseExistingMedia = JSON.parse(existingMedia);
     let parseProductCategory = JSON.parse(productCategories);
@@ -245,39 +181,18 @@ exports.updateShopRegistration = async (req, res) => {
     }
 
     // @@---for updating media from cloudinary
-    console.log(mediaData, "medaiData");
+
     const publicIds = mediaData.map((item) => {
       return item.path.split("/").pop().split(".")[0];
     });
 
-    // publicIds.forEach((publicId) => {
-    //   cloudinary.uploader.destroy(publicId, (err, res) => {
-    //     if (err) {
-    //       throw err;
-    //     }
-    //   });
-    // });
-
-    // mediaData.forEach((item) => {
-    //   cloudinary.uploader.upload(item, (err, res) => {
-    //     if (err) {
-    //       throw err;
-    //       console.log(err, "error of clodinary");
-    //     }
-    //     console.log(res, "Image uploaded successfully!!");
-    //   });
-    // });
-
-    // cloudinary.uploader.destroy(
-    //   publicId,
-    //   (cloudinaryError, cloudinaryResult) => {
-    //     if (cloudinaryError) {
-    //       throw cloudinaryError;
-    //     }
-
-    //     res.status(400).json({ status: true, message: "Deleted successfully" });
-    //   }
-    // );
+    publicIds.forEach((publicId) => {
+      cloudinary.uploader.destroy(publicId, (err, res) => {
+        if (err) {
+          throw err;
+        }
+      });
+    });
 
     const updatedData = await Registration.findByIdAndUpdate(req?.params?.id, {
       ...req?.body,

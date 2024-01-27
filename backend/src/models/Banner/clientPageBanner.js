@@ -5,13 +5,11 @@ const clientBannerSchema = new mongoose.Schema(
     banner: { type: String, required: [true, "Banner image is required!!"] },
     mobileBanner: {
       type: String,
-      required: [true, "Mobile banner image is required!!"],
+      // required: [true, "Mobile banner image is required!!"],
     },
     bannerData: {
       type: String,
-      // required: [true, "Banner data is required!!"],
-      // minLength: 2,
-      // maxLength: 50,
+      required: true,
     },
     active: {
       type: Boolean,
@@ -20,7 +18,7 @@ const clientBannerSchema = new mongoose.Schema(
 
     buttonLink: {
       type: String,
-      // required: [true, "Button link is required!! "],
+      required: true,
     },
   },
   { timestamps: true }

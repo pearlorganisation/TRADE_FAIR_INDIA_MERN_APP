@@ -3,7 +3,6 @@ const ShopRegistration = require("../models/ShopRegistration");
 exports.checkRole = () => {
   try {
     return async (req, res, next) => {
-      console.log(req?.userCredentials);
       let vendorCheck = false;
 
       if (

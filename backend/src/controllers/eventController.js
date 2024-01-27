@@ -1,5 +1,6 @@
 // @imports-section
 const { cloudinary } = require("../configs/cloudinary");
+const authModel = require("../models/Authentication/authenticationModel");
 const ShopRegistration = require("../models/ShopRegistration");
 const Event = require("../models/events");
 
@@ -10,21 +11,6 @@ exports.createEvent = async (req, res) => {
     const { shopDetails, eventDate, ageGroup, organiser } = req?.body;
     const { userId } = req?.userCredentials;
     const { shopGalleries } = req?.files;
-    console.log(shopGalleries, "hello");
-
-    // if (!shopDetails || typeof shopDetails === "string") {
-    //   return res.status(200).json({
-    //     status: "FAILURE",
-    //     message: "Shop details is required and pleaswe stringify it!!",
-    //   });
-    // }
-
-    // if (!eventData || typeof shopDetails === "string") {
-    //   return res.status(200).json({
-    //     status: "FAILURE",
-    //     message: "Event data is require and please stringify it!!",
-    //   });
-    // }
 
     let parseAgeGroup = JSON.parse(ageGroup);
     let parseOrganiser = JSON.parse(organiser);
@@ -162,11 +148,6 @@ exports.deleteEvent = async (req, res) => {
           if (cloudinaryError) {
             throw cloudinaryError;
           }
-
-          console.log(
-            cloudinaryResult,
-            " Media gallery deleted from cloudinary successfully!!"
-          );
         }
       );
     });
@@ -213,7 +194,7 @@ exports.getSingleEvent = async (req, res) => {
 
 exports.updateEvent = async (req, res) => {
   try {
-    const {
+    let {
       shopDetails,
       eventDate,
       ageGroup,
@@ -254,7 +235,7 @@ exports.updateEvent = async (req, res) => {
       shopGalleries?.forEach((imgItem, i) => {
         parseShop?.forEach((shopItem) => {
           if (newShopDetails && parseNewShopDetails) {
-            parseNewShopDetails?.forEach((pItem) => {
+            parseNewShopDetails?.((pItem) => {
               if (imgItem?.originalname?.includes(pItem?.uniqueKey)) {
                 pItem.gallery = [];
                 pItem?.gallery.push(imgItem);
@@ -262,17 +243,24 @@ exports.updateEvent = async (req, res) => {
             });
           }
           if (imgItem?.originalname?.includes(shopItem?.uniqueKey)) {
-            shopItem?.gallery.push(imgItem);
+            shopItem.gallery.push(imgItem);
           }
         });
       });
     }
 
-    //--------------------------------------@@validations for formdata  and parsing formdata section----------------------------
-
     let existingData = await Event.findById(req?.params?.id);
+    // const existingMediaGallery = [];
+    // Array.isArray(existingData?.shopDetails) &&
+    //   existingData?.shopDetails?.forEach((i) => {
+    //     Array.isArray(i?.gallery) &&
+    //       i?.gallery?.forEach((item) => {
+    //         existingMediaGallery.push(item);
+    //       });
+    //   });
 
-    // @@--------------------------------------------------------------@@End---------------------------------------------------
+    shopDetails = [...parseShop, ...parseNewShopDetails];
+
     const eventData = await Event.findByIdAndUpdate(
       req.params.id,
       {
@@ -281,7 +269,7 @@ exports.updateEvent = async (req, res) => {
         ageGroup: parseAgeGroup,
         eventPdf: req?.files?.files,
         gallery: req?.files?.gallery,
-        shopDetails: [...parseShop, ...parseNewShopDetails],
+        shopDetails,
         eventLogo: logo || existingData?.eventLogo,
         eventBanner: banner || existingData?.eventBanner,
         eventDate: parseEventDate,

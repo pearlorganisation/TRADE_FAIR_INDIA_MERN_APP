@@ -1,9 +1,11 @@
 // ----------------------------------------------imports------------------------------------------------
 const nodemailer = require("nodemailer");
+const ejs = require("ejs");
+const path = require("path");
 // -----------------------------------------------------------------------------------------------------
 
 // sendMail - this method is used to send mail
-exports.sendMail = (email, otp) => {
+exports.sendMail = async (email, otp) => {
   // transporter - configuration of admin/user to send mail from
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -14,13 +16,16 @@ exports.sendMail = (email, otp) => {
       pass: process.env.NODEMAILER_MAIL_PASSWORD,
     },
   });
+  const templatePath = path.join(__dirname, `../../views/forgotPassword.ejs`);
+
+  let data = await ejs.renderFile(templatePath, { email, otp });
 
   //   mailOptions - details of the user to whom the mail needs to be delievered
   mailOptions = {
     from: process.env.NODEMAILER_MAIL,
     to: email,
     subject: "Trade Fair India Otp",
-    html: `<h1>OTP - ${otp}</h1>`,
+    html: data,
   };
 
   return new Promise((resolve, reject) => {

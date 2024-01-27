@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const { nameRegex, passwordRegex, emailRegex } = require("../utils/regex");
 const permissionModel = require("../models/Authentication/permissions");
 const roleModel = require("../models/Authentication/roles");
+const { cloudinary } = require("../configs/cloudinary");
 
 // @desc  Get users
 // @route   Get /api/v1/users
@@ -41,15 +42,25 @@ exports.updateUsers = async (req, res) => {
     const existingUser = await User.findById(req?.params?.id);
 
     if (!existingUser) {
-      res
+      return res
         .status(400)
         .json({ status: "FAILURE", message: "No user found with given Id" });
+    }
+
+    if (req?.file) {
+      let publicId = existingUser?.profilePic?.split("/").pop().split(".")[0];
+
+      cloudinary.uploader.destroy(publicId, (e) => {
+        if (e) {
+          return res.status(400).json({ status: "FAILURE", message: e });
+        }
+      });
     }
 
     const updatedUser = await User.findByIdAndUpdate(req?.params?.id, {
       createdBy: req?.body?.createdBy,
       name: req?.body?.name,
-      profilePic: req?.file?.path,
+      profilePic: req?.file?.path || existingUser?.profilePic,
       permissions: updatedPermission,
       role: req?.body?.role,
     });
@@ -86,6 +97,13 @@ exports.deleteUser = async (req, res) => {
         message: "You are not allowed to delete active Super Admin",
       });
     }
+
+    let publicId = existingUser?.profilePic?.split("/").pop().split(".")[0];
+    cloudinary.uploader.destroy(publicId, (e) => {
+      if (e) {
+        return res.status(400).json({ status: "FAILURE", message: e });
+      }
+    });
 
     await User.findByIdAndDelete(req?.params?.id);
     res
@@ -159,18 +177,6 @@ exports.createUser = async (req, res) => {
         .json({ status: "FAILURE", message: "Please eneter a valid email" });
     }
 
-    //-----@@end-----
-
-    // @@ Create the final formatted date string
-    const today = new Date();
-    const day = today.getDate();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
-
-    const formattedDay = day < 10 ? `0${day}` : day;
-    const formattedMonth = month < 10 ? `0${month}` : month;
-
-    const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
     const hashPassword = await bcrypt.hash(req?.body?.password, 10);
 
     // @@ section for getting time
@@ -181,12 +187,12 @@ exports.createUser = async (req, res) => {
       .findById(req?.body?.role)
       .populate("permissions");
 
-    // if (!existingRoles) {
-    //   return res.status(400).status({
-    //     status: "FAILURE",
-    //     message: "No role data found with given id",
-    //   });
-    // }
+    if (!existingRoles) {
+      return res.status(400).status({
+        status: "FAILURE",
+        message: "No role data found with given id",
+      });
+    }
 
     let existingPermissions = [];
     existingRoles &&
@@ -225,7 +231,7 @@ exports.userStatus = async (req, res) => {
     let updatedresult = await User.findByIdAndUpdate(req?.params?.id, {
       isUserActivate: result,
     });
-    console.log(updatedresult);
+
     if (!updatedresult) {
       return res.status(400).json({
         status: "FAILURE",

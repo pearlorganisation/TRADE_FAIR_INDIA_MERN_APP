@@ -45,7 +45,6 @@ exports.updateRole = async (req, res) => {
       { new: true }
     );
 
-    console.log(updateRole);
     res.status(200).json({
       status: "SUCCESS",
       updateRole,
@@ -113,13 +112,11 @@ exports.getSingleRole = async (req, res) => {
 // @route   post /api/v1/role/
 exports.createRole = async (req, res) => {
   try {
-    
     const role = await roleModel.create({
       ...req?.body,
       createdBy: req?.userCredentials?.userId,
     });
 
-    console.log(role, "roleee");
     res.status(200).json({
       status: "SUCCESS",
       data: role,
