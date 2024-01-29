@@ -48,7 +48,7 @@ export const authSlice = createSlice({
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
         state.errorMessage = action.payload;
-        toast.error("Error");
+        toast.error(`Uh-oh! ${action.payload}`);
       })
 
       // user signIn
@@ -68,7 +68,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = false;
         state.errorMessage = action.payload;
-        toast.error("Error");
+        toast.error(`Uh-oh! ${action.payload}`);
       })
 
       // user emailVerification
@@ -87,7 +87,7 @@ export const authSlice = createSlice({
       .addCase(emailVerification.rejected, (state, action) => {
         state.isLoading = false;
         state.errorMessage = action.payload;
-        toast.error("Uh-oh! ⏳ Email verification link expired.");
+        toast.error(`Uh-oh! ⏳ ${action.payload}`);
       })
 
       .addCase(userLogout.pending, (state, action) => {
