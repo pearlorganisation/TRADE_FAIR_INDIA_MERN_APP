@@ -30,23 +30,15 @@ const SignUp = () => {
   };
 
   function checkPasswordStrength(password) {
-    if (/^[a-z0-9!@#$%^&*]{1,}$/.test(password)) {
+    if (password === "") {
+      return { strength: "", color: "" };
+    } else if (!password.match(/[0-9]/) && !password.match(/[^a-zA-Z0-9]/)) {
       return { strength: "Weak", color: "red" };
-    }
-
-    if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{1,}$/.test(password)) {
+    } else if (!password.match(/[^a-zA-Z0-9]/)) {
       return { strength: "Good", color: "orange" };
-    }
-
-    if (
-      /^(?=.*[a-z\d])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{1,}$/.test(
-        password
-      )
-    ) {
+    } else {
       return { strength: "Strong", color: "green" };
     }
-
-    return { strength: "", color: "" };
   }
 
   useEffect(() => {
@@ -134,7 +126,7 @@ const SignUp = () => {
                 <span
                   className={`absolute right-[2.5rem] top-[2.6rem] cursor-pointer`}
                 >
-                  <div
+                  {/* <div
                     className={`w-6 h-6 border-dashed border-4 rounded-full ${
                       passStrength?.strength === "Weak"
                         ? "border-b-red-500"
@@ -142,11 +134,36 @@ const SignUp = () => {
                         ? "border-b-yellow-400 border-r-yellow-400"
                         : "border-green-500"
                     }`}
-                  ></div>
+                  ></div> */}
                 </span>
               )}
+              {passStrength?.strength != "" && (
+                <div className="flex justify-start items-center gap-1 p-1 ">
+                  {Array(5)
+                    .fill(true)
+                    .map((item, index) => {
+                      const strengthCss = `${
+                        passStrength?.strength === "Weak" && index < 1
+                          ? "bg-red-500"
+                          : "bg-gray-300"
+                      }  
+       ${
+         passStrength?.strength === "Good" && index < 3
+           ? "bg-yellow-500"
+           : "bg-gray-300"
+       } 
+       ${
+         passStrength?.strength === "Strong" && index <= 5
+           ? "bg-green-500"
+           : "bg-gray-300"
+       } 
+       h-1 w-[20%] transition-colors `;
+                      return <div className={strengthCss}></div>;
+                    })}
+                </div>
+              )}
 
-              {passStrength?.strength && <span>{passStrength?.strength}</span>}
+              {/* {passStrength?.strength && <span>{passStrength?.strength}</span>} */}
               {errors.password && (
                 <span className="text-red-500">Password field is required</span>
               )}
