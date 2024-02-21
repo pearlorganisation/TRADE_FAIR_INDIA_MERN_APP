@@ -1,25 +1,32 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { postEnquiry } from "../../features/actions/enquiryAction";
+import { useParams } from "react-router";
 
 const QueryForm = () => {
+  const dispatch = useDispatch();
+  const { shopId } = useParams();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    dispatch(postEnquiry({ payload: data, shopId: shopId }));
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Component: Rounded large input with helper text  */}
       <div className="flex flex-wrap items-end gap-3">
-        <div class="relative my-6 flex-grow basis-[550px] relative">
+        <div class="relative my-6 flex-grow basis-[550px]">
           <input
             id="id-l03"
             type="text"
             placeholder="Name"
-            {...register("Name", { required: true })}
+            {...register("name", { required: true })}
             class="relative w-full h-12 px-4 placeholder-transparent transition-all border rounded outline-none focus-visible:outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-emerald-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           />
           <label
@@ -28,15 +35,15 @@ const QueryForm = () => {
           >
             Name
           </label>
-          {errors.Name && (
+          {errors.name && (
             <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
               This field is required
             </div>
           )}
         </div>
-        <div class="relative my-6 flex-grow basis-[550px] relative">
+        <div class="relative my-6 flex-grow basis-[550px]">
           <input
-            {...register("ContactNumber", { required: true })}
+            {...register("number", { required: true })}
             id="id-l03"
             type="text"
             placeholder="Contact Number"
@@ -48,16 +55,16 @@ const QueryForm = () => {
           >
             Contact Number
           </label>
-          {errors.ContactNumber && (
+          {errors.number && (
             <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
               This field is required
             </div>
           )}
         </div>
 
-        <div class="relative my-6 flex-grow basis-[550px] absolute">
+        <div class=" my-6 flex-grow basis-[550px] relative">
           <input
-            {...register("Email", { required: true })}
+            {...register("email", { required: true })}
             id="id-l03"
             type="text"
             placeholder="Email"
@@ -69,16 +76,16 @@ const QueryForm = () => {
           >
             Email
           </label>
-          {errors.Email && (
+          {errors.email && (
             <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
               This field is required
             </div>
           )}
         </div>
 
-        <div class="relative my-6 flex-grow basis-[550px] relative">
+        <div class=" my-6 flex-grow basis-[550px] relative">
           <input
-            {...register("City_State", { required: true })}
+            {...register("state", { required: true })}
             id="id-l03"
             type="text"
             placeholder="City/State"
@@ -90,16 +97,16 @@ const QueryForm = () => {
           >
             City/State
           </label>
-          {errors.City_State && (
+          {errors.city_state && (
             <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
               This field is required
             </div>
           )}
         </div>
 
-        <div class="relative my-6 w-full relative">
+        <div class="relative my-6 w-full">
           <textarea
-            {...register("City_State", { required: true })}
+            {...register("query", { required: true })}
             cols="30"
             rows="10"
             id="id-l03"
@@ -112,7 +119,7 @@ const QueryForm = () => {
           >
             Would love to hear something from you....
           </label>
-          {errors.City_State && (
+          {errors.query && (
             <div className="absolute top-[1rem] right-[0.5rem] text-sm text-red-400">
               This field is required
             </div>

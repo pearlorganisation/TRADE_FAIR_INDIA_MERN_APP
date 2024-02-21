@@ -57,7 +57,7 @@ const ShopCarousel = ({ shopDetails }) => {
           shopDetails?.map((item) => {
             return (
               <SwiperSlide className="">
-                <Link to="/shop" state={item}>
+                <Link to={`/shop/${item?._id}`} state={item}>
                   <div className="bg-white max-h-[20rem] max-w-[22rem] rounded-lg grid grid-rows-[13rem_auto] mx-auto">
                     <div className=" flex justify-center items-center relative">
                       <img
