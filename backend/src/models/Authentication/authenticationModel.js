@@ -15,19 +15,20 @@ const authSchema = new mongoose.Schema(
         "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.amazon.in%2FProfessional-Cartoon-Profile-Portfolio-Picture%2Fdp%2FB07H7G6ZX9&psig=AOvVaw14kv_zmOJkHivWfg705_-d&ust=1697704834666000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJCe7sCZ_4EDFQAAAAAdAAAAABAH",
     },
     password: String,
-    permissions: {
-      type: [],
-      required: false,
-    }, // Required field },
+
     role: {
       type: mongoose.Schema.ObjectId,
       ref: "role",
-      enum: ["ADMIN", "VENDOR", "USER", "SUPER_ADMIN"],
+      enum: ["USER", "SUPER_ADMIN"],
     },
     isUserActivate: {
       type: String,
       enum: ["Activate", "Deactivate"],
       default: "Activate",
+    },
+    permissions: {
+      type: [mongoose.Schema.ObjectId],
+      ref: "permission",
     },
     createdBy: { type: mongoose.Schema.ObjectId, ref: "admin-client-auth" },
     createdAtTime: String,

@@ -147,16 +147,6 @@ exports.createUser = async (req, res) => {
     const { password, email, name, permissions } = req?.body;
 
     let updatedPermission;
-    if (permissions && typeof permissions === "string") {
-      updatedPermission = JSON.parse(permissions);
-    }
-
-    if (req?.file && req?.file?.size > 2 * 1024 * 1024) {
-      return res.status(400).json({
-        status: "FAILURE",
-        message: "profile pic size must be smaller than 2MB",
-      });
-    }
 
     if (!nameRegex.test(name)) {
       return res
@@ -179,34 +169,31 @@ exports.createUser = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(req?.body?.password, 10);
 
-    // @@ section for getting time
-    const createdAtTime =
-      today.getHours() + "-" + today.getMinutes() + "-" + today.getSeconds();
+    // const existingRoles = await roleModel
+    //   .findById(req?.body?.role)
+    //   .populate("permissions");
 
-    const existingRoles = await roleModel
-      .findById(req?.body?.role)
-      .populate("permissions");
+    // if (!existingRoles) {
+    //   return res.status(400).status({
+    //     status: "FAILURE",
+    //     message: "No role data found with given id",
+    //   });
+    // }
 
-    if (!existingRoles) {
-      return res.status(400).status({
-        status: "FAILURE",
-        message: "No role data found with given id",
-      });
-    }
-
-    let existingPermissions = [];
-    existingRoles &&
-      existingRoles?.permissions?.forEach((item) => {
-        existingPermissions.push({
-          _id: item?._id,
-          permission: item?.permission,
-        });
-      });
+    // let existingPermissions = [];
+    // existingRoles &&
+    //   existingRoles?.permissions?.forEach((item) => {
+    //     existingPermissions.push({
+    //       _id: item?._id,
+    //       permission: item?.permission,
+    //     });
+    //   });
 
     const user = await User.create({
       ...req?.body,
+      emailVerified: true,
       profilePic: req?.file?.path,
-      permissions: existingPermissions,
+      permissions: JSON.parse(req?.body?.permissions),
       password: hashPassword,
       createdBy: req?.userCredentials?.userId,
     });

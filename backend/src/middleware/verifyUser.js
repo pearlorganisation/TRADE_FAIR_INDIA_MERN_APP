@@ -48,7 +48,7 @@ exports.verifyUserTokenMiddleware = async (req, res, next) => {
 
         const userCredentials = {
           role: userIdentification?.role?.role || "",
-          permissions: permissionArray,
+          // permissions: permissionArray,
           userId: id,
         };
         req.userCredentials = userCredentials;
