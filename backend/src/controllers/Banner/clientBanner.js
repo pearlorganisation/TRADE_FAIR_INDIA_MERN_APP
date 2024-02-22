@@ -11,9 +11,9 @@ exports.newClientBanner = async (req, res) => {
     const newDoc = new clientPageBanner({
       ...req?.body,
       banner: req?.files?.banner[0]?.path,
-      mobileBanner: req?.files?.mobileBanner[0]?.path,
+      // mobileBanner: req?.files?.mobileBanner[0]?.path,
     });
-    console.log(newDoc);
+
     await newDoc.save();
 
     res
@@ -42,7 +42,6 @@ exports.deleteClientBanner = async (req, res) => {
 
     cloudinary.uploader.destroy(publicId, (error, result) => {
       if (error) {
-        console.error(error);
         return res
           .status(400)
           .json({ status: "FAILURE", message: error.message });
@@ -53,7 +52,6 @@ exports.deleteClientBanner = async (req, res) => {
       .status(200)
       .json({ status: "SUCCESS", message: "Banner deleted successfully!!" });
   } catch (error) {
-    console.error(error);
     res
       .status(500)
       .json({ status: "FAILURE", message: "Internal Server Error" });
@@ -75,6 +73,24 @@ exports.getBanner = async (req, res) => {
 exports.updateBanner = async (req, res) => {
   try {
     const existingData = await clientPageBanner.findById(req?.params?.id);
+    if (!existingData) {
+      return res.status(400).json({
+        status: "FAILURE",
+        message: "No banner data found with given id!!",
+      });
+    }
+
+    if (req?.file) {
+      console.log(existingData?.banner);
+
+      let publicId = existingData?.banner?.split("/").pop().split(".")[0];
+      cloudinary.uploader.destroy(publicId, (e, r) => {
+        if (e) {
+          return res.status(400).json({ status: "FAILURE", message: e });
+        }
+      });
+    }
+
     if (req?.body?.active) {
       await clientPageBanner.updateMany(
         { _id: { $ne: req?.params?.id } },

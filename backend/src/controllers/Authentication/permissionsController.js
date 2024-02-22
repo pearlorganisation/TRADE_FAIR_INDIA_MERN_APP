@@ -43,7 +43,8 @@ exports.updatePermission = async (req, res) => {
       }
     );
 
-    console.log("data", updatePermission);
+
+    
     res.status(200).json({
       status: "SUCCESS",
       message: "Permission Updated Successfully",

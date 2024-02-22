@@ -68,3 +68,10 @@ exports.updateFaq = async (req, res) => {
     });
   }
 };
+
+exports.updateData = async (req, res) => {
+  try {
+  } catch (e) {
+    res.status(200).json({ status: "SUCCESS", message: "No data found!!" });
+  }
+};

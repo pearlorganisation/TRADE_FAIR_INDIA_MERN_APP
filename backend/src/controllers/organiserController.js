@@ -63,7 +63,6 @@ const createOrganiser = async (req, res) => {
     const savedData = await data.save();
     res.status(201).json({ status: "SUCCESS", data: savedData });
   } catch (err) {
-    console.log("error", err);
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -81,7 +80,6 @@ const getOrganisers = async (req, res) => {
       .populate("enquiries");
     res.status(200).json({ status: "SUCCESS", data: data });
   } catch (err) {
-    console.log("err", err);
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -174,10 +172,9 @@ const updateOrganiser = async (req, res) => {
       },
       { new: true }
     );
-    console.log(data, "dataa");
+
     res.status(200).json({ status: "SUCCESS", data: data });
   } catch (err) {
-    console.log("error", err.message);
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -232,11 +229,6 @@ const deleteOrganiser = async (req, res) => {
           if (cloudinaryError) {
             throw cloudinaryError;
           }
-
-          console.log(
-            cloudinaryResult,
-            "Media gallery deleted from cloudinary successfully!!"
-          );
         }
       );
     });
@@ -246,7 +238,6 @@ const deleteOrganiser = async (req, res) => {
       .status(200)
       .json({ status: "SUCCESS", message: "Data is deleted successfully" });
   } catch (err) {
-    console.log("error", error);
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",

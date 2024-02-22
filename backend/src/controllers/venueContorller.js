@@ -45,7 +45,6 @@ exports.getVenue = async (req, res, next) => {
 // @route   POST /api/v1/venue/:id
 exports.createVenue = async (req, res, next) => {
   try {
-    console.log(req.userCredentials);
     const { userId } = req.userCredentials;
     let venue = await Venue.create({
       ...req.body,

@@ -3,29 +3,17 @@ const ShopRegistration = require("../models/ShopRegistration");
 exports.checkRole = () => {
   try {
     return async (req, res, next) => {
-      console.log(req?.userCredentials);
-      let vendorCheck = false;
+      // let vendorCheck = false;
 
-      if (
-        req?.userCredentials &&
-        req.userCredentials?.role == "VENDOR" &&
-        req?.params?.id
-      ) {
-        const data = await ShopRegistration.findById(req?.params?.id);
-        if (data?.createdBy == req?.userCredentials?.userId) {
-          vendorCheck = true;
-        }
-      }
+      // if (
+      //   (req?.userCredentials?.role && req.userCredentials?.role == "ADMIN") ||
+      //   req.userCredentials?.role == "SUPER_ADMIN" ||
+      //   vendorCheck
+      // ) {
+      // }
+      return next();
 
-      if (
-        (req?.userCredentials?.role && req.userCredentials?.role == "ADMIN") ||
-        req.userCredentials?.role == "SUPER_ADMIN" ||
-        vendorCheck
-      ) {
-        return next();
-      }
-
-      res.status(403).json({ status: false, message: "Access denied!!" });
+      // res.status(403).json({ status: false, message: "Access denied!!" });
     };
   } catch (err) {
     res.status(400).json({
