@@ -11,6 +11,7 @@ import evetnCategoryReducer from "./slices/eventCategorySlice";
 import showBannerReducer from "./slices/showsBannerSlice";
 import categoryReducer from "./slices/categorySlice";
 import authReducer from "./slices/authSlice";
+import enquiryReducer from "./slices/enquirySlice";
 
 // Combine your individual reducers here
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   eventCategory: evetnCategoryReducer,
   showsBanner: showBannerReducer,
   category: categoryReducer,
+  enquiry: enquiryReducer,
 });
 
 // Custom root reducer handling a clear action

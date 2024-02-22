@@ -10,6 +10,9 @@ let enquirySchema = new mongoose.Schema(
       type: String,
       required: [true, "Mobile Number is required"],
     },
+    state:{type:String
+          
+          },
     name: {
       type: String,
       required: [true, "Name is required"],
