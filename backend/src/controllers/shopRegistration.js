@@ -56,6 +56,10 @@ exports.createRegistration = async (req, res, next) => {
 // @route   POST /api/v1/shopRegistration
 exports.getRegistration = async (req, res) => {
   try {
+    let filter = {};
+    if (req?.userCredentials?.role === "USER") {
+      filter = { createdBy: req?.userCredentials?.userId };
+    }
     const allRegistrations = await Registration.find()
       .populate("category")
       .populate("createdBy", ["_id", "name", "email"])

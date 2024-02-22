@@ -20,7 +20,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(getRegistration)
+  .get(verifyUserTokenMiddleware, getRegistration)
   .post(
     verifyUserTokenMiddleware,
     upload.fields([
