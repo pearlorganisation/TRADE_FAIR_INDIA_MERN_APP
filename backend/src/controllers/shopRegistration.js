@@ -60,7 +60,7 @@ exports.getRegistration = async (req, res) => {
     if (req?.userCredentials?.role === "USER") {
       filter = { createdBy: req?.userCredentials?.userId };
     }
-    const allRegistrations = await Registration.find()
+    const allRegistrations = await Registration.find(filter)
       .populate("category")
       .populate("createdBy", ["_id", "name", "email"])
       .populate("productCategories")
