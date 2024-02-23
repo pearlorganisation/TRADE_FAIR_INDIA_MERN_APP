@@ -74,7 +74,7 @@ const ViewShops = () => {
 
           {(loggedInUserData?.role === "ADMIN" ||
             loggedInUserData?.role === "SUPER_ADMIN" ||
-            loggedInUserData?.role === "VENDOR") && (
+            loggedInUserData?.role === "USER") && (
             <Col
               xs="4"
               md="2"
@@ -137,10 +137,7 @@ const ViewShops = () => {
                                   "MMMM Do YYYY, h:mm:ss a"
                                 )
                               : "N.A"} */}
-                              {
-                                shop?.createdBy?.name || "N.A"
-                              }
-                              
+                            {shop?.createdBy?.name || "N.A"}
                           </td>
                           <td>
                             {shop?.updatedAt
@@ -164,7 +161,7 @@ const ViewShops = () => {
 
                             {(loggedInUserData?.role === "ADMIN" ||
                               loggedInUserData?.role === "SUPER_ADMIN" ||
-                              loggedInUserData?.role === "VENDOR") && (
+                              loggedInUserData?.role === "USER") && (
                               <>
                                 <Button
                                   variant="warning"

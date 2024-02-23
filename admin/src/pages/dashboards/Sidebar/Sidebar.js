@@ -53,6 +53,11 @@ const routes = [
         name: "FAQs",
         icon: <FaQuestion />,
       },
+      {
+        path: "/client/listYourEvent",
+        name: "List Your Event",
+        icon: <FaQuestion />,
+      },
     ],
   },
   {

@@ -50,6 +50,8 @@ import UpdateEventCategory from "./pages/client-panel/eventCategory/UpdateEventC
 import FetchEventBanners from "./pages/client-panel/eventBanner/FetchEventBanners";
 import CreateEventBanner from "./pages/client-panel/eventBanner/CreateEventBanner";
 import { UpdateEventBanner } from "./pages/client-panel/eventBanner/UpdateEventBanner";
+import ListYourEvent from "./pages/client-panel/listYourEvent/ListYourEvent";
+import CreateListYourEvent from "./pages/client-panel/listYourEvent/CreateListYourEvent";
 // ----------------------------------------------------------------------------------
 const App = () => {
   const { isUserLoggedIn, loggedInUserData, usersList } = useAuth();
@@ -86,7 +88,7 @@ const App = () => {
         <Route
           element={
             <ProtectedRouteHandler
-              allowedRoles={["SUPER_ADMIN", "ADMIN", "VENDOR"]}
+              allowedRoles={["SUPER_ADMIN", "ADMIN", "USER"]}
               allowedPermissions={["CREATE_SHOP", "UPDATE_SHOP", "DELETE_SHOP"]}
             />
           }
@@ -168,6 +170,12 @@ const App = () => {
           <Route
             path="/client/updateEventBanner/:eventBannerId"
             element={<UpdateEventBanner />}
+          />
+
+          <Route path="/client/listYourEvent" element={<ListYourEvent />} />
+          <Route
+            path="/client/addListYourEvent"
+            element={<CreateListYourEvent />}
           />
           {/* // Client Panel Routes -- Finished */}
 
