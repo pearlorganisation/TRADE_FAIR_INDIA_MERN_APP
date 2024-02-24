@@ -95,20 +95,21 @@ const CreateUser = () => {
 
   const onSubmit = (data) => {
     const { name, email, password, permissions, role, profilePic } = data;
+    console.log("::data::", data);
 
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("role", role?.value);
-    // formData.append(
-    //   "permissions",
-    //   JSON.stringify(
-    //     Array.isArray(permissions) && permissions?.length > 0
-    //       ? permissions.map((permission) => permission?.value)
-    //       : []
-    //   )
-    // );
+    formData.append(
+      "permissions",
+      JSON.stringify(
+        Array.isArray(permissions) && permissions?.length > 0
+          ? permissions.map((permission) => permission?.value)
+          : []
+      )
+    );
     formData.append("profilePic", profilePic?.[0]);
 
     dispatch(createUser(formData));
@@ -167,52 +168,49 @@ const CreateUser = () => {
               </Col>
               <Col sm={12} md={6}>
                 <Row>
-                  <Col sm={12} md={6}>
-                    <Form.Group className="mb-3" controlId="profileImage">
-                      <Form.Label>Profile Image</Form.Label>
-                      <Form.Control
-                        type="file"
-                        autoComplete={"off"}
-                        placeholder="Please enter your Full Name"
-                        {...register("profilePic", {
-                          required: {
-                            value: false,
-                            message: "Profile Image is required",
-                          },
-                        })}
-                      />
-                      <span className="fw-normal fs-6 text-danger">
-                        {errors?.profilePic?.message}
-                      </span>
-                    </Form.Group>
-                  </Col>
-                  <Col sm={12} md={6}>
-                    {profileImageLogo && (
-                      <img
-                        className="my-2"
-                        style={{ cursor: "pointer" }}
-                        src={profileImageLogo || ""}
-                        alt="profile logo"
-                        width="200"
-                        height="200"
-                        ref={profileImageRef}
-                        onMouseOver={() => {
-                          profileImageRef.current.style.width = "400px";
-                          profileImageRef.current.style.height = "400px";
-                        }}
-                        onMouseOut={() => {
-                          profileImageRef.current.style.width = "200px";
-                          profileImageRef.current.style.height = "200px";
-                        }}
-                      />
-                    )}
+                  <Form.Group className="mb-3" controlId="profileImage">
+                    <Form.Label>Profile Image</Form.Label>
+                    <Form.Control
+                      type="file"
+                      autoComplete={"off"}
+                      placeholder="Please enter your Full Name"
+                      {...register("profilePic", {
+                        required: {
+                          value: false,
+                          message: "Profile Image is required",
+                        },
+                      })}
+                    />
+                    <span className="fw-normal fs-6 text-danger">
+                      {errors?.profilePic?.message}
+                    </span>
+                  </Form.Group>
 
-                    <div>
-                      <span className="fw-normal fs-6 text-danger">
-                        {errors?.shopLogo?.message}
-                      </span>
-                    </div>
-                  </Col>
+                  {profileImageLogo && (
+                    <img
+                      className="my-2"
+                      style={{ cursor: "pointer" }}
+                      src={profileImageLogo || ""}
+                      alt="profile logo"
+                      width="200"
+                      height="200"
+                      ref={profileImageRef}
+                      onMouseOver={() => {
+                        profileImageRef.current.style.width = "400px";
+                        profileImageRef.current.style.height = "400px";
+                      }}
+                      onMouseOut={() => {
+                        profileImageRef.current.style.width = "200px";
+                        profileImageRef.current.style.height = "200px";
+                      }}
+                    />
+                  )}
+
+                  <div>
+                    <span className="fw-normal fs-6 text-danger">
+                      {errors?.shopLogo?.message}
+                    </span>
+                  </div>
                 </Row>
               </Col>
 
@@ -245,7 +243,7 @@ const CreateUser = () => {
                 </Form.Group>
               </Col>
 
-              {/* <Col sm={12} md={6}>
+              <Col sm={12} md={6}>
                 <Form.Group className="mb-3" controlId="city">
                   <Form.Label>Select Permission</Form.Label>
                   <Controller
@@ -273,7 +271,7 @@ const CreateUser = () => {
                     {errors?.permissions?.message}
                   </span>
                 </Form.Group>
-              </Col> */}
+              </Col>
 
               <Col sm={12} md={6}>
                 <div className="d-flex flex-column gap-2">
@@ -356,24 +354,23 @@ const CreateUser = () => {
                   )}
                 </div>
               </Col>
-
-              <Col
-                sm={12}
-                md={12}
-                className="d-flex justify-content-end align-items-end"
-              >
-                {isLoading ? (
-                  <LoadingButton />
-                ) : (
-                  <button
-                    type="submit"
-                    className="btn btn-primary w-20 py-2 fw-medium fs-6"
-                  >
-                    Submit
-                  </button>
-                )}
-              </Col>
             </Row>
+            <Col
+              sm={12}
+              md={12}
+              className="d-flex justify-content-end align-items-end"
+            >
+              {isLoading ? (
+                <LoadingButton />
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-primary w-20 py-2 fw-medium fs-6"
+                >
+                  Submit
+                </button>
+              )}
+            </Col>
           </Form>
         </Container>
       </section>
