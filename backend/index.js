@@ -90,6 +90,7 @@ const enquiryRoutes = require("./src/routes/enquiryRoutes");
 const clientBannerRoutes = require("./src/routes/Banner/clientBanner.js");
 const clientSubBanner = require("./src/routes/Banner/clientSubBanner.js");
 const faqRoutes = require("./src/routes/faqRoutes.js");
+const eventUrlRoutes = require("./src/routes/listYourEvent.js");
 const eventBannerRoutes = require("./src/routes/Banner/eventBanner.js");
 const eventCategory = require("./src/routes/eventCategoryRoutes.js");
 
@@ -109,6 +110,7 @@ app.use("/api/v1/clientSubBanner", clientSubBanner);
 app.use("/api/v1/vendor", vendorRoutes);
 app.use("/api/v1/owner/", ownerRoutes);
 app.use("/api/v1/faq", faqRoutes);
+app.use("/api/v1/eventUrl", eventUrlRoutes);
 app.use("/api/v1/eventCategory", eventCategory);
 app.use("/api/v1/eventBanner", eventBannerRoutes);
 
