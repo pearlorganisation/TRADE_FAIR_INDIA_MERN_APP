@@ -87,8 +87,8 @@ exports.getSingleRole = async (req, res) => {
   try {
     const existingRole = await roleModel
       .findById(req?.params?.id)
-      .populate("createdBy")
-      .populate("permissions", ["_id", "permission"]);
+      .populate("createdBy");
+
     if (!existingRole) {
       return res.status(400).json({
         status: "FAILURE",
