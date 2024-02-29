@@ -84,13 +84,17 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         breakpoints={{
           640: {
             slidesPerView: 1,
-            spaceBetween: 20,
+            spaceBetween: 10,
           },
           768: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          1024: {
             slidesPerView: 2,
             spaceBetween: 40,
           },
-          1024: {
+          1280: {
             slidesPerView: 3,
             spaceBetween: 50,
           },
@@ -209,7 +213,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         onClick={() => {
           goNext();
         }}
-        className="bg-[#DFFEC8] text-3xl md:text-4xl lg:text-5xl text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -right-4  z-10 cursor-pointer"
+        className="bg-[#DFFEC8] text-[32px] md:text-4xl lg:text-5xl text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -right-0 md:-right-4  z-10 cursor-pointer"
       >
         <FaAngleRight />
       </div>
@@ -217,7 +221,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         onClick={() => {
           goPrev();
         }}
-        className="bg-[#DFFEC8] text-3xl md:text-4xl lg:text-5xl text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -left-4 z-10 cursor-pointer"
+        className="bg-[#DFFEC8] text-[32px] md:text-4xl lg:text-5xl text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -left-0 md:-left-4 z-10 cursor-pointer"
       >
         <FaAngleLeft />
       </div>
