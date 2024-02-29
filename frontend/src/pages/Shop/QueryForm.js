@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 const QueryForm = () => {
   const dispatch = useDispatch();
   const { shopId } = useParams();
+  const { isLoading } = useSelector((state) => state.enquiry);
   const {
     register,
     handleSubmit,
@@ -127,12 +128,21 @@ const QueryForm = () => {
         </div>
       </div>
       <div>
-        <button
-          className="px-12 py-2 w-full sm:w-auto rounded-3xl active:scale-95 hover:ring-4 ring-[#00373E]/30 transition-all bg-[#00373E] text-white"
-          type="submit"
-        >
-          Send
-        </button>
+        {isLoading ? (
+          <button
+            className="px-12 py-2 w-full sm:w-auto rounded-3xl active:scale-95 hover:ring-4 ring-[#00373E]/30 transition-all bg-[#00373E] text-white"
+            type="button"
+          >
+            Loading...
+          </button>
+        ) : (
+          <button
+            className="px-12 py-2 w-full sm:w-auto rounded-3xl active:scale-95 hover:ring-4 ring-[#00373E]/30 transition-all bg-[#00373E] text-white"
+            type="submit"
+          >
+            Send
+          </button>
+        )}
       </div>
 
       {/* End Rounded large input with helper text */}

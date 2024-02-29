@@ -25,15 +25,15 @@ const EventCategoryDetailsModal = ({ data, show, hide }) => {
             <Table striped bordered hover>
               <tbody>
                 <tr>
-                  <th>Event Category Id</th>
+                  <th>Event URL Id</th>
 
                   <td>
                     <b>{data?._id || "N.A"}</b>
                   </td>
                 </tr>
                 <tr>
-                  <th>Category</th>
-                  <td>{data?.category || "N.A"}</td>
+                  <th>URL</th>
+                  <td>{data?.url || "N.A"}</td>
                 </tr>
               </tbody>
             </Table>

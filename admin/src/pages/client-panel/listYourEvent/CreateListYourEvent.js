@@ -9,56 +9,34 @@ import { toast } from "react-toastify";
 
 import Select from "react-select";
 import { createEventCategory } from "../../../features/actions/eventCategory";
+import { createListYourEventLink } from "../../../features/actions/listYourEventLinkAction";
 
 // ----------------------------------------------------------------------------
 const CreateListYourEvent = () => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     control,
     formState: { errors, isValid, dirtyFields },
-    getValues,
-    setValue,
-    watch,
-    reset,
-    resetField,
-    getFieldState,
   } = useForm({
     mode: "onTouched",
     defaultValues: {},
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const location = useLocation();
 
-  const { isLoading, isEventCategoryCreated, errorMessage } = useSelector(
-    (state) => state.eventCategory
+  const { isLoading, listYourEventLink } = useSelector(
+    (state) => state.listYourEventLink
   );
 
-  if (isEventCategoryCreated) {
-    navigate("/client/eventCategories");
+  if (listYourEventLink?.status) {
+    navigate("/client/listYourEvent");
   }
-  const [
-    isEventCategoryCreationApiCalled,
-    setIsEventCategoryCreationApiCalled,
-  ] = useState(false);
-
-  // Redirection to Roles Listing Page after event category Creation
-
-  //Showing Error Message in toast
-  useEffect(() => {
-    errorMessage &&
-      isEventCategoryCreationApiCalled &&
-      toast.error(errorMessage, {
-        position: "bottom-center",
-      });
-  }, [errorMessage, isEventCategoryCreationApiCalled]);
 
   const onSubmit = (formData) => {
     console.log(formData);
-    // dispatch(createEventCategory({ category: formData?.eventCategory }));
-    // setIsEventCategoryCreationApiCalled(true);
+    dispatch(createListYourEventLink(formData));
   };
 
   return (
@@ -87,21 +65,10 @@ const CreateListYourEvent = () => {
                     type="text"
                     autoComplete={"off"}
                     placeholder="Please enter list your event"
-                    {...register("eventCategory", {
+                    {...register("url", {
                       required: {
                         value: true,
-                        message: "Event category Name is required",
-                      },
-
-                      minLength: {
-                        value: 2,
-                        message:
-                          "Event category cannot be less than 2 characters.",
-                      },
-                      maxLength: {
-                        value: 20,
-                        message:
-                          "Event category cannot be more than 20 characters.",
+                        message: "List Your Link is required",
                       },
                     })}
                   />
@@ -110,42 +77,9 @@ const CreateListYourEvent = () => {
                   </span>
                 </Form.Group>
               </Col>
-              {/* <Col>
-                <Form.Label>Event category Image</Form.Label>
-                <div class="input-group mb-3">
-                  <input
-                  {...register("eventCategoryImage", {
-                    required: {
-                      value: true,
-                      message: "Event category Image is required",
-                    },
-
-                    minLength: {
-                      value: 2,
-                      message:
-                        "Event category Image cannot be less than 2 characters.",
-                    },
-                    maxLength: {
-                      value: 20,
-                      message:
-                        "Event category Image cannot be more than 20 characters.",
-                    },
-                  })}
-                    type="file"
-                    class="form-control"
-                    id="inputGroupFile02"
-                  />
-                  <label class="input-group-text" for="inputGroupFile02">
-                    Upload
-                  </label>
-                </div>
-                <span className="fw-normal fs-6 text-danger">
-                    {errors?.eventCategoryImage?.message}
-                  </span>
-              </Col> */}
               <Col
                 sm={12}
-                md={12}
+                md={6}
                 className="d-flex justify-content-end align-items-end"
               >
                 {isLoading ? (

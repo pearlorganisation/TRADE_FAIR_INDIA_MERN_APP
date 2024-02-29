@@ -38,12 +38,12 @@ const UpdateUser = () => {
         label: state?.role?.role,
         value: state?.role?._id,
       },
-      // permissions: state?.permissions?.map((item) => {
-      //   return {
-      //     label: item?.permission,
-      //     value: item?._id,
-      //   };
-      // }),
+      permissions: state?.permissions?.map((item) => {
+        return {
+          label: item?.permission,
+          value: item?._id,
+        };
+      }),
     },
   });
 
@@ -53,10 +53,10 @@ const UpdateUser = () => {
     (state) => state.user
   );
   const { rolesList } = useSelector((state) => state.role);
-  // const { permissionsList } = useSelector((state) => state.permission);
+  const { permissionsList } = useSelector((state) => state.permission);
 
   const [modifiedRolesList, setModifiedRolesList] = useState([]);
-  // const [modifiedPermissionsList, setModifiedPermissionsList] = useState([]);
+  const [modifiedPermissionsList, setModifiedPermissionsList] = useState([]);
   const [isUserUpdationApiCalled, setIsUserUpdationApiCalled] = useState(false);
   const [profileImageLogo, setProfileImageLogo] = useState("");
   const [isProfileImageChanged, setIsProfileImageChanged] = useState(false);
@@ -73,16 +73,16 @@ const UpdateUser = () => {
       );
     }
 
-    // if (Array.isArray(permissionsList) && permissionsList?.length > 0) {
-    //   setModifiedPermissionsList(
-    //     permissionsList.map((permission) => {
-    //       return {
-    //         label: permission?.permission,
-    //         value: permission?._id,
-    //       };
-    //     })
-    //   );
-    // }
+    if (Array.isArray(permissionsList) && permissionsList?.length > 0) {
+      setModifiedPermissionsList(
+        permissionsList.map((permission) => {
+          return {
+            label: permission?.permission,
+            value: permission?._id,
+          };
+        })
+      );
+    }
   }, [rolesList]);
   // permissionsList
 
@@ -123,14 +123,14 @@ const UpdateUser = () => {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("role", role?.value);
-    // formData.append(
-    //   "permissions",
-    //   JSON.stringify(
-    //     Array.isArray(permissions) && permissions?.length > 0
-    //       ? permissions.map((permission) => permission?.value)
-    //       : []
-    //   )
-    // );
+    formData.append(
+      "permissions",
+      JSON.stringify(
+        Array.isArray(permissions) && permissions?.length > 0
+          ? permissions.map((permission) => permission?.value)
+          : []
+      )
+    );
     formData.append("profilePic", profilePic?.[0]);
 
     dispatch(updateUserDetails({ userId: state?._id, payload: formData }));
@@ -269,7 +269,7 @@ const UpdateUser = () => {
                 </Form.Group>
               </Col>
 
-              {/* <Col sm={12} md={6}>
+              <Col sm={12} md={6}>
                 <Form.Group className="mb-3" controlId="city">
                   <Form.Label>Select Permission</Form.Label>
                   <Controller
@@ -299,7 +299,7 @@ const UpdateUser = () => {
                     {errors?.permissions?.message}
                   </span>
                 </Form.Group>
-              </Col> */}
+              </Col>
 
               <Col sm={12} md={6}>
                 <div className="d-flex flex-column gap-2">

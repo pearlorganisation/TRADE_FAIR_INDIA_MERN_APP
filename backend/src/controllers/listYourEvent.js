@@ -8,7 +8,7 @@ exports.newListUrl = async (req, res) => {
   } catch (e) {
     res.status(500).json({
       status: "FAILURE",
-      error: err?.message || "Internal Server Error",
+      error: e?.message || "Internal Server Error",
     });
   }
 };

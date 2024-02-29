@@ -19,6 +19,7 @@ import clientSubBannerSlice from "./slices/clientSubBannerSlice";
 import clientBannerSlice from "./slices/clientHomeBannerSlice";
 import eventBannerSlice from "./slices/eventBannerSlice";
 import eventCategorySlice from "./slices/eventCategorySlice";
+import listYourEventSlice from "./slices/listYourEventLinkSlice";
 
 // ---------------------------------------------------------
 
@@ -54,6 +55,7 @@ const reducer = combineReducers({
   permission: permissionReducer,
   faq: faqReducer,
   eventBanner: eventBannerSlice,
+  listYourEventLink: listYourEventSlice,
   // omitedPart: OmitReducer // not persisting this reducer
 });
 

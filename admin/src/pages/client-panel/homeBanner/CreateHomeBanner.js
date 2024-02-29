@@ -45,7 +45,7 @@ const CreateBanner = () => {
           <div className="row g-3">
             <div className="col-md-6">
               <label htmlFor="banner" className="form-label">
-                Banner image
+                Banner Image(Desktop)
               </label>
               <Controller
                 control={control}
@@ -62,6 +62,30 @@ const CreateBanner = () => {
               />
               {errors.banner && (
                 <span className="text-danger">{errors.banner.message}</span>
+              )}
+            </div>
+
+            <div className="col-md-6">
+              <label htmlFor="mobileBanner" className="form-label">
+                Banner Image(Mobile)
+              </label>
+              <Controller
+                control={control}
+                name="mobileBanner"
+                render={({ field: { onChange } }) => (
+                  <input
+                    type="file"
+                    onChange={(e) => {
+                      onChange(e.target.files);
+                    }}
+                    className="form-control"
+                  />
+                )}
+              />
+              {errors.mobileBanner && (
+                <span className="text-danger">
+                  {errors.mobileBanner.message}
+                </span>
               )}
             </div>
 

@@ -23,7 +23,7 @@ const UpcomingEvents = () => {
         <div className="w-full h-full z-10 text-fluid_font0_1 font-semibold flex justify-center items-center flex-col text-[#00373E]">
           {" "}
           <p className="text-center w-[70%]  md:w-[55%] lg:w-[45%] xl:w-[35%]">
-            {showsBannerData[0]?.bannerData}
+            {filteredData[0]?.bannerData}
           </p>
           {/* <span className="text-center ">Trade Shows, </span>{" "}
           <span className="text-center">Exhibitions, Confrence</span>{" "} */}

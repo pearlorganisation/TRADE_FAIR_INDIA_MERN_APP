@@ -1,0 +1,7 @@
+.modalWidth {
+  min-width: 60vw !important;
+}
+.modalHeight {
+  height: 80vh !important;
+  overflow: auto;
+}

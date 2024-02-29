@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------------------------------
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { fetchFaqList } from "../actions/faqActions";
 import { fetchEventById, fetchEventList } from "../actions/eventActions";
 
@@ -8,6 +8,9 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   eventData: [],
+  //on the basis of location
+  filteredEventData: [],
+  filteredExploreByChoice: [],
   errorMessage: "",
 };
 
@@ -16,7 +19,35 @@ const initialState = {
 export const eventsSlice = createSlice({
   name: "event",
   initialState,
-  reducers: {},
+  reducers: {
+    filterEvent: (state, action) => {
+      console.log("payload::", action.payload);
+      if (action?.payload?.name != "All") {
+        state.filteredEventData = current(state.eventData).filter((item) => {
+          return item.venue?.City === action.payload?.name;
+        });
+      } else {
+        state.filteredEventData = state.eventData;
+      }
+      console.log(
+        current(state.eventData).filter((item) => {
+          return item.venue?.City === action.payload?.name;
+        })
+      );
+    },
+    // filteredData according to explore by choice
+    exploreByChoice: (state, action) => {
+      if (action?.payload?.category != "All") {
+        state.filteredExploreByChoice = current(
+          state?.filteredEventData
+        )?.filter(
+          (item) => item?.category[0].category === action?.payload?.category
+        );
+      } else {
+        state.filteredExploreByChoice = state.filteredEventData;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Fetch faq List Cases
@@ -44,7 +75,7 @@ export const eventsSlice = createSlice({
 // -------------------------------------------------------------------------
 
 // Action creators are generated for each case reducer function
-export const {} = eventsSlice.actions;
+export const { filterEvent, exploreByChoice } = eventsSlice.actions;
 export default eventsSlice.reducer;
 
 // ================================================== THE END ==================================================

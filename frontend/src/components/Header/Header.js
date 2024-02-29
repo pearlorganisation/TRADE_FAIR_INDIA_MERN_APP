@@ -6,11 +6,13 @@ import GoogleMapsLocationForHeader from "../GoogleMap/GoogleMapsLocationForHeade
 import { fetchEventList } from "../../features/actions/eventActions";
 import { useDispatch, useSelector } from "react-redux";
 import SpringModal from "../LogoutModal/LogoutModal";
-import { userLogout } from "../../features/actions/authAction";
+import LocationDropDown from "./LocationDropDown";
+import { fetchListYourLink } from "../../features/actions/listYourEventLinkAction";
 
 const Header = () => {
   const dispatch = useDispatch();
   const { authData, isAuthenticated } = useSelector((state) => state.auth);
+  const { listYourLink } = useSelector((state) => state.listYourEventLink);
   const [state, setState] = useState(false);
   const [showNav, setShowNav] = useState(false);
   const [cityName, setCityName] = useState("");
@@ -40,6 +42,9 @@ const Header = () => {
   useEffect(() => {
     dispatch(fetchEventList(cityName || "Dehradun"));
   }, [cityName]);
+  useEffect(() => {
+    dispatch(fetchListYourLink());
+  }, []);
 
   const receiveGeolocationData = (data) => {
     console.log("receiveGeolocationData:::::", data);
@@ -58,12 +63,16 @@ const Header = () => {
       }, 3000);
     }
   }, [cityName]);
+  useEffect(() => {
+    console.log(listYourLink);
+  }, [listYourLink]);
 
   return (
     <>
       <GoogleMapsLocationForHeader
         sendCurrentLocationData={receiveGeolocationData}
       />
+
       {cityName && showLocationAlert && (
         <div class="bg-indigo-900/70 text-center py-4 lg:px-4 absolute top-[0.2rem] w-full z-[100]">
           <div
@@ -137,16 +146,24 @@ const Header = () => {
                 : "h-[0vh] px-3 md:px-0 overflow-hidden"
             }`}
           >
-            <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
-              <li className="text-white border-2 border-white py-1 px-3 rounded-2xl">
-                List Your Event
+            <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0 ">
+              <li className="text-white border-2 border-white hover:ring-4 transition-all ring-white/30 py-1 px-3 rounded-2xl">
+                {listYourLink
+                  ?.filter((it, idx) => idx < 1)
+                  ?.map((item) => {
+                    return (
+                      <a
+                        href={item?.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        List Your Event
+                      </a>
+                    );
+                  })}
               </li>
-              <li className="text-white border-2 border-white py-1 px-3 rounded-2xl flex justify-evenly items-center gap-1">
-                <FaMapMarkerAlt />{" "}
-                <span className="font-medium text-nowrap">
-                  {cityName || "Loading..."}
-                </span>
-                {/* <FaChevronDown /> */}
+              <li>
+                <LocationDropDown />
               </li>
 
               <span className="hidden w-px h-6 bg-gray-300 md:block"></span>

@@ -13,6 +13,7 @@ import { deleteShop, fetchShopsList } from "../../features/actions/shopActions";
 import styles from "./Shops.module.css";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import moment from "moment";
+import { availablePermissions } from "../../utils";
 // -------------------------------------------------------------------------------------------------
 const ViewShops = () => {
   const navigate = useNavigate();
@@ -60,6 +61,12 @@ const ViewShops = () => {
   //Calling Fetch Shops List API
   useEffect(() => {
     dispatch(fetchShopsList());
+  }, []);
+
+  useEffect(() => {
+    console.log(availablePermissions);
+    console.log(loggedInUserData?.permissions);
+    console.log(loggedInUserData?.permissions.includes("DELETE_SHOP"));
   }, []);
 
   // -------------------------------------------------------------------------------------------------------------
@@ -159,9 +166,8 @@ const ViewShops = () => {
                               <BiSolidShow />
                             </Button>
 
-                            {(loggedInUserData?.role === "ADMIN" ||
-                              loggedInUserData?.role === "SUPER_ADMIN" ||
-                              loggedInUserData?.role === "USER") && (
+                            {loggedInUserData?.role === "ADMIN" ||
+                            loggedInUserData?.role === "SUPER_ADMIN" ? (
                               <>
                                 <Button
                                   variant="warning"
@@ -183,6 +189,37 @@ const ViewShops = () => {
                                 >
                                   <MdDelete />
                                 </Button>
+                              </>
+                            ) : (
+                              <>
+                                {loggedInUserData?.permissions.includes(
+                                  "UPDATE_SHOP"
+                                ) && (
+                                  <Button
+                                    variant="warning"
+                                    size="md"
+                                    title="Edit Shop Details"
+                                    onClick={() =>
+                                      navigate("/editShopDetails", {
+                                        state: shop,
+                                      })
+                                    }
+                                  >
+                                    <FaEdit />
+                                  </Button>
+                                )}
+                                {loggedInUserData?.permissions.includes(
+                                  "DELETE_SHOP"
+                                ) && (
+                                  <Button
+                                    variant="danger"
+                                    size="md"
+                                    title="Delete Shop"
+                                    onClick={() => handleDeleteShop(shop?._id)}
+                                  >
+                                    <MdDelete />
+                                  </Button>
+                                )}
                               </>
                             )}
                           </td>

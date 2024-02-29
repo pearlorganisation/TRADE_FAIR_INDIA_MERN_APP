@@ -11,12 +11,16 @@ import { MdFileDownload } from "react-icons/md";
 import Location from "../../components/GoogleMap/Location";
 import { useLocation, useNavigate, useParams } from "react-router";
 import ShopCarousel from "./ShopCarousel";
+import { useDispatch } from "react-redux";
+import { fetchEventById } from "../../features/actions/eventActions";
 
 const Event = () => {
   const { state } = useLocation();
+  const { eventId } = useParams();
   const navigate = useNavigate();
   const [value, setValue] = useState({});
   const [formattedDate, setFormattedDate] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const formattedDates = state?.eventDate?.map((dateString) => {
@@ -28,7 +32,11 @@ const Event = () => {
 
   useEffect(() => {
     console.log("state::", state);
+    console.log("eventId::", eventId);
   }, [state]);
+  // useEffect(() => {
+  //   dispatch(fetchEventById({ eventId }));
+  // }, []);
 
   // Automatically scrolls to top whenever pathname changes
   useEffect(() => {

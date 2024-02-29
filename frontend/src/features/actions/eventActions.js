@@ -14,18 +14,22 @@ export const fetchEventList = createAsyncThunk(
       console.log("data::: ", data?.data);
 
       const actualData = { ...data };
-      const filteredData =
-        Array.isArray(data?.data) &&
-        data?.data?.length > 0 &&
-        data?.data?.filter(
-          (val) =>
-            val?.venue?.City?.toString()?.toLowerCase() ===
-            cityName?.toString()?.toLowerCase()
-        );
-      console.log("filteredData:: ", filteredData);
-      return Array.isArray(filteredData) && filteredData?.length > 0
-        ? filteredData
-        : actualData;
+      return actualData;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const fetchEventById = createAsyncThunk(
+  "event/fetchEventById",
+  async ({ eventId }, { rejectWithValue }) => {
+    try {
+      const { data } = await instance.get(`/event/${eventId}`, {
+        withCredentials: true,
+      });
+
+      return data;
     } catch (error) {
       return rejectWithValue(error);
     }

@@ -5,13 +5,12 @@ import UpcomingEvents from "../../components/UpcomingEvents/UpcomingEvents";
 import ExploreByChoice from "../../components/ExploreByChoice/ExploreByChoice";
 import PopularTradeEvent from "../../components/PopularTradeEvent/PopularTradeEvent";
 import FeaturedEvents from "../../components/FeaturedEvents/FeaturedEvents";
-import TopEvents from "../../components/TopEvents/TopEvents";
 
 const Home = () => {
   return (
     <div className="">
       <HeroSection />
-      <TopEvents />
+      {/* <TopEvents /> */}
       <FeaturedEvents />
       <ExploreByChoice />
       <PopularTradeEvent />

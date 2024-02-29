@@ -87,9 +87,9 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
                   </SwiperSlide>
                 );
               })
-          : Array.isArray(filteredData) &&
-            filteredData?.length > 0 &&
-            filteredData?.map((item) => {
+          : Array.isArray(eventData) &&
+            eventData?.length > 0 &&
+            eventData?.map((item) => {
               return (
                 <SwiperSlide className="">
                   {" "}

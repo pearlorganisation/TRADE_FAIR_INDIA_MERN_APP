@@ -12,6 +12,9 @@ import showBannerReducer from "./slices/showsBannerSlice";
 import categoryReducer from "./slices/categorySlice";
 import authReducer from "./slices/authSlice";
 import enquiryReducer from "./slices/enquirySlice";
+import venueReducer from "./slices/venueSlice";
+import listYourEvent from "./slices/listYourEventLinkSlice";
+import shopReducer from "./slices/shopSlice";
 
 // Combine your individual reducers here
 const rootReducer = combineReducers({
@@ -25,6 +28,9 @@ const rootReducer = combineReducers({
   showsBanner: showBannerReducer,
   category: categoryReducer,
   enquiry: enquiryReducer,
+  venue: venueReducer,
+  listYourEventLink: listYourEvent,
+  shop: shopReducer,
 });
 
 // Custom root reducer handling a clear action

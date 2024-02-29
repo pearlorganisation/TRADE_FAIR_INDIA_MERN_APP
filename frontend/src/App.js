@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { Suspense } from "react";
 import coreRoutes from "./routes";
 import "./App.css";
+import LocationDropDown from "./components/Header/LocationDropDown";
 
 function App() {
   return (

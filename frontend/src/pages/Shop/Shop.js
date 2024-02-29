@@ -16,11 +16,29 @@ import { BsTwitterX } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
 import QueryForm from "./QueryForm";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchShopByUniqueKey } from "../../features/actions/shopAction";
 
 const Shop = () => {
   const navigate = useNavigate();
+  const { shopId } = useParams();
   const { state } = useLocation();
+  const dispatch = useDispatch();
+
+  const { shopData } = useSelector((state) => state.shop);
+  const copyContent = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success("Link Copied.", {
+        position: "top-center",
+      });
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
+
   // Automatically scrolls to top whenever pathname changes
   useEffect(() => {
     window.scrollTo({
@@ -30,8 +48,8 @@ const Shop = () => {
     });
   }, []);
   useEffect(() => {
-    console.log("state:::", state);
-  }, [state]);
+    dispatch(fetchShopByUniqueKey({ uniqueKey: shopId }));
+  }, []);
 
   return (
     <div className="min-h-dvh pb-12">
@@ -46,6 +64,7 @@ const Shop = () => {
           />
         </div>
         <button
+          onClick={copyContent}
           className="bg-slate-300 px-8 py-3 rounded-3xl flex justify-center items-center gap-2 font-medium absolute left-[50%] translate-x-[-50%] translate-y-[-50%] active:scale-95 transition-all"
           type="button"
         >
@@ -140,19 +159,31 @@ const Shop = () => {
                 return (
                   <div>
                     <div>
-                      <img
+                      {/* <img
                         className="rounded-xl"
                         width={110}
                         height={110}
                         src={CatProfile}
                         alt=""
-                      />
+                      /> */}
                     </div>
                     <div className="flex flex-col justify-start items-start gap-3">
-                      <span>{item?.name || "Abhishek Bahuguna"}</span>
-                      <span>{item?.designation || "Web Developer"}</span>
+                      <span>
+                        Name:{" "}
+                        <span className="font-normal">
+                          {item?.name || "Abhishek Bahuguna"}
+                        </span>
+                      </span>
+                      <span>
+                        Designation:{" "}
+                        <span className="font-normal">
+                          {item?.designation || "Web Developer"}
+                        </span>
+                      </span>
                       <span className="flex justify-start items-center gap-1">
-                        <IoCall /> {item?.mobileNo}
+                        <IoCall />
+                        Mobile No. :{" "}
+                        <span className="font-normal"> {item?.mobileNo}</span>
                       </span>
                       <div className="space-x-3">
                         {" "}
@@ -183,23 +214,28 @@ const Shop = () => {
               <div className="text-slate-700 font-medium flex justify-center items-center">
                 {state?.shopName?.pdfList?.map((item, index) => {
                   return (
-                    <a href={item?.path} download target="_blank">
+                    <a
+                      href={item?.path}
+                      className="space-y-3 flex flex-col justify-center items-center"
+                      download
+                      target="_blank"
+                    >
                       {" "}
                       <img
                         className="w-[5rem] md:w-[6.5rem] lg:w-[8rem]"
                         src={PdfIcon}
                         alt=""
                       />
+                      <button
+                        type="button"
+                        className="border-2 active:scale-95 transition-all hover:ring-4 ring-[#00373E]/30 font-medium border-[#00373E] p-2 rounded-3xl flex justify-center items-center gap-1"
+                      >
+                        Download <MdOutlineFileDownload size={20} />
+                      </button>
                     </a>
                   );
                 })}
               </div>
-              <button
-                type="button"
-                className="border-2 active:scale-95 transition-all hover:ring-4 ring-[#00373E]/30 font-medium border-[#00373E] px-6 py-2 rounded-3xl flex justify-center items-center gap-1"
-              >
-                Download <MdOutlineFileDownload size={20} />
-              </button>
             </div>
           </div>
         </div>

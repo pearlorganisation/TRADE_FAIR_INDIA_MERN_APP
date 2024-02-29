@@ -17,6 +17,7 @@ import {
   fetchEventCategory,
 } from "../../../features/actions/eventCategory";
 import EventCategoryDetailsModal from "./EventCategoryDetailsModal";
+import { fetchListYourEventLink } from "../../../features/actions/listYourEventLinkAction";
 
 // ------------------------------------------------------------------------------------
 
@@ -35,6 +36,8 @@ const ListYourEvent = () => {
 
   const [selectedEventCategoryDetails, setSelectedEventCategoryDetails] =
     useState({});
+
+  const { listYourEventLink } = useSelector((state) => state.listYourEventLink);
 
   // -------------------------------------------------------------------------------------------------------------
   // This method is used to delete event category.
@@ -58,7 +61,7 @@ const ListYourEvent = () => {
   // -------------------------------------------------------------------------------------------------------------
 
   useEffect(() => {
-    dispatch(fetchEventCategory());
+    dispatch(fetchListYourEventLink());
   }, []);
 
   return (
@@ -99,29 +102,29 @@ const ListYourEvent = () => {
                 <thead>
                   <tr className="text-center">
                     <th>S.No</th>
-                    <th>Event category Id</th>
-                    <th>Event Category</th>
+                    <th>Link Id</th>
+                    <th>URL</th>
                   </tr>
                 </thead>
                 <tbody className="text-center">
                   {isLoading ? (
                     <TableSkeletonLoading thCount={7} />
-                  ) : Array.isArray(eventCategoryList) &&
-                    eventCategoryList?.length > 0 ? (
-                    eventCategoryList?.map((eCategory, i) => {
+                  ) : Array.isArray(listYourEventLink) &&
+                    listYourEventLink?.length > 0 ? (
+                    listYourEventLink?.map((e, i) => {
                       return (
-                        <tr key={eCategory?._id || i}>
+                        <tr key={e?._id || i}>
                           <td>{i + 1}</td>
-                          <td>{eCategory?._id || "N.A"}</td>
+                          <td>{e?._id || "N.A"}</td>
 
-                          <td>{eCategory?.category}</td>
+                          <td>{e?.url}</td>
                           <td className="d-flex gap-3  justify-content-center align-items-center">
                             <Button
                               variant="info"
                               size="md"
                               title="View Complete Details"
                               onClick={() => {
-                                setSelectedEventCategoryDetails(eCategory);
+                                setSelectedEventCategoryDetails(e);
                                 setShowCompleteDetailsModal(true);
                               }}
                             >
@@ -136,9 +139,9 @@ const ListYourEvent = () => {
                                   title="Edit Role "
                                   onClick={() =>
                                     navigate(
-                                      `/client/updateEventCategory/${eCategory._id}`,
+                                      `/client/updateEventCategory/${e._id}`,
                                       {
-                                        state: eCategory,
+                                        state: e,
                                       }
                                     )
                                   }
@@ -150,9 +153,7 @@ const ListYourEvent = () => {
                                   variant="danger"
                                   size="md"
                                   title="Delete Role"
-                                  onClick={() =>
-                                    handleEventCategory(eCategory?._id)
-                                  }
+                                  onClick={() => handleEventCategory(e?._id)}
                                 >
                                   <MdDelete />
                                 </Button>

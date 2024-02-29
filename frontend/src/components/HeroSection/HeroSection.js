@@ -90,6 +90,7 @@ const HeroSection = () => {
           >
             Explore Now
           </button>
+
           <img
             sizes="(min-width: 768px) 100vw, (max-width: 814px) min(100%, 774px), (max-height: 756px) min(100%, 774px), (min-aspect-ratio: 5184/3888) calc((calc(100vh - 175px)) * 1.33333), calc(100vw - 40px)"
             srcset="
