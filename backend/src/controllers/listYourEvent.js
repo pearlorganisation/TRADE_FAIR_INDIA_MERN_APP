@@ -17,9 +17,12 @@ exports.getAllUrl = async (req, res) => {
   try {
     const data = await eventUrl.find();
     res.status(200).json({ status: true, data });
+    res.status(200);
   } catch (e) {
     res
       .status(200)
       .json({ status: false, message: e?.message || "Internal server error" });
   }
 };
+
+exports.getAllUrl = async (req, res) => {};
