@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -19,6 +19,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
 
 const PopularEventCarousel = ({ isLoading, eventData }) => {
+  // screen width state
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   const filteredData = useMemo(() => {
     return eventData?.filter((item) => item?.isPopular === true);
   }, [eventData]);
@@ -34,6 +37,29 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
       swiperRef.current.swiper.slidePrev();
     }
   };
+
+
+   // useEffect for window width
+   useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Call handleResize once to set initial class
+    handleResize();
+
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+
+
   return (
     <div className="container mx-auto relative">
       <Swiper
@@ -150,7 +176,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
         onClick={() => {
           goNext();
         }}
-        className="bg-[#DFFEC8] text-xl md:text-2xl lg:text-3xl text-[#00373E] rounded-full p-1 absolute top-[50%] right-0 z-10 cursor-pointer"
+        className={`${windowWidth < 390 ? 'opacity-70' : ''} bg-[#DFFEC8] text-[32px] md:text-5xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -right-0 md:-right-4  z-10 cursor-pointer`}
       >
         <FaAngleRight />
       </div>
@@ -158,7 +184,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
         onClick={() => {
           goPrev();
         }}
-        className="bg-[#DFFEC8] text-xl md:text-2xl lg:text-3xl text-[#00373E] rounded-full p-1 absolute top-[50%] z-10 cursor-pointer"
+        className={`${windowWidth < 390 ? 'opacity-70' : ''} bg-[#DFFEC8] text-[32px] md:text-5xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -left-0 md:-left-4 z-10 cursor-pointer`}
       >
         <FaAngleLeft />
       </div>

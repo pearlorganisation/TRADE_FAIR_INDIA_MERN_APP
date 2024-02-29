@@ -13,7 +13,7 @@ const FeaturedEvents = () => {
   }, [filteredEventData]);
 
   return (
-    <div className="min-h-dvh bg-[#FFFEF1] flex flex-col justify-center items-center ">
+    <div className="max-h-dvh py-3 bg-[#FFFEF1] flex flex-col justify-center items-center">
       <div className="container relative space-y-12 px-4 sm:px-10 md:px-14">
         <div className="text-center text-[#00373E] font-medium text-4xl">
           Featured Events
