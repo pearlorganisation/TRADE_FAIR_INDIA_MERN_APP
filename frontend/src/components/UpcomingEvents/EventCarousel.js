@@ -69,7 +69,7 @@ const EventCarousel = () => {
             return (
               <SwiperSlide className="">
                 {" "}
-                <Link to={`/event/${item?._id}`} state={item}>
+                <Link to={`/event/${item?.randomString}`} state={item}>
                   <div className="bg-white min-h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[auto_6rem] mx-auto">
                     <div className=" flex justify-center items-center">
                       <img

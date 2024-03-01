@@ -24,7 +24,7 @@ import { fetchShopByUniqueKey } from "../../features/actions/shopAction";
 const Shop = () => {
   const navigate = useNavigate();
   const { shopId } = useParams();
-  const { state } = useLocation();
+
   const dispatch = useDispatch();
 
   const { shopData } = useSelector((state) => state.shop);
@@ -77,16 +77,14 @@ const Shop = () => {
           <div className="text-teal-600 font-semibold py-2 border-b-2 border-[#0D948B]">
             About
           </div>
-          <div className="text-slate-700 font-medium">
-            {state?.shopName?.aboutUs}
-          </div>
+          <div className="text-slate-700 font-medium">{shopData?.aboutUs}</div>
         </div>
         <div className="space-y-2">
           <div className="text-teal-600 font-semibold py-2 border-b-2 border-[#0D948B]">
             Previous Events
           </div>
           <div className="text-slate-700 font-medium bg-[#FFFEF1] space-y-10 py-5">
-            <ShopCarousel />
+            <ShopCarousel events={shopData?.events} />
             <div className="grid place-items-center">
               {" "}
               <button
@@ -106,9 +104,9 @@ const Shop = () => {
             {/* {Array(5)
               .fill(ShopsImage)
               .map((item, idx) => { */}
-            {Array.isArray(state?.gallery) &&
-              state?.gallery?.length > 0 &&
-              state?.gallery
+            {Array.isArray(shopData?.gallery) &&
+              shopData?.gallery?.length > 0 &&
+              shopData?.gallery
                 ?.filter((item, index) => index < 5)
                 ?.map((item, idx) => {
                   return (
@@ -116,7 +114,9 @@ const Shop = () => {
                       {idx === 4 ? (
                         <div
                           onClick={() => {
-                            navigate("/shop/photos", { state: state?.gallery });
+                            navigate("/shop/photos", {
+                              state: shopData?.gallery,
+                            });
                           }}
                           className="absolute cursor-pointer w-full h-full bg-black/70 flex flex-col justify-center items-center gap-1 text-white font-medium"
                         >
@@ -155,7 +155,7 @@ const Shop = () => {
               Key Person :
             </div>
             <div className="text-slate-700 font-medium bg-white p-3 space-y-3 rounded-xl">
-              {state?.shopName?.keyPersonsDetails?.map((item) => {
+              {shopData?.keyPersonsDetails?.map((item) => {
                 return (
                   <div>
                     <div>
@@ -212,7 +212,7 @@ const Shop = () => {
             </div>
             <div className="flex flex-col justify-center items-center gap-6 bg-white rounded-xl h-full p-2">
               <div className="text-slate-700 font-medium flex justify-center items-center">
-                {state?.shopName?.pdfList?.map((item, index) => {
+                {shopData?.pdfList?.map((item, index) => {
                   return (
                     <a
                       href={item?.path}

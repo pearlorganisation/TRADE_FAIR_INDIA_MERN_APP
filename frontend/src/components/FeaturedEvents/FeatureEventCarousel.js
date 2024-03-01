@@ -115,7 +115,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
             const isActive = idx === activeIndex + 1;
             return (
               <SwiperSlide className="">
-                <Link to={`/event/${item?._id}`} state={item}>
+                <Link to={`/event/${item?.randomString}`} state={item}>
                   {" "}
                   <div
                     className={`bg-white h-[30rem] max-w-[25rem] px-3 pt-3 rounded-lg grid grid-rows-[15rem_auto] mx-auto`}

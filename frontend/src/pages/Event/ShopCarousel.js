@@ -58,7 +58,7 @@ const ShopCarousel = ({ shopDetails }) => {
             console.log("item::", item);
             return (
               <SwiperSlide className="">
-                <Link to={`/shop/${item?.shopName?._id}`} state={item}>
+                <Link to={`/shop/${item?.shopName?.randomString}`} state={item}>
                   <div className="bg-white max-h-[20rem] max-w-[22rem] rounded-lg grid grid-rows-[13rem_auto] mx-auto">
                     <div className=" flex justify-center items-center relative">
                       <img

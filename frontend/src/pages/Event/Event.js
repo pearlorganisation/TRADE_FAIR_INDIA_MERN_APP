@@ -11,7 +11,7 @@ import { MdFileDownload } from "react-icons/md";
 import Location from "../../components/GoogleMap/Location";
 import { useLocation, useNavigate, useParams } from "react-router";
 import ShopCarousel from "./ShopCarousel";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchEventById } from "../../features/actions/eventActions";
 
 const Event = () => {
@@ -21,9 +21,10 @@ const Event = () => {
   const [value, setValue] = useState({});
   const [formattedDate, setFormattedDate] = useState([]);
   const dispatch = useDispatch();
+  const { singleEventData } = useSelector((state) => state.events);
 
   useEffect(() => {
-    const formattedDates = state?.eventDate?.map((dateString) => {
+    const formattedDates = singleEventData?.eventDate?.map((dateString) => {
       const date = new Date(dateString);
       return { date: date.toLocaleString("en-US", { timeZone: "UTC" }) };
     });
@@ -34,9 +35,9 @@ const Event = () => {
     console.log("state::", state);
     console.log("eventId::", eventId);
   }, [state]);
-  // useEffect(() => {
-  //   dispatch(fetchEventById({ eventId }));
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchEventById({ eventId }));
+  }, []);
 
   // Automatically scrolls to top whenever pathname changes
   useEffect(() => {
@@ -49,7 +50,7 @@ const Event = () => {
 
   return (
     <div className="relative min-h-screen px-[0.8rem] sm:px-[1rem] py-[5rem] md:py-[7rem]  md:px-[2rem] lg:p-[8rem] ">
-      {!state ? (
+      {!singleEventData ? (
         <div className="grid place-items-center">
           <img className="w-[40rem] h-[40rem]" src={NoData} alt="" srcset="" />
           <button
@@ -73,20 +74,20 @@ const Event = () => {
                 objectFit: "cover",
                 objectPosition: "top center",
               }}
-              src={state?.eventBanner?.path || EventBanner}
+              src={singleEventData?.eventBanner?.path || EventBanner}
             />
           </div>
 
           <div className="md:w-[70%] mx-auto space-y-3 ">
             <div className=" font-medium md:font-semibold text-slate-700 space-y-4 rounded-md pl-0 px-5 py-6 pb-8 text-sm md:text-base">
               <div className="text-xl md:text-2xl lg:text-4xl md:translate-y-5 font-medium md:font-semibold">
-                {state?.eventName}
+                {singleEventData?.eventName}
               </div>
             </div>
             <div className="bg-white font-medium md:font-semibold text-slate-700 space-y-4 rounded-md px-5 py-6 text-sm md:text-base">
               <div className="flex justify-start items-center gap-2">
                 <RiMapPinLine size={20} />
-                <span className="">{state?.venue?.Address}</span>
+                <span className="">{singleEventData?.venue?.Address}</span>
               </div>
               <div className="flex flex-col md:flex-row justify-start items-start md:items-center space-y-4 md:space-y-0 md:space-x-4">
                 <span className="flex justify-start items-center gap-2">
@@ -107,7 +108,7 @@ const Event = () => {
                 About The Event
               </div>
               <div className="text-slate-700 font-medium">
-                {state?.description}
+                {singleEventData?.description}
               </div>
             </div>
 
@@ -117,7 +118,7 @@ const Event = () => {
               </div>
               <div className="text-slate-700 font-medium">
                 <ul className="list-disc pl-5">
-                  {state?.attendReason
+                  {singleEventData?.attendReason
                     ?.split(".")
                     ?.filter((item) => item != "")
                     ?.map((item) => {
@@ -132,7 +133,7 @@ const Event = () => {
                 Terms & Conditions :
               </div>
               <div className="text-slate-700 font-medium">
-                {state?.termsConditions
+                {singleEventData?.termsConditions
                   ?.split(".")
                   ?.filter((item) => item != "")
                   ?.map((item) => {
@@ -147,7 +148,7 @@ const Event = () => {
               </div>
               <div className="text-slate-700 font-medium">
                 <ul className="list-disc pl-5">
-                  {state?.rules
+                  {singleEventData?.rules
                     ?.split(".")
                     ?.filter((item) => item != "")
                     ?.map((item) => {
@@ -164,9 +165,9 @@ const Event = () => {
               <div className="text-slate-700 font-medium space-y-1">
                 <span className="p-1">Tap To Download</span>
                 <div className="flex justify-start items-center">
-                  {Array.isArray(state?.eventBrochure) &&
-                    state?.eventBrochure.length > 0 &&
-                    state?.eventBrochure?.map((item) => {
+                  {Array.isArray(singleEventData?.eventBrochure) &&
+                    singleEventData?.eventBrochure.length > 0 &&
+                    singleEventData?.eventBrochure?.map((item) => {
                       return (
                         <a
                           href={`${item?.path}`}
@@ -261,8 +262,8 @@ const Event = () => {
               </div>
               <div className="text-slate-700 font-medium">
                 <Location
-                  lat={state?.venue?.GeoLocation?.latLng?.lat}
-                  lng={state?.venue?.GeoLocation?.latLng?.lng}
+                  lat={singleEventData?.venue?.GeoLocation?.latLng?.lat}
+                  lng={singleEventData?.venue?.GeoLocation?.latLng?.lng}
                   setValue={setValue}
                 />
               </div>
@@ -273,7 +274,7 @@ const Event = () => {
                 Shops in Event :
               </div>
               <div className="text-slate-700 font-medium flex gap-3">
-                <ShopCarousel shopDetails={state?.shopDetails} />
+                <ShopCarousel shopDetails={singleEventData?.shopDetails} />
               </div>
             </div>
 
@@ -287,7 +288,7 @@ const Event = () => {
                 </div>
                 <div className="grid">
                   <span className="font-medium text-2xl md:text-3xl">
-                    {state?.organiser[0]?.companyName}
+                    {/* {singleEventData?.organiser[0]?.companyName} */}
                   </span>
                   <span className="text-lg md:text-xl">
                     12+ Events Done In Past

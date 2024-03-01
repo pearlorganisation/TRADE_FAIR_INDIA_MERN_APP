@@ -93,7 +93,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
               return (
                 <SwiperSlide className="">
                   {" "}
-                  <Link to={`/event/${item?._id}`} state={item}>
+                  <Link to={`/event/${item?.randomString}`} state={item}>
                     <div className="bg-white h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[10rem_auto] mx-auto ">
                       <div className=" flex justify-center items-center relative">
                         <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">

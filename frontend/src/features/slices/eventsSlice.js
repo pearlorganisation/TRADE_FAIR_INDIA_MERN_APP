@@ -11,6 +11,7 @@ const initialState = {
   //on the basis of location
   filteredEventData: [],
   filteredExploreByChoice: [],
+  singleEventData: null,
   errorMessage: "",
 };
 
@@ -27,13 +28,8 @@ export const eventsSlice = createSlice({
           return item.venue?.City === action.payload?.name;
         });
       } else {
-        state.filteredEventData = state.eventData;
+        state.filteredEventData = state?.eventData;
       }
-      console.log(
-        current(state.eventData).filter((item) => {
-          return item.venue?.City === action.payload?.name;
-        })
-      );
     },
     // filteredData according to explore by choice
     exploreByChoice: (state, action) => {
@@ -65,6 +61,24 @@ export const eventsSlice = createSlice({
           : action?.payload;
       })
       .addCase(fetchEventList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.errorMessage = action.payload;
+      })
+      .addCase(fetchEventById.pending, (state, action) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.errorMessage = "";
+      })
+      .addCase(fetchEventById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.errorMessage = "";
+        state.singleEventData = action?.payload?.data
+          ? action?.payload?.data
+          : action?.payload;
+      })
+      .addCase(fetchEventById.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;
