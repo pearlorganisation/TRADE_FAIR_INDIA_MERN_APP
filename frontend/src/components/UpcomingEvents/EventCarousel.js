@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -16,6 +16,12 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const EventCarousel = () => {
+
+   // screen width state
+   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+   const [activeIndex, setActiveIndex] = useState(0);
+
   const swiperRef = useRef(null);
   const { isLoading, eventData } = useSelector((state) => state.events);
 
@@ -40,6 +46,27 @@ const EventCarousel = () => {
       swiperRef.current.swiper.slidePrev();
     }
   };
+
+  // useEffect for window width
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Call handleResize once to set initial class
+    handleResize();
+
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+
   return (
     <div className="container mx-auto relative">
       <Swiper

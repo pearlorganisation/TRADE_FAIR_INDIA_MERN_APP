@@ -213,7 +213,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         onClick={() => {
           goNext();
         }}
-        className={`${windowWidth < 390 ? 'opacity-70' : ''} bg-[#DFFEC8] text-[32px] md:text-5xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -right-0 md:-right-4  z-10 cursor-pointer`}
+        className={`${windowWidth < 390 ? 'opacity-70' : ''} bg-[#DFFEC8] text-[32px] md:text-5xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -right-0 md:-right-6  z-10 cursor-pointer`}
       >
         <FaAngleRight />
       </div>
