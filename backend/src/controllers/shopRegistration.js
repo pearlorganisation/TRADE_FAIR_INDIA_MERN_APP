@@ -1,4 +1,5 @@
 const Registration = require("../models/ShopRegistration.js");
+const event = require("../models/events.js");
 const { vendorMail } = require("../utils/vendorMail.js");
 const Category = require("../models/category.js");
 const ShopRegistration = require("../models/ShopRegistration.js");
@@ -144,7 +145,22 @@ exports.getSingleShopRegistration = async (req, res) => {
         .status(400)
         .json({ status: false, message: "No data found with given id!!" });
     }
-    res.status(200).json({ status: true, data: singleShopData });
+
+    const data = await event.findOne({
+      "shopDetails.shopName": singleShopData?._id,
+    });
+
+    let gallery = [];
+
+    data?.shopDetails?.forEach((item) => {
+      if (item?.shopName?.toString() === singleShopData?._id?.toString()) {
+        gallery = item?.gallery;
+      }
+    });
+
+    res
+      .status(200)
+      .json({ status: true, data: { ...singleShopData?._doc, gallery } });
   } catch (err) {
     res.status(400).json({
       status: false,
