@@ -11,7 +11,7 @@ exports.newClientBanner = async (req, res) => {
     const newDoc = new clientPageBanner({
       ...req?.body,
       banner: req?.files?.banner[0]?.path,
-      // mobileBanner: req?.files?.mobileBanner[0]?.path,
+      mobileBanner: req?.files?.mobileBanner[0]?.path,
     });
 
     await newDoc.save();
