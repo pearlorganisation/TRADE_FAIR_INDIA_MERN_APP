@@ -22,6 +22,8 @@ const CreateBanner = () => {
 
   const handleBanner = (bannerData) => {
     formData.append("banner", bannerData?.banner[0]);
+    formData.append("mobileBanner", bannerData?.mobileBanner[0]);
+
     formData.append("bannerData", bannerData?.bannerData);
     formData.append("buttonLink", bannerData?.buttonLink);
     dispatch(createHomeBanner(formData));

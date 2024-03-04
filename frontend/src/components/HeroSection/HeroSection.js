@@ -26,8 +26,8 @@ const HeroSection = () => {
       {isLoading ? (
         <div className="bg-slate-200 animate-pulse w-[90%] rounded-2xl mx-auto bg-top h-[80dvh] relative overflow-hidden flex flex-col justify-center items-center gap-12"></div>
       ) : (
-        <div className="bg-[#00373E] w-[90%] rounded-2xl mx-auto bg-top h-[80dvh] relative overflow-hidden flex flex-col justify-center items-center gap-12">
-          <svg
+        <div className=" w-[90%] rounded-2xl mx-auto bg-top h-[80dvh] relative overflow-hidden flex flex-col justify-center items-center gap-12">
+          {/* <svg
             className="absolute top-[-12rem] left-[-15rem] md:top-[-6rem] md:left-[-10rem] rotate-[60deg]"
             width="408"
             height="408"
@@ -75,9 +75,9 @@ const HeroSection = () => {
               d="M921,565.9999999999999C921.8331706246653,636.8606931268291,828.4156904146583,695.0366668274289,737.4990237479917,742.1938028412529C646.5823570813251,789.350938855077,458.5978701709415,872.8084498898191,375.5000000000001,848.9428160829436C292.4021298290587,825.0771822760681,235.74513605567677,697.1170570836847,238.9118027223434,599C242.07846938901002,500.88294291631536,312.23530045372377,307.2355329007894,394.49999999999983,260.2404735808356C476.7646995462759,213.24541426088186,644.7499999999998,266.06972301041674,732.4999999999998,317.0296440802775C820.2499999999998,367.9895651501382,920.1668293753347,495.13930687317065,921,565.9999999999999C921.8331706246653,636.8606931268291,828.4156904146583,695.0366668274289,737.4990237479917,742.1938028412529"
               fill="#DFFEC8"
             />
-          </svg>
+          </svg> */}
 
-          <div className="text-fluid_font/none z-50 text-white w-full md:w-[70%] lg:w-[50%] text-center font-medium">
+          <div className="text-fluid_font/none z-10 text-white w-full md:w-[70%] lg:w-[50%] text-center font-medium">
             {activeBanner?.bannerData}
             {/* Explore 40+ happening events near you */}
           </div>

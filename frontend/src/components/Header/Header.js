@@ -143,7 +143,7 @@ const Header = () => {
             className={`flex-1  md:block pb-0 mt-0 absolute left-0 w-full top-[4rem] md:static md:h-auto md:w-auto transition-all bg-[#00373E] ${
               state
                 ? "h-[100vh] px-3 md:px-0"
-                : "h-[0vh] px-3 md:px-0 overflow-hidden"
+                : "h-[0vh] px-3 md:px-0 overflow-hidden md:overflow-visible"
             }`}
           >
             <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0 ">
@@ -162,7 +162,7 @@ const Header = () => {
                     );
                   })}
               </li>
-              <li>
+              <li className="">
                 <LocationDropDown />
               </li>
 
