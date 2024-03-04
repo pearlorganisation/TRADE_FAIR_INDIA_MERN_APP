@@ -16,11 +16,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const EventCarousel = () => {
+  // screen width state
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-   // screen width state
-   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const swiperRef = useRef(null);
   const { isLoading, eventData } = useSelector((state) => state.events);
@@ -66,9 +65,8 @@ const EventCarousel = () => {
     };
   }, []);
 
-
   return (
-    <div className="container mx-auto relative">
+    <div className="flex flex-row">
       <Swiper
         ref={swiperRef}
         slidesPerView={1}
@@ -76,13 +74,17 @@ const EventCarousel = () => {
         breakpoints={{
           640: {
             slidesPerView: 1,
-            spaceBetween: 20,
+            spaceBetween: 10,
           },
           768: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          1024: {
             slidesPerView: 2,
             spaceBetween: 40,
           },
-          1024: {
+          1280: {
             slidesPerView: 3,
             spaceBetween: 50,
           },
@@ -94,36 +96,47 @@ const EventCarousel = () => {
           filteredData?.length > 0 &&
           filteredData?.map((item) => {
             return (
+            
               <SwiperSlide className="">
-                {" "}
                 <Link to={`/event/${item?._id}`} state={item}>
-                  <div className="bg-white min-h-[20rem] max-w-[22rem] px-3 pt-3 rounded-lg grid grid-rows-[auto_6rem] mx-auto">
-                    <div className=" flex justify-center items-center">
+                  {" "}
+                  <div
+                    className={`bg-white max-w-[25rem] px-1 pt-1 rounded-lg  mx-auto border border-neutral-400 shadow-sm`}
+                  >
+                    <div className=" flex justify-center items-center text-center relative">
+                      <div className="absolute bottom-1 w-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white p-2">
+                        <span>MeetUp 2023</span> <span>Raipur</span>
+                      </div>
                       <img
-                        className="w-full h-full"
+                        className="w-full"
                         src={item?.eventBanner?.path}
                         alt=""
                       />
                     </div>
-                    <div className="flex justify-between items-center">
-                      <div className="font-medium text-xl w-[60%] line-clamp-2">
+                    <div className=" p-2">
+                      <div className="font-medium text-lg line-clamp-1 mb-2">
                         {item?.eventName ||
-                          "Startup Tour 2023 ft. 50 Cent | Mumbai"}
+                          "All Inida Meetup 2023 ft. 50 Cent | Mumbai"}
                       </div>
-                      <FaAngleRight className="cursor-pointer" size={25} />
+                      <div className="font-medium text-sm text-[#00373E] py-1">
+                        <span className="text-xs">By Bombay inc</span>
+                      </div>
                     </div>
                   </div>
                 </Link>
               </SwiperSlide>
+            
             );
           })}
       </Swiper>
-      {/* Custom next and prev buttons */}
-      <div
+       {/* Custom next and prev buttons */}
+       <div
         onClick={() => {
           goNext();
         }}
-        className="bg-[#DFFEC8] text-xl md:text-2xl lg:text-3xl text-[#00373E] rounded-full p-1 absolute top-[50%] right-0 z-10 cursor-pointer"
+        className={`${
+          windowWidth < 390 ? "opacity-70" : ""
+        } absolute bg-[#DFFEC8] text-[32px] md:text-5xl  text-[#00373E] rounded-full p-1  top-[50%] translate-y-1/2 -right-0 xl:-right-6  z-10 cursor-pointer`}
       >
         <FaAngleRight />
       </div>
@@ -131,7 +144,9 @@ const EventCarousel = () => {
         onClick={() => {
           goPrev();
         }}
-        className="bg-[#DFFEC8] text-xl md:text-2xl lg:text-3xl text-[#00373E] rounded-full p-1 absolute top-[50%] z-10 cursor-pointer"
+        className={`${
+          windowWidth < 390 ? "opacity-70" : ""
+        } bg-[#DFFEC8] text-[32px] md:text-5xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -left-0 xl:-left-4 z-10 cursor-pointer`}
       >
         <FaAngleLeft />
       </div>
