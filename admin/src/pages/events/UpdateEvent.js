@@ -743,7 +743,7 @@ const UpdateEvent = () => {
                         htmlFor="eventBanner"
                         className="form-label fw-bold d-flex gap-2 justify-content-start align-items-center"
                       >
-                        Event Banner
+                        Event Banner (1536 X 416)
                         <BsFillPenFill style={{ cursor: "pointer" }} />
                       </label>
                       <input

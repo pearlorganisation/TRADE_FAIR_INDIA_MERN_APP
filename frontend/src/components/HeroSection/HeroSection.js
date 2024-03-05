@@ -26,7 +26,7 @@ const HeroSection = () => {
       {isLoading ? (
         <div className="bg-slate-200 animate-pulse w-[90%] rounded-2xl mx-auto bg-top h-[80dvh] relative overflow-hidden flex flex-col justify-center items-center gap-12"></div>
       ) : (
-        <div className=" w-[90%] rounded-2xl mx-auto bg-top h-[80dvh] relative overflow-hidden flex flex-col justify-center items-center gap-12">
+        <div className=" w-[1710px] rounded-2xl mx-auto bg-top h-[80dvh] relative overflow-hidden flex flex-col justify-center items-center gap-12">
           {/* <svg
             className="absolute top-[-12rem] left-[-15rem] md:top-[-6rem] md:left-[-10rem] rotate-[60deg]"
             width="408"
@@ -107,6 +107,13 @@ const HeroSection = () => {
             className="tB6UZ a5VGX absolute "
             style={{ aspectRatio: "5184 / 3888" }}
           />
+
+          {/* <img
+            src={activeBanner?.banner}
+            alt="a couple of old tvs sitting in a window"
+            className="tB6UZ a5VGX absolute "
+            style={{ aspectRatio: "5184 / 3888" }}
+          /> */}
         </div>
       )}
     </div>
