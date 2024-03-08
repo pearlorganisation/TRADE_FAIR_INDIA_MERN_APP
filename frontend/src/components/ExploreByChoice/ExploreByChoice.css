@@ -1,0 +1,20 @@
+.icons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .icon {
+    flex: 0 0 auto;
+    fill: #000000;
+    stroke: #000000;
+    width: 20px;
+  }
+  
+  .icon svg { 
+    --size: 15px;
+    fill: inherit;
+    min-height: var(--size);
+    min-width:  var(--size);
+  }

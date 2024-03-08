@@ -1,3 +1,7 @@
+html, body, #app {
+  overflow-x: hidden;
+}
+
 .App-link {
   color: #61dafb;
 }

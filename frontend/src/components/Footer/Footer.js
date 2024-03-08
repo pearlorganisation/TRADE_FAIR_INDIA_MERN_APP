@@ -24,7 +24,7 @@ const Footer = () => {
         </div>
         <div className="justify-between sm:flex">
           <div className=" p-10 bg-white rounded-xl mt-10 space-y-6 flex flex-col lg:flex-row justify-between  gap-5 md:space-y-0 md:mt-0">
-            <div className="flex gap-2 flex-col h-full justify-evenly items-start w-[70%] ">
+            <div className="flex gap-2 flex-col h-full justify-evenly items-start xl:w-[70%] ">
               <Link to="/">
                 <div className="font-medium text-lg flex justify-content items-center gap-2">
                   <div className="rounded-md  h-[2.5rem] w-[2.5rem] bg-[#00373E] text-white grid place-items-center">
@@ -33,15 +33,21 @@ const Footer = () => {
                   <span className="text-[#00373E]">TRADE FAIR</span>
                 </div>
               </Link>
-              <p className="font-medium">
-                If you’re looking for the latest in wireless headphones, look no
-                further. These are perfect for TV, stereo, home, and cell phone.
-              </p>
+              <ul className="font-medium w-full list-disc lg:list-none">
+                <li>
+                If you’re looking for the best events, look no
+                further. 
+                </li>
+                <li>
+                These are perfect for building your knowlegde as well as social gathering.
+                </li>
+              </ul>
               <div className="flex justify-start items-center gap-2 font-medium">
                 <div className="flex justify-start items-center gap-1">
                   {" "}
                   <IoMdMail /> trade@gmail.com{" "}
                 </div>
+                {"|"}
                 <div className="flex justify-start items-center gap-1">
                   <IoIosCall />
                   9876543210
