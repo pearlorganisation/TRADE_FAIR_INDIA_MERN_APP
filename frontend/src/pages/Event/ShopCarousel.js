@@ -89,7 +89,7 @@ const ShopCarousel = ({ shopDetails }) => {
         onClick={() => {
           goNext();
         }}
-        className="bg-[#DFFEC8] text-[#00373E] rounded-full p-1 absolute top-[50%] right-[-2rem] z-10 cursor-pointer"
+        className="bg-[#DFFEC8] text-[#00373E] rounded-full p-1 absolute top-[50%] right-[-0.5rem] md:top-[50%] md:right-[-2.8rem] z-10 cursor-pointer"
       >
         <FaAngleRight size={30} />
       </div>
@@ -97,7 +97,7 @@ const ShopCarousel = ({ shopDetails }) => {
         onClick={() => {
           goPrev();
         }}
-        className="bg-[#DFFEC8] text-[#00373E] rounded-full p-1 absolute left-[-2rem] top-[50%] z-10 cursor-pointer"
+        className="bg-[#DFFEC8] text-[#00373E] rounded-full p-1 absolute left-[-0.5rem] top-[50%] md:left-[-2.8rem] md:top-[50%] z-10 cursor-pointer"
       >
         <FaAngleLeft size={30} />
       </div>
