@@ -44,6 +44,7 @@ export const UpdateEventBanner = () => {
     useState(false);
   const [modifiedBanner, setModifiedBannerList] = useState([]);
   const [bannerImg, setBannerImg] = useState(state?.banner);
+
   const [bannerFile, setBannerFile] = useState();
 
   useEffect(() => {

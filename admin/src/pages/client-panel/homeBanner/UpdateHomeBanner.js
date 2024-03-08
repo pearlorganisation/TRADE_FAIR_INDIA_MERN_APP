@@ -38,10 +38,15 @@ export const UpdateHomeBanner = () => {
     useSelector((state) => state?.clientBanner);
 
   const [bannerImg, setBannerImg] = useState(state?.banner);
+  const [mobileBannerImg, setMobileBannerImg] = useState(state?.mobileBanner);
+
   const [bannerFile, setBannerFile] = useState();
+  const [mobileBannerFile, setMobileBannerFile] = useState();
 
   function handleBanner(bannerData) {
+    console.log(bannerData);
     formData.append("banner", bannerFile || bannerImg);
+    formData.append("mobileBanner", mobileBannerFile || mobileBannerImg);
     formData.append("bannerData", bannerData?.bannerData);
     formData.append("buttonLink", bannerData?.buttonLink);
     id
@@ -50,9 +55,14 @@ export const UpdateHomeBanner = () => {
   }
 
   function handleBannerData(e) {
-    const bannerImg = e.target.files[0];
-    setBannerImg(URL.createObjectURL(bannerImg));
-    setBannerFile(bannerImg);
+    const img = e.target.files[0];
+    setBannerImg(URL.createObjectURL(img));
+    setBannerFile(img);
+  }
+  function handleMobileBannerData(e) {
+    const img = e.target.files[0];
+    setMobileBannerImg(URL.createObjectURL(img));
+    setMobileBannerFile(img);
   }
   useEffect(() => {
     if (isHomeBannerUpdated) {
@@ -77,7 +87,7 @@ export const UpdateHomeBanner = () => {
             <div className="row">
               <div className="col-md-5">
                 <div className="form-row my-3">
-                  <label htmlFor="logo" className="form-label fw-medium">
+                  <label htmlFor="desktopImg" className="form-label fw-medium">
                     Banner image
                   </label>
                   <Controller
@@ -88,7 +98,7 @@ export const UpdateHomeBanner = () => {
                         <>
                           <label
                             className="btn btn-outline-info m-2"
-                            htmlFor="banner"
+                            htmlFor="desktopImg"
                           >
                             Edit
                           </label>
@@ -104,7 +114,49 @@ export const UpdateHomeBanner = () => {
                               handleBannerData(event);
                             }}
                             type="file"
-                            id="banner"
+                            id="desktopImg"
+                            className="form-control"
+                            style={{ display: "none" }}
+                          />
+                        </>
+                      );
+                    }}
+                  />
+                  {errors.logo && (
+                    <span className="text-danger">{errors?.logo?.message}</span>
+                  )}
+                </div>
+              </div>
+              <div className="col-md-5">
+                <div className="form-row my-3">
+                  <label htmlFor="mobileImg" className="form-label fw-medium">
+                    Mobile Banner image
+                  </label>
+                  <Controller
+                    control={control}
+                    name={"mobileBanner"}
+                    render={({ field: { value, onChange, ...field } }) => {
+                      return (
+                        <>
+                          <label
+                            className="btn btn-outline-info m-2"
+                            htmlFor="mobileImg"
+                          >
+                            Edit
+                          </label>
+                          <div className="w-100 h-100">
+                            <img
+                              src={mobileBannerImg}
+                              alt="logo"
+                              style={{ width: "200px", height: "200px" }}
+                            />
+                          </div>
+                          <input
+                            onChange={(event) => {
+                              handleMobileBannerData(event);
+                            }}
+                            type="file"
+                            id="mobileImg"
                             className="form-control"
                             style={{ display: "none" }}
                           />

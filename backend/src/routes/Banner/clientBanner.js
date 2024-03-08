@@ -19,6 +19,9 @@ router
   .get(getBanner);
 router
   .route("/:id")
-  .patch(upload.single("banner"), updateBanner)
+  .patch(
+    upload.fields([{ name: "banner" }, { name: "mobileBanner" }]),
+    updateBanner
+  )
   .delete(deleteClientBanner);
 module.exports = router;
