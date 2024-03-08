@@ -22,7 +22,7 @@ const Footer = () => {
             </button>
           </div>
         </div>
-        <div className="justify-between sm:flex">
+        <div className="justify-between sm:flex w-full shadow-sm">
           <div className=" p-10 bg-white rounded-xl mt-10 space-y-6 flex flex-col lg:flex-row justify-between  gap-5 md:space-y-0 md:mt-0">
             <div className="flex gap-2 flex-col h-full justify-evenly items-start xl:w-[70%] ">
               <Link to="/">
@@ -34,12 +34,10 @@ const Footer = () => {
                 </div>
               </Link>
               <ul className="font-medium w-full list-disc lg:list-none">
+                <li>If you’re looking for the best events, look no further.</li>
                 <li>
-                If you’re looking for the best events, look no
-                further. 
-                </li>
-                <li>
-                These are perfect for building your knowlegde as well as social gathering.
+                  These are perfect for building your knowlegde as well as
+                  social gathering.
                 </li>
               </ul>
               <div className="flex justify-start items-center gap-2 font-medium">
@@ -54,20 +52,18 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-6">
-              <div className="">
-                <div className="flex flex-col gap-3 ">
-                  <button className="block py-2 px-3 font-medium text-center bg-[#00373e] text-white  active:shadow-none rounded-lg shadow md:inline">
-                    Sign in
-                  </button>
-                  <button
-                    className="flex justify-center items-center gap-2 py-2 px-3 font-medium text-center bg-[#00373e] text-white  active:shadow-none rounded-lg shadow"
-                    type="button"
-                  >
-                    <FaMapMarkerAlt />
-                    Dehradun
-                  </button>
-                </div>
+            <div className="mt-6 ">
+              <div className="flex flex-col gap-3 ">
+                <button className="block py-2 px-3 font-medium text-center bg-[#00373e] text-white  active:shadow-none rounded-lg shadow md:inline">
+                  Sign in
+                </button>
+                <button
+                  className="flex justify-center items-center gap-2 py-2 px-3 font-medium text-center bg-[#00373e] text-white  active:shadow-none rounded-lg shadow"
+                  type="button"
+                >
+                  <FaMapMarkerAlt />
+                  Dehradun
+                </button>
               </div>
             </div>
           </div>
