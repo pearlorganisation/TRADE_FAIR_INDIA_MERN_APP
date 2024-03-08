@@ -83,13 +83,12 @@ const UpcomingEvents = () => {
         </div>
         <div className="container relative rounded-lg bg-[#00373e] flex flex-col gap-3 sm:gap-6 px-4 pb-4 sm:px-10 md:px-14">
           <div className="text-center text-[#fbfbfb] font-medium text-4xl pt-2">
-            All Trade Events
+            Upcoming Events
           </div>
-          
+
           <EventCarousel />
         </div>
       </div>
-
     </>
   );
 };
