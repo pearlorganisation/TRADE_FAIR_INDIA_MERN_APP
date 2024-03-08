@@ -81,8 +81,6 @@ exports.updateBanner = async (req, res) => {
     }
 
     if (req?.file) {
-      console.log(existingData?.banner);
-
       let publicId = existingData?.banner?.split("/").pop().split(".")[0];
       cloudinary.uploader.destroy(publicId, (e, r) => {
         if (e) {
@@ -99,7 +97,19 @@ exports.updateBanner = async (req, res) => {
     }
     const validData = await clientPageBanner.findByIdAndUpdate(
       req?.params?.id,
-      { ...req?.body, banner: req?.file?.path || existingData?.banner }
+      {
+        ...req?.body,
+        banner:
+          (Array.isArray(req?.files?.banner) &&
+            req?.files?.banner.length >= 1 &&
+            req?.files?.banner[0]?.path) ||
+          existingData?.banner,
+        mobileBanner:
+          (Array.isArray(req?.files?.mobileBanner) &&
+            req?.files?.mobileBanner.length >= 1 &&
+            req?.files?.mobileBanner[0]?.path) ||
+          existingData?.mobileBanner,
+      }
     );
     res
       .status(200)
