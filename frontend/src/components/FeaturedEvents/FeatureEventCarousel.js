@@ -19,6 +19,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
 
 const FeatureEventCarousel = ({ isLoading, eventsData }) => {
+  // screen width state
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef(null);
   const goNext = () => {
@@ -48,8 +51,32 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
     console.log("eventsData::", eventsData);
     // console.log(filteredData);
   }, [eventsData, filteredData]);
+
+
+   // useEffect for window width
+   useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Call handleResize once to set initial class
+    handleResize();
+
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+
+
   return (
-    <div className="container mx-auto relative">
+    <div className="flex flex-row">
+      
       <Swiper
         ref={swiperRef}
         slidesPerView={1}
@@ -57,13 +84,17 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         breakpoints={{
           640: {
             slidesPerView: 1,
-            spaceBetween: 20,
+            spaceBetween: 10,
           },
           768: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          1024: {
             slidesPerView: 2,
             spaceBetween: 40,
           },
-          1024: {
+          1280: {
             slidesPerView: 3,
             spaceBetween: 50,
           },
@@ -118,7 +149,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
                 <Link to={`/event/${item?.randomString}`} state={item}>
                   {" "}
                   <div
-                    className={`bg-white h-[30rem] max-w-[25rem] px-3 pt-3 rounded-lg grid grid-rows-[15rem_auto] mx-auto`}
+                    className={`bg-white h-[30rem] max-w-[25rem] px-4 pt-3 rounded-lg grid grid-rows-[15rem_auto] mx-auto border border-neutral-400 shadow-sm`}
                   >
                     <div className=" flex justify-center items-center relative">
                       <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
@@ -182,7 +213,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         onClick={() => {
           goNext();
         }}
-        className="bg-[#DFFEC8] text-xl md:text-2xl lg:text-3xl text-[#00373E] rounded-full p-1 absolute top-[50%] right-0 z-10 cursor-pointer"
+        className={`${windowWidth < 390 ? 'opacity-70' : ''} bg-[#DFFEC8] text-[32px] md:text-5xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -right-0 xl:-right-6  z-10 cursor-pointer`}
       >
         <FaAngleRight />
       </div>
@@ -190,7 +221,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         onClick={() => {
           goPrev();
         }}
-        className="bg-[#DFFEC8] text-xl md:text-2xl lg:text-3xl text-[#00373E] rounded-full p-1 absolute top-[50%] z-10 cursor-pointer"
+        className={`${windowWidth < 390 ? 'opacity-70' : ''} bg-[#DFFEC8] text-[32px] md:text-5xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 -left-0 xl:-left-4 z-10 cursor-pointer`}
       >
         <FaAngleLeft />
       </div>

@@ -80,8 +80,8 @@ const CommonQuestion = () => {
     console.log("faqData::", faqData);
   }, [faqData]);
   return (
-    <div className="h-dvh grid place-items-center">
-      <section className="leading-relaxed max-w-screen-xl mt-12 mx-auto px-4 md:px-8 w-full">
+    <div className="grid place-items-center">
+      <section className="leading-relaxed max-w-screen-xl mt-10 mb-10 mx-auto px-4 md:px-8 w-full">
         <div className="space-y-3 text-center">
           <h1 className="text-3xl text-[#00373E] font-semibold">
             Common Questions
