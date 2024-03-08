@@ -37,8 +37,8 @@ const CreateEventBanner = () => {
   return (
     <div className="container" style={{ paddingBottom: "5rem" }}>
       <div className="row">
-        <div className="col-md-12 fs-4 fw-medium py-2 text-center ">
-        <h1 className="text-center text-danger"> Create Event banner</h1>
+        <div className="col-md-12 fs-4 fw-medium py-2 text-center">
+          <h1 className="text-center text-danger"> Create Event banner</h1>
         </div>
         <form
           onSubmit={handleSubmit(handleBanner)}
@@ -82,7 +82,9 @@ const CreateEventBanner = () => {
                   id="bannerData"
                 />
                 {errors.bannerData && (
-                  <span className="text-danger">{errors.bannerData.message}</span>
+                  <span className="text-danger">
+                    {errors.bannerData.message}
+                  </span>
                 )}
               </div>
             </div>
@@ -102,7 +104,9 @@ const CreateEventBanner = () => {
                   id="buttonLink"
                 />
                 {errors.buttonLink && (
-                  <span className="text-danger">{errors.buttonLink.message}</span>
+                  <span className="text-danger">
+                    {errors.buttonLink.message}
+                  </span>
                 )}
               </div>
             </div>

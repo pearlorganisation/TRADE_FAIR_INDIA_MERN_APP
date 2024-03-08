@@ -25,12 +25,6 @@ export const UpdateHomeBanner = () => {
     handleSubmit,
     control,
     formState: { errors, isValid, dirtyFields },
-    getValues,
-    setValue,
-    watch,
-    reset,
-    resetField,
-    getFieldState,
   } = useForm({
     mode: "onTouched",
     defaultValues: {
@@ -45,8 +39,6 @@ export const UpdateHomeBanner = () => {
 
   const [bannerImg, setBannerImg] = useState(state?.banner);
   const [bannerFile, setBannerFile] = useState();
-
-
 
   function handleBanner(bannerData) {
     formData.append("banner", bannerFile || bannerImg);

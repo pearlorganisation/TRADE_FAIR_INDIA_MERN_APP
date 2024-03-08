@@ -89,7 +89,8 @@ const FetchBanners = () => {
                 <tr className="">
                   <th className="text-center align-middle">S.NO</th>
                   <th className="text-center align-middle">banner id</th>
-                  <th className="text-center align-middle">Banner</th>
+                  <th className="text-center align-middle">Banner Desktop</th>
+                  <th className="text-center align-middle">Banner Mobile</th>
                   <th className="text-center align-middle">Banner data</th>
                   <th className="text-center align-middle">Button Link</th>
                   <th className="text-center align-middle">Actions</th>
@@ -110,6 +111,14 @@ const FetchBanners = () => {
                           <img
                             className="w-25"
                             src={res?.banner}
+                            alt="banner"
+                          ></img>
+                        </td>
+
+                        <td>
+                          <img
+                            className="w-25"
+                            src={res?.mobileBanner}
                             alt="banner"
                           ></img>
                         </td>

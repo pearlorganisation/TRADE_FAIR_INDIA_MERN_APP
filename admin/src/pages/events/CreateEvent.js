@@ -599,7 +599,7 @@ const CreateEvent = () => {
                 <div className="col-md-6 my-2">
                   <Form.Group className="" controlId="eventBanner">
                     <label htmlFor="website" className="form-label fw-bold">
-                      Event Banner
+                      Event Banner (1536 X 416)
                     </label>
                     <Form.Control
                       type="file"
