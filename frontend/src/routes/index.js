@@ -22,7 +22,7 @@ const coreRoutes = [
     component: <Event />,
   },
   {
-    path: "/shop/:shopId",
+    path: "/shop/:shopUniqueId",
     title: "Shop",
     component: <Shop />,
   },

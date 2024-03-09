@@ -130,7 +130,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
             const isActive = idx === activeIndex + 1;
             return (
               <SwiperSlide className="">
-                <Link to={`/event/${item?._id}`} state={item}>
+                <Link to={`/event/${item?.randomString}`} state={item}>
                   {" "}
                   <div
                     className={`bg-white h-[30rem] max-w-[25rem] px-4 pt-3 rounded-lg grid grid-rows-[15rem_auto] mx-auto border border-neutral-400 shadow-sm`}

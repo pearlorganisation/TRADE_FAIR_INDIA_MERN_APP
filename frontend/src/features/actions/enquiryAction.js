@@ -5,10 +5,10 @@ import { instance } from "../../service/axiosInterceptor";
 
 export const postEnquiry = createAsyncThunk(
   "/postEnquiry",
-  async ({ payload, shopId }, { rejectWithValue }) => {
+  async ({ payload, shopUniqueId }, { rejectWithValue }) => {
     console.log("working");
     try {
-      const {data} = await instance.post(`/enquiry/${shopId}`, payload);
+      const { data } = await instance.post(`/enquiry/${shopUniqueId}`, payload);
       console.log(data);
       return data;
     } catch (err) {
