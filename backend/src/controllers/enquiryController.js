@@ -6,10 +6,15 @@ let Model = require(`../models/ShopRegistration`);
 exports.newEnquiry = async (req, res) => {
   try {
     let initialEnqury = new Enquiry(req?.body);
+    console.log(req?.params?.id);
     let savedData = await initialEnqury.save();
-    await Model.findByIdAndUpdate(req?.params?.id, {
-      $push: { enquiries: savedData._id },
-    });
+    console.log("savedData", savedData?._id.toString());
+    await Model.findOneAndUpdate(
+      { randomString: req?.params?.id },
+      {
+        $push: { enquiries: savedData._id.toString() },
+      }
+    );
     res.status(200).json({
       status: "SUCCESS",
       msg: "enquiry Created successfully",

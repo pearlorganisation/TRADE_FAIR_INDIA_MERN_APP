@@ -2,12 +2,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { postEnquiry } from "../../features/actions/enquiryAction";
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 
 const QueryForm = () => {
   const dispatch = useDispatch();
-  const { shopId } = useParams();
+  const { shopUniqueId } = useParams();
   const { isLoading } = useSelector((state) => state.enquiry);
+  const { state } = useLocation();
   const {
     register,
     handleSubmit,
@@ -15,7 +16,7 @@ const QueryForm = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    dispatch(postEnquiry({ payload: data, shopId: shopId }));
+    dispatch(postEnquiry({ payload: data, shopUniqueId: shopUniqueId }));
   };
 
   return (
