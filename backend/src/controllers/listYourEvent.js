@@ -24,5 +24,3 @@ exports.getAllUrl = async (req, res) => {
       .json({ status: false, message: e?.message || "Internal server error" });
   }
 };
-
-exports.getAllUrl = async (req, res) => {};
