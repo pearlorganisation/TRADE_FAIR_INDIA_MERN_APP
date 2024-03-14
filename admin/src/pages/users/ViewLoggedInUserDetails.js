@@ -5,29 +5,37 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { AiTwotoneEdit } from "react-icons/ai";
 import ProfilePH from "../../assets/images/ProfilePH.jpg";
-import { useForm,Controller } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserDetails } from "../../features/actions/userActions";
-
 
 import Select from "react-select";
 import LoadingButton from "../events/LoadingButton";
 // -----------------------------------------------------------
 
 const ViewLoggedInUserDetails = () => {
-  const { rolesList } = useSelector((state) => state.role);
   const { isLoading } = useSelector((state) => state.auth);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { loggedInUserData } = useAuth();
   const [profile, setProfile] = useState(
     loggedInUserData?.profilePic || ProfilePH
   );
-  const { role, _id } = rolesList.find(
-    (item) => item.role === loggedInUserData.role
-  );
-  console.log(role, _id);
+  const [modifiedRolesList, setModifiedRolesList] = useState([
+    {
+      label: "SUPER_ADMIN",
+      value: "SUPER_ADMIN",
+    },
+    {
+      label: "USER",
+      value: "USER",
+    },
+  ]);
+  // const { role, _id } = rolesList.find(
+  //   (item) => item.role === loggedInUserData.role
+  // );
+  // console.log(role, _id);
   const {
     register,
     handleSubmit,
@@ -39,8 +47,8 @@ const ViewLoggedInUserDetails = () => {
       name: loggedInUserData?.name,
       email: loggedInUserData?.email,
       role: {
-        label: role,
-        value: _id,
+        label: loggedInUserData?.role,
+        value: loggedInUserData?.role,
       },
       // permissions: state?.permissions?.map((item) => {
       //   return {
@@ -51,32 +59,32 @@ const ViewLoggedInUserDetails = () => {
     },
   });
 
-  const [modifiedRolesList, setModifiedRolesList] = useState([]);
-  useEffect(() => {
-    if (Array.isArray(rolesList) && rolesList?.length > 0) {
-      setModifiedRolesList(
-        rolesList.map((role) => {
-          return {
-            label: role?.role,
-            value: role?._id,
-          };
-        })
-      );
-    }
-  }, [rolesList]);
- 
-  const onSubmit = (data)=>{
-    console.log(data)
-    const { name,profilePic } = data;
+  // useEffect(() => {
+  //   if (Array.isArray(rolesList) && rolesList?.length > 0) {
+  //     setModifiedRolesList(
+  //       rolesList.map((role) => {
+  //         return {
+  //           label: 'role?.role',
+  //           value: 'role?._id',
+  //         };
+  //       })
+  //     );
+  //   }
+  // }, [rolesList]);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    const { name, profilePic } = data;
 
     const formData = new FormData();
     formData.append("name", name);
-   
-   
+
     formData.append("profilePic", profilePic?.[0]);
-    console.log("user",loggedInUserData)
-    dispatch(updateUserDetails({ userId: loggedInUserData?.userId, payload: formData }));
-  }
+    console.log("user", loggedInUserData);
+    dispatch(
+      updateUserDetails({ userId: loggedInUserData?.userId, payload: formData })
+    );
+  };
 
   const [editForm, setEditForm] = useState(false);
   const navigate = useNavigate();
@@ -86,7 +94,10 @@ const ViewLoggedInUserDetails = () => {
     setProfile(image);
     console.log("image", image);
   };
-  console.log(loggedInUserData?.role === 'SUPER_ADMIN' || loggedInUserData?.role === 'SUPER_ADMIN')
+  console.log(
+    loggedInUserData?.role === "SUPER_ADMIN" ||
+      loggedInUserData?.role === "SUPER_ADMIN"
+  );
   const [showModal, setShowModal] = useState(true);
   return (
     <div>
@@ -107,25 +118,25 @@ const ViewLoggedInUserDetails = () => {
             <Modal.Title id="shop-details-modal" className="text-center">
               User's Details
             </Modal.Title>
-           <div className="d-flex gap-2">
-           <Button
-              variant="primary"
-              onClick={() => {
-                setEditForm(!editForm);
-              }}
-            >
-              Edit <AiTwotoneEdit />{" "}
-            </Button>
-            <Button
-                      variant="secondary"
-                      onClick={() => {
-                        setShowModal(false);
-                        navigate("/");
-                      }}
-                    >
-                      Close
-                    </Button>
-           </div>
+            <div className="d-flex gap-2">
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setEditForm(!editForm);
+                }}
+              >
+                Edit <AiTwotoneEdit />{" "}
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setShowModal(false);
+                  navigate("/");
+                }}
+              >
+                Close
+              </Button>
+            </div>
           </Modal.Header>
           <Modal.Body>
             <section>
@@ -249,51 +260,49 @@ const ViewLoggedInUserDetails = () => {
                       {errors?.role && "User Name is Required"}
                     </span>
                   </Row>
-                  {
-                    loggedInUserData?.role === 'SUPER_ADMIN'   &&  <Row className="mb-3">
-                    <Col sm={12} md={6}>
-                      <Form.Group className="mb-3" controlId="city">
-                        <Form.Label>Select Role</Form.Label>
-                        <Controller
-                          name="role"
-                          autoComplete={"off"}
-                          control={control}
-                          render={({ field: { onChange, value, ref } }) => (
-                            <Select
-                              options={modifiedRolesList}
-                              onChange={(val) => {
-                                onChange(val);
-                              }}
-                              isClearable
-                              value={value || null}
-                              defaultValue={modifiedRolesList}
-                            />
-                          )}
-                          rules={{
-                            required: {
-                              message: "Role is required",
-                              value: true,
-                            },
-                          }}
-                        />
-                        <span className="fw-normal fs-6 text-danger">
-                          {errors?.role?.message}
-                        </span>
-                      </Form.Group>
-                    </Col>
+                  {loggedInUserData?.role === "SUPER_ADMIN" && (
+                    <Row className="mb-3">
+                      <Col sm={12} md={6}>
+                        <Form.Group className="mb-3" controlId="city">
+                          <Form.Label>Select Role</Form.Label>
+                          <Controller
+                            name="role"
+                            autoComplete={"off"}
+                            control={control}
+                            render={({ field: { onChange, value, ref } }) => (
+                              <Select
+                                options={modifiedRolesList}
+                                onChange={(val) => {
+                                  onChange(val);
+                                }}
+                                isClearable
+                                value={value || null}
+                                defaultValue={modifiedRolesList}
+                              />
+                            )}
+                            rules={{
+                              required: {
+                                message: "Role is required",
+                                value: true,
+                              },
+                            }}
+                          />
+                          <span className="fw-normal fs-6 text-danger">
+                            {errors?.role?.message}
+                          </span>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                  )}
 
-                   
-                  </Row>
-                  }
-                 
                   <div className="d-flex gap-2">
-                    {
-                      isLoading ?  <LoadingButton/> : <Button variant="primary" type="submit">
-                      Submit
-                    </Button>
-                    }
-                   
-                    
+                    {isLoading ? (
+                      <LoadingButton />
+                    ) : (
+                      <Button variant="primary" type="submit">
+                        Submit
+                      </Button>
+                    )}
                   </div>
                 </Form>
               )}
