@@ -97,7 +97,7 @@ const EventCarousel = () => {
           filteredData?.map((item) => {
             return (
               <SwiperSlide className="">
-                <Link to={`/event/${item?._id}`} state={item}>
+                <Link to={`/event/${item?.randomString}`} state={item}>
                   {" "}
                   <div
                     className={`bg-white max-w-[25rem] px-1 pt-1 rounded-lg  mx-auto border border-neutral-400 shadow-sm`}
