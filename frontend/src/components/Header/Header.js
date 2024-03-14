@@ -148,19 +148,21 @@ const Header = () => {
           >
             <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0 ">
               <li className="text-white border-2 border-white hover:ring-4 transition-all ring-white/30 py-1 px-3 rounded-2xl">
-                {listYourLink
-                  ?.filter((it, idx) => idx < 1)
-                  ?.map((item) => {
-                    return (
-                      <a
-                        href={item?.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        List Your Event
-                      </a>
-                    );
-                  })}
+                {Array.isArray(listYourLink) &&
+                  listYourLink.length > 0 &&
+                  listYourLink
+                    ?.filter((it, idx) => idx < 1)
+                    ?.map((item) => {
+                      return (
+                        <a
+                          href={item?.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          List Your Event
+                        </a>
+                      );
+                    })}
               </li>
               <li className="">
                 <LocationDropDown />
