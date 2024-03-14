@@ -23,7 +23,7 @@ import { fetchShopByUniqueKey } from "../../features/actions/shopAction";
 
 const Shop = () => {
   const navigate = useNavigate();
-  const { shopId } = useParams();
+  const { shopUniqueId } = useParams();
 
   const dispatch = useDispatch();
 
@@ -48,7 +48,7 @@ const Shop = () => {
     });
   }, []);
   useEffect(() => {
-    dispatch(fetchShopByUniqueKey({ uniqueKey: shopId }));
+    dispatch(fetchShopByUniqueKey({ uniqueKey: shopUniqueId }));
   }, []);
 
   return (
