@@ -64,7 +64,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducerWithClear);
 // Configure and create the Redux store
 const store = configureStore({
   reducer: persistedReducer,
-  devTools: process.env.REACT_APP_WORKING_ENVIRONMENT !== "development",
+  devTools: process.env.REACT_APP_WORKING_ENVIRONMENT == "development",
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

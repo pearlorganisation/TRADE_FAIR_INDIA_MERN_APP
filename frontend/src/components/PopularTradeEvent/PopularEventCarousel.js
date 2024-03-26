@@ -123,8 +123,8 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
                 </SwiperSlide>
               );
             })
-        ) : Array.isArray(filteredData) && filteredData.length > 0 ? (
-          filteredData?.map((item, idx) => {
+        ) : Array.isArray(eventData) && eventData.length > 0 ? (
+          eventData?.map((item, idx) => {
             const isPrev = idx === activeIndex - 1;
             const isNext = idx === activeIndex + 1;
             const isActive = idx === activeIndex + 1;

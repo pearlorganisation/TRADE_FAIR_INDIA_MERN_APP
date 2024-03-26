@@ -14,6 +14,7 @@ import sampleImage from "../assets/UpEvents.png";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { FaCalendarAlt } from "react-icons/fa";
 
 const EventCarousel = () => {
   // screen width state
@@ -113,12 +114,32 @@ const EventCarousel = () => {
                       />
                     </div>
                     <div className=" p-2">
-                      <div className="font-medium text-lg line-clamp-1 mb-2">
+                      <div className="font-medium text-lg line-clamp-1">
                         {item?.eventName ||
                           "All Inida Meetup 2023 ft. 50 Cent | Mumbai"}
                       </div>
                       <div className="font-medium text-sm text-[#00373E] py-1">
-                        <span className="text-xs">By Bombay inc</span>
+                        <span className="text-xs">By Bombay inc</span>{" "}
+                        <span className="flex justify-start items-center gap-1">
+                          <FaCalendarAlt />{" "}
+                          {new Date(item?.eventDate[1]).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          ) +
+                            " - " +
+                            new Date(item?.eventDate[0]).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
+                        </span>
                       </div>
                     </div>
                   </div>
