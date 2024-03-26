@@ -5,11 +5,15 @@ import { FaCheck } from "react-icons/fa6";
 import { RiExpandUpDownLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVenue } from "../../features/actions/venueAction";
-import { filterEvent } from "../../features/slices/eventsSlice";
+import {
+  exploreByChoice,
+  filterEvent,
+} from "../../features/slices/eventsSlice";
 
 const LocationDropDown = () => {
   const dispatch = useDispatch();
   const { venueData } = useSelector((state) => state.venue);
+  const { filteredEventData } = useSelector((state) => state.events);
   const people = [{ name: "Select Location" }];
   const [isSelected, setSelected] = useState(false);
   const [selectedData, setSelectedData] = useState({ name: "Select Location" });
@@ -29,6 +33,10 @@ const LocationDropDown = () => {
   useEffect(() => {
     dispatch(filterEvent({ name: "All" }));
   }, [venueData]);
+
+  useEffect(() => {
+    dispatch(exploreByChoice({ category: "All" }));
+  }, [filteredEventData]);
 
   useEffect(() => {
     console.log("locationData::", locationData);

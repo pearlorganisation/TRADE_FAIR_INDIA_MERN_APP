@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -15,8 +15,14 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ShopCarousel = ({ shopDetails }) => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  useEffect(() => {
+    console.log(isAuthenticated, ":::isUserLoggedIn");
+  }, [isAuthenticated]);
+
   const swiperRef = useRef(null);
   const goNext = () => {
     if (swiperRef.current && swiperRef.current.swiper) {
@@ -58,7 +64,14 @@ const ShopCarousel = ({ shopDetails }) => {
             console.log("item::", item);
             return (
               <SwiperSlide className="">
-                <Link to={`/shop/${item?.shopName?.randomString}`} state={item}>
+                <Link
+                  to={`${
+                    isAuthenticated
+                      ? `/shop/${item?.shopName?.randomString}`
+                      : "#"
+                  }`}
+                  state={item}
+                >
                   <div className="bg-white max-h-[20rem] max-w-[22rem] rounded-lg grid grid-rows-[13rem_auto] mx-auto">
                     <div className=" flex justify-center items-center relative">
                       <img
