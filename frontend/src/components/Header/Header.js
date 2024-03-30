@@ -21,23 +21,23 @@ const Header = () => {
 
   let prevScroll = window.scrollY;
   let currScroll = 0;
-  const handleNavBar = () => {
-    currScroll = window.scrollY;
-    if (prevScroll < currScroll) {
-      setShowNav(true);
-    } else {
-      setShowNav(false);
-    }
+  // const handleNavBar = () => {
+  //   currScroll = window.scrollY;
+  //   if (prevScroll < currScroll) {
+  //     setShowNav(true);
+  //   } else {
+  //     setShowNav(false);
+  //   }
 
-    prevScroll = currScroll;
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", handleNavBar);
+  //   prevScroll = currScroll;
+  // };
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleNavBar);
 
-    return () => {
-      window.removeEventListener("scroll", handleNavBar);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleNavBar);
+  //   };
+  // }, []);
 
   useEffect(() => {
     dispatch(fetchEventList(cityName || "Dehradun"));
