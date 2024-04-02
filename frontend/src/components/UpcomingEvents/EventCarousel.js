@@ -101,7 +101,7 @@ const EventCarousel = () => {
                 <Link to={`/event/${item?.randomString}`} state={item}>
                   {" "}
                   <div
-                    className={`bg-white max-w-[20rem] md:h-[30rem] md:max-w-[25rem] px-1 pt-1 rounded-lg  mx-auto border border-neutral-400 shadow-sm`}
+                    className={`bg-white max-w-[20rem]  md:max-w-[25rem] px-1 pt-1 rounded-lg  mx-auto border border-neutral-400 shadow-sm`}
                   >
                     <div className=" flex justify-center items-center text-center relative">
                       <div className="absolute bottom-1 w-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white p-2">
@@ -160,7 +160,7 @@ const EventCarousel = () => {
         }}
         className={`${
           windowWidth < 390 ? "opacity-70" : ""
-        } absolute bg-[#DFFEC8] text-[22px] md:text-5xl  text-[#00373E] rounded-full p-1  top-[50%] translate-y-1/2 right-[0.2rem] xl:-right-6  z-10 cursor-pointer`}
+        } absolute bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1  top-[50%] translate-y-1/2 right-[0.2rem] xl:-right-6  z-10 cursor-pointer`}
       >
         <FaAngleRight />
       </div>
@@ -170,7 +170,7 @@ const EventCarousel = () => {
         }}
         className={`${
           windowWidth < 390 ? "opacity-70" : ""
-        } bg-[#DFFEC8] text-[22px] md:text-5xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 left-[0.2rem] xl:-left-4 z-10 cursor-pointer`}
+        } bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 left-[0.2rem] xl:-left-4 z-10 cursor-pointer`}
       >
         <FaAngleLeft />
       </div>
