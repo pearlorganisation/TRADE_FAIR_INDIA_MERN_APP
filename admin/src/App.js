@@ -85,7 +85,7 @@ const App = () => {
 
         <Route path="*" element={<PageNotFound />} />
 
-        <Route
+        {/* <Route
           element={
             <ProtectedRouteHandler
               allowedRoles={["SUPER_ADMIN", "ADMIN", "USER"]}
@@ -95,16 +95,27 @@ const App = () => {
         >
           <Route path="/addNewShop" element={<CreateShop />} />
           <Route path="/editShopDetails" element={<UpdateShop />} />
-        </Route>
+        </Route> */}
 
         <Route
           element={
             <ProtectedRouteHandler
-              allowedRoles={["SUPER_ADMIN", "ADMIN"]}
+              allowedRoles={["SUPER_ADMIN", "ADMIN", "USER"]}
               allowedPermissions={availablePermissions}
             />
           }
         >
+          <Route index element={<Dashboard />} />
+          <Route path="/venues" element={<Venue />} />
+          <Route path="/categories" element={<Category />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/organiser" element={<ViewOrganiser />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/shops" element={<ViewShops />} />
+          <Route
+            path="/viewProfileDetails"
+            element={<ViewLoggedInUserDetails />}
+          />
           <Route path="/createVenue" element={<CreateVenue />} />
           <Route path="/venue/updateVenue" element={<UpdateVenue />} />
           <Route path="/addCategoryDetails" element={<AddCategory />} />
@@ -185,7 +196,7 @@ const App = () => {
           <Route path="/client/faq" element={<ViewShops />} />
         </Route>
 
-        <Route
+        {/* <Route
           element={
             <ProtectedRouteHandler
               allowedRoles={availableRoles}
@@ -199,18 +210,8 @@ const App = () => {
             />
           }
         >
-          <Route index element={<Dashboard />} />
-          <Route path="/venues" element={<Venue />} />
-          <Route path="/categories" element={<Category />} />
-          <Route path="/category" element={<Category />} />
-          <Route path="/organiser" element={<ViewOrganiser />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/shops" element={<ViewShops />} />
-          <Route
-            path="/viewProfileDetails"
-            element={<ViewLoggedInUserDetails />}
-          />
-        </Route>
+         
+        </Route> */}
 
         {/* --------------------------------------------------------------------------- */}
       </Route>

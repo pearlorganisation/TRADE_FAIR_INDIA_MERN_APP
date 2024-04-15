@@ -70,7 +70,11 @@ const Events = () => {
             md="2"
             className="d-flex align-items-center justify-content-end"
           >
-            {isUserHavePermission(loggedInUserData?.role) && (
+            {isUserHavePermission(
+              loggedInUserData?.role,
+              loggedInUserData?.permissions,
+              "CREATE_EVENT"
+            ) && (
               <Button
                 size="md"
                 title="Create New Shop"
@@ -112,23 +116,37 @@ const Events = () => {
                           <td>{item?.eventName}</td>
                           <td>{item?.venue?.PlaceName}</td>
 
-                          <td>{item?.ageGroup?.map((age,ind) => {
-                            return item.ageGroup[ind + 1] === undefined ? `${age}` : `${age} / `
-                          })}</td>
+                          <td>
+                            {item?.ageGroup?.map((age, ind) => {
+                              return item.ageGroup[ind + 1] === undefined
+                                ? `${age}`
+                                : `${age} / `;
+                            })}
+                          </td>
                           <td className="d-flex justify-content-center gap-3 st">
-                            <Button
-                              variant="info"
-                              size="md"
-                              title="View Complete Details"
-                              onClick={() => {
-                                setShowCompleteDetailsModal(true);
-                                setEvent(item);
-                              }}
-                            >
-                              <BiSolidShow />
-                            </Button>
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "VIEW_EVENTS"
+                            ) && (
+                              <Button
+                                variant="info"
+                                size="md"
+                                title="View Complete Details"
+                                onClick={() => {
+                                  setShowCompleteDetailsModal(true);
+                                  setEvent(item);
+                                }}
+                              >
+                                <BiSolidShow />
+                              </Button>
+                            )}
 
-                            {isUserHavePermission(loggedInUserData?.role) && (
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "UPDATE_EVENT"
+                            ) && (
                               <Button
                                 variant="warning"
                                 size="md"
@@ -140,7 +158,11 @@ const Events = () => {
                                 <FaEdit />
                               </Button>
                             )}
-                            {isUserHavePermission(loggedInUserData?.role) && (
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "DELETE_EVENT"
+                            ) && (
                               <Button
                                 variant="danger"
                                 size="md"

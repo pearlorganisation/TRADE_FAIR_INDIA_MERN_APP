@@ -74,7 +74,11 @@ const ViewUsers = () => {
             md="2"
             className="d-flex align-items-center justify-content-end"
           >
-            {isUserHavePermission(loggedInUserData?.role) && (
+            {isUserHavePermission(
+              loggedInUserData?.role,
+              loggedInUserData?.permissions,
+              "CREATE_USER"
+            ) && (
               <Button
                 size="md"
                 title="Create New User"
@@ -174,7 +178,11 @@ const ViewUsers = () => {
                               <BiSolidShow />
                             </Button>
 
-                            {isUserHavePermission(loggedInUserData?.role) && (
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "UPDATE_USER"
+                            ) && (
                               <>
                                 <Button
                                   variant="warning"
@@ -189,26 +197,26 @@ const ViewUsers = () => {
                                   <FaEdit />
                                 </Button>
 
-                                {user?.role?.role !== "SUPER_ADMIN" &&
-                                  user?.role?.role !== "ADMIN" && (
-                                    <Button
-                                      variant="danger"
-                                      size="md"
-                                      title="Delete User"
-                                      onClick={() =>
-                                        handleDeleteUser(user?._id)
-                                      }
-                                      disabled={
-                                        user?.role?.role === "SUPER_ADMIN"
-                                      }
-                                    >
-                                      <MdDelete />
-                                    </Button>
-                                  )}
+                                {isUserHavePermission(
+                                  loggedInUserData?.role,
+                                  loggedInUserData?.permissions,
+                                  "DELETE_USER"
+                                ) && (
+                                  <Button
+                                    variant="danger"
+                                    size="md"
+                                    title="Delete User"
+                                    onClick={() => handleDeleteUser(user?._id)}
+                                    disabled={
+                                      user?.role?.role === "SUPER_ADMIN"
+                                    }
+                                  >
+                                    <MdDelete />
+                                  </Button>
+                                )}
 
                                 {(loggedInUserData?.role === "SUPER_ADMIN" ||
-                                  (loggedInUserData?.role === "ADMIN" &&
-                                    user?.role?.role !== "SUPER_ADMIN")) && (
+                                  loggedInUserData?.role === "ADMIN") && (
                                   <Form.Check
                                     type="switch"
                                     id="custom-switch"

@@ -17,9 +17,10 @@ const authSchema = new mongoose.Schema(
     password: String,
 
     role: {
-      type: mongoose.Schema.ObjectId,
+      type: String,
       ref: "role",
       enum: ["USER", "SUPER_ADMIN"],
+      default: "USER",
     },
     isUserActivate: {
       type: String,

@@ -122,7 +122,7 @@ const UpdateUser = () => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
-    formData.append("role", role?.value);
+    // formData.append("role", role?.value);
     formData.append(
       "permissions",
       JSON.stringify(
@@ -238,7 +238,7 @@ const UpdateUser = () => {
                 </Row>
               </Col>
 
-              <Col sm={12} md={6}>
+              {/* <Col sm={12} md={6}>
                 <Form.Group className="mb-3" controlId="city">
                   <Form.Label>Select Role</Form.Label>
                   <Controller
@@ -267,7 +267,7 @@ const UpdateUser = () => {
                     {errors?.role?.message}
                   </span>
                 </Form.Group>
-              </Col>
+              </Col> */}
 
               <Col sm={12} md={6}>
                 <Form.Group className="mb-3" controlId="city">
@@ -278,6 +278,7 @@ const UpdateUser = () => {
                     control={control}
                     render={({ field: { onChange, value, ref } }) => (
                       <Select
+                        closeMenuOnSelect={false}
                         options={modifiedPermissionsList}
                         onChange={(val) => {
                           onChange(val);

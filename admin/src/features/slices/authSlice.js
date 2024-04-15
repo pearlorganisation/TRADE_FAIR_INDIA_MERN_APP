@@ -46,6 +46,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.loggedInUserData = action.payload;
+        state.isLogoutSuccess = false;
         state.isUserLoggedIn = true;
         state.isLogInSuccess = true;
         toast.success(`Welcome ${action?.payload?.name}`, {

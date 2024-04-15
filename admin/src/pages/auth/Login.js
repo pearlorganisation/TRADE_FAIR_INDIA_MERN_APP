@@ -32,7 +32,7 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {}, [isLogInSuccess]);
+  // useEffect(() => {}, [isLogInSuccess]);
 
   return (
     <>

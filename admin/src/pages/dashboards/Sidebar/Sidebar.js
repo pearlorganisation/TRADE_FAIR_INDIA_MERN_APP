@@ -81,25 +81,26 @@ const routes = [
         icon: <BsPeopleFill />,
       },
       {
-        path: "/events",
-        name: "Events",
-        icon: <MdEventAvailable />,
-      },
-      {
         path: "/shops",
         name: "Shops",
         icon: <BsShop />,
       },
       {
+        path: "/events",
+        name: "Events",
+        icon: <MdEventAvailable />,
+      },
+
+      {
         path: "/users",
         name: "Users",
         icon: <FiUsers />,
       },
-      {
-        path: "/roles",
-        name: "Roles",
-        icon: <SiPrivateinternetaccess />,
-      },
+      // {
+      //   path: "/roles",
+      //   name: "Roles",
+      //   icon: <SiPrivateinternetaccess />,
+      // },
       {
         path: "/permissions",
         name: "Permissions",
@@ -130,15 +131,16 @@ const userVendorRoutes = [
     name: "Organiser",
     icon: <BsPeopleFill />,
   },
-  {
-    path: "/events",
-    name: "Events",
-    icon: <MdEventAvailable />,
-  },
+
   {
     path: "/shops",
     name: "Shops",
     icon: <BsShop />,
+  },
+  {
+    path: "/events",
+    name: "Events",
+    icon: <MdEventAvailable />,
   },
 ];
 
@@ -223,8 +225,7 @@ const SideBar = ({ children }) => {
             </div>
           </div>
           <section className="routes">
-            {(loggedInUserData?.role === "USER" ||
-            loggedInUserData?.role === "VENDOR"
+            {(loggedInUserData?.role === "USER"
               ? userVendorRoutes
               : routes
             ).map((route, index) => {

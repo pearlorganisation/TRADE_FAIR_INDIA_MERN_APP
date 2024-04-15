@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 // -------------------------------------------------------------------------------------
 const Layout = () => {
   const { isUserLoggedIn } = useAuth();
+  console.log(isUserLoggedIn, "isUserLoggedIn");
 
   return (
     <main>

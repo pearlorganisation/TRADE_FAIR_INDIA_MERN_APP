@@ -31,7 +31,6 @@ exports.verifyUserTokenMiddleware = async (req, res, next) => {
             _id: id,
           })
           .populate("permissions", ["permission", "_id"])
-          .populate("role", ["role", "_id"])
 
           .select("-__v");
 

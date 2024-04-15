@@ -211,7 +211,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         }}
         className={`${
           windowWidth < 390 ? "opacity-70" : ""
-        } bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-[1.5rem] right-[0.1rem] xl:-right-6  z-10 cursor-pointer`}
+        } bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-[1.5rem] right-[3rem] lg:-right-6  z-10 cursor-pointer`}
       >
         <FaAngleRight />
       </div>
@@ -221,7 +221,7 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
         }}
         className={`${
           windowWidth < 390 ? "opacity-70" : ""
-        } bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-[1rem] left-[0.1rem] xl:-left-4 z-10 cursor-pointer`}
+        } bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-[1rem] left-[3rem] lg:-left-4 z-10 cursor-pointer`}
       >
         <FaAngleLeft />
       </div>

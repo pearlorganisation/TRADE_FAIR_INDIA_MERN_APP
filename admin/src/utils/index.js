@@ -19,14 +19,19 @@ export const generateDynamicUrl = (value) => {
 };
 
 // This method is used to check user having access or not.
-export const isUserHavePermission = (role) => {
+export const isUserHavePermission = (role, permissions, allowedPermission) => {
   let isAllowed = false;
   if (
     role?.toString()?.toUpperCase() === "SUPER_ADMIN" ||
     role?.toString()?.toUpperCase() === "ADMIN"
-  )
+  ) {
     isAllowed = true;
-  else isAllowed = false;
+  } else if (
+    role?.toString()?.toUpperCase() === "USER" &&
+    permissions?.includes(allowedPermission)
+  ) {
+    isAllowed = true;
+  }
   return isAllowed;
 };
 
