@@ -139,7 +139,7 @@ const ListYourEvent = () => {
                                   title="Edit Role "
                                   onClick={() =>
                                     navigate(
-                                      `/client/updateEventCategory/${e._id}`,
+                                      `/client/updateListYourEvent/${e._id}`,
                                       {
                                         state: e,
                                       }

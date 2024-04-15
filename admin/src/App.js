@@ -52,6 +52,8 @@ import CreateEventBanner from "./pages/client-panel/eventBanner/CreateEventBanne
 import { UpdateEventBanner } from "./pages/client-panel/eventBanner/UpdateEventBanner";
 import ListYourEvent from "./pages/client-panel/listYourEvent/ListYourEvent";
 import CreateListYourEvent from "./pages/client-panel/listYourEvent/CreateListYourEvent";
+import UpdateListYourEvent from "./pages/client-panel/listYourEvent/UpdateListYourEvent";
+
 // ----------------------------------------------------------------------------------
 const App = () => {
   const { isUserLoggedIn, loggedInUserData, usersList } = useAuth();
@@ -187,6 +189,10 @@ const App = () => {
           <Route
             path="/client/addListYourEvent"
             element={<CreateListYourEvent />}
+          />
+          <Route
+            path="/client/updateListYourEvent/:listYourEventId"
+            element={<UpdateListYourEvent />}
           />
           {/* // Client Panel Routes -- Finished */}
 

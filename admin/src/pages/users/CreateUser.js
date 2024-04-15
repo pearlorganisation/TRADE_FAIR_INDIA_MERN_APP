@@ -115,9 +115,6 @@ const CreateUser = () => {
     dispatch(createUser(formData));
     setIsUserCreationApiCalled(true);
   };
-  useEffect(() => {
-    reset();
-  }, []);
 
   return (
     <>
