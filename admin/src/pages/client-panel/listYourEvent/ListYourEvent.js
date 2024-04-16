@@ -17,7 +17,10 @@ import {
   fetchEventCategory,
 } from "../../../features/actions/eventCategory";
 import EventCategoryDetailsModal from "./EventCategoryDetailsModal";
-import { fetchListYourEventLink } from "../../../features/actions/listYourEventLinkAction";
+import {
+  deleteListYourEventLink,
+  fetchListYourEventLink,
+} from "../../../features/actions/listYourEventLinkAction";
 
 // ------------------------------------------------------------------------------------
 
@@ -43,12 +46,12 @@ const ListYourEvent = () => {
   // This method is used to delete event category.
   const handleEventCategory = (id) => {
     confirmAlert({
-      title: "Event category Delete Confirmation",
-      message: "Are you sure you want to delete this event category?",
+      title: "List Your Event Link Delete Confirmation",
+      message: "Are you sure you want to delete this link?",
       buttons: [
         {
           label: "Yes",
-          onClick: () => dispatch(deleteEventCategory(id)),
+          onClick: () => dispatch(deleteListYourEventLink({ id })),
         },
         {
           label: "No",

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import {
   createListYourEventLink,
   fetchListYourEventLink,
+  updateListYourEventLink,
 } from "../actions/listYourEventLinkAction";
 
 // ----------------------------------------------------------------------------------------------------
@@ -55,6 +56,29 @@ export const listYourEventSlice = createSlice({
         });
       })
       .addCase(createListYourEventLink.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.errorMessage = action.payload;
+        toast.error(state?.errorMessage, {
+          position: "top-right",
+        });
+      })
+      // update
+      .addCase(updateListYourEventLink.pending, (state, action) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.errorMessage = "";
+      })
+      .addCase(updateListYourEventLink.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.errorMessage = "";
+        state.listYourEventLink = action.payload;
+        toast.success("Link Added successfully", {
+          position: "top-right",
+        });
+      })
+      .addCase(updateListYourEventLink.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;

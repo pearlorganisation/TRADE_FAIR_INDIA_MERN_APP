@@ -8,6 +8,7 @@ import { customFieldregex } from "../../../utils/regexes";
 import LoadingButton from "../../events/LoadingButton";
 import { toast } from "react-toastify";
 import { updateEventCategory } from "../../../features/actions/eventCategory";
+import { updateListYourEventLink } from "../../../features/actions/listYourEventLinkAction";
 
 // ----------------------------------------------------------------------------
 const UpdateListYourEvent = () => {
@@ -34,22 +35,26 @@ const UpdateListYourEvent = () => {
     defaultValues: state,
   });
 
-  const { isLoading, isSuccess, isEventCategoryUpdated, errorMessage } =
-    useSelector((state) => state.listYourEventLink);
+  const { isLoading, listYourEventLink } = useSelector(
+    (state) => state.listYourEventLink
+  );
 
-  const onSubmit = (formData) => {
-    console.log("listYourEventLink::", formData);
-    // dispatch(
-    //   updateEventCategory({
-    //     id: state?._id,
-    //     payload: { category: formData?.category },
-    //   })
-    // );
+  const onSubmit = (data) => {
+    console.log("listYourEventLink::", data);
+    dispatch(
+      updateListYourEventLink({
+        id: state?._id,
+        payload: data,
+      })
+    );
     // setIsCategoryUpdationApiCalled(true);
   };
   useEffect(() => {
+    if (listYourEventLink?.success) {
+      navigate("/client/listYourEvent");
+    }
     console.log("state::", state);
-  }, []);
+  }, [listYourEventLink]);
 
   return (
     <>
