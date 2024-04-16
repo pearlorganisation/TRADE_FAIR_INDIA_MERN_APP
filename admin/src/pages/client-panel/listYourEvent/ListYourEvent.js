@@ -40,7 +40,9 @@ const ListYourEvent = () => {
   const [selectedEventCategoryDetails, setSelectedEventCategoryDetails] =
     useState({});
 
-  const { listYourEventLink } = useSelector((state) => state.listYourEventLink);
+  const { listYourEventLink, isDeleted } = useSelector(
+    (state) => state.listYourEventLink
+  );
 
   // -------------------------------------------------------------------------------------------------------------
   // This method is used to delete event category.
@@ -66,6 +68,11 @@ const ListYourEvent = () => {
   useEffect(() => {
     dispatch(fetchListYourEventLink());
   }, []);
+  useEffect(() => {
+    if (isDeleted) {
+      dispatch(fetchListYourEventLink());
+    }
+  }, [isDeleted]);
 
   return (
     <section>

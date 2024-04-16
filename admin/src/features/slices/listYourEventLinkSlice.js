@@ -13,6 +13,7 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   errorMessage: "",
+  isDeleted: false,
   listYourEventLink: [],
 };
 
@@ -33,6 +34,7 @@ export const listYourEventSlice = createSlice({
       .addCase(fetchListYourEventLink.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.isDeleted = false;
         state.errorMessage = "";
         state.listYourEventLink = action.payload;
       })
@@ -98,6 +100,7 @@ export const listYourEventSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.errorMessage = "";
+        state.isDeleted = true;
         state.listYourEventLink = action.payload;
         toast.success("Deleted Successfully...", {
           position: "top-right",
