@@ -29,4 +29,32 @@ export const createListYourEventLink = createAsyncThunk(
   }
 );
 
+export const updateListYourEventLink = createAsyncThunk(
+  "link/updateListYourEventLink",
+  async ({ id, payload }, { rejectWithValue }) => {
+    try {
+      const { data } = await instance.put(`/eventUrl/${id}`, payload, {
+        withCredentials: true,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.message);
+    }
+  }
+);
+
+export const deleteListYourEventLink = createAsyncThunk(
+  "link/deleteListYourEventLink",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const { data } = await instance.delete(`/eventUrl/${id}`, {
+        withCredentials: true,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.message);
+    }
+  }
+);
+
 // ================================================== THE END ==================================================

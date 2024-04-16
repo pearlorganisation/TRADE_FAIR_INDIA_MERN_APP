@@ -2,7 +2,9 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
   createListYourEventLink,
+  deleteListYourEventLink,
   fetchListYourEventLink,
+  updateListYourEventLink,
 } from "../actions/listYourEventLinkAction";
 
 // ----------------------------------------------------------------------------------------------------
@@ -55,6 +57,53 @@ export const listYourEventSlice = createSlice({
         });
       })
       .addCase(createListYourEventLink.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.errorMessage = action.payload;
+        toast.error(state?.errorMessage, {
+          position: "top-right",
+        });
+      })
+      // update
+      .addCase(updateListYourEventLink.pending, (state, action) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.errorMessage = "";
+      })
+      .addCase(updateListYourEventLink.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.errorMessage = "";
+        state.listYourEventLink = action.payload;
+        toast.success("Link Updated successfully", {
+          position: "top-right",
+        });
+      })
+      .addCase(updateListYourEventLink.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.errorMessage = action.payload;
+        toast.error(state?.errorMessage, {
+          position: "top-right",
+        });
+      })
+
+      // delete
+      .addCase(deleteListYourEventLink.pending, (state, action) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.errorMessage = "";
+      })
+      .addCase(deleteListYourEventLink.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.errorMessage = "";
+        state.listYourEventLink = action.payload;
+        toast.success("Deleted Successfully...", {
+          position: "top-right",
+        });
+      })
+      .addCase(deleteListYourEventLink.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.errorMessage = action.payload;

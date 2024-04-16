@@ -49,3 +49,14 @@ exports.getAllUrl = async (req, res) => {
       .json({ status: false, message: e?.message || "Internal server error" });
   }
 };
+
+exports.deleteListYourEvent = async (req, res) => {
+  try {
+    const data = await eventUrl.findByIdAndDelete(req.params.id);
+    res.status(200).json({ status: true, message: "Successfully Deleted..." });
+  } catch (e) {
+    res
+      .status(200)
+      .json({ status: false, message: e?.message || "Internal server error" });
+  }
+};
