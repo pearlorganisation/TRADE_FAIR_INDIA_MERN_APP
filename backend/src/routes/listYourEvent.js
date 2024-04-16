@@ -5,5 +5,6 @@ const {
   updateListUrl,
 } = require("../controllers/listYourEvent");
 const router = express.Router();
-router.route("/:id").post(newListUrl).get(getAllUrl).put(updateListUrl);
+router.route("/").post(newListUrl).get(getAllUrl);
+router.route("/:id").put(updateListUrl);
 module.exports = router;
