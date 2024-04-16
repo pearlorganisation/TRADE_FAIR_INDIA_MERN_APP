@@ -11,7 +11,7 @@ exports.viewUsers = async (req, res) => {
   try {
     const existingUsers = await User.find()
       .populate("permissions", ["permission", "_id"])
-      .populate("role", ["role", "_id"])
+      // .populate("role", ["role", "_id"])
       .populate("createdBy");
 
     const total = existingUsers?.length;
@@ -69,6 +69,7 @@ exports.updateUsers = async (req, res) => {
       message: "User Updated Successfully",
     });
   } catch (err) {
+    console.log(err.message);
     res
       .status(400)
       .json({ status: 400, message: err?.message || "Internal Server Error" });
@@ -86,7 +87,7 @@ exports.deleteUser = async (req, res) => {
         .json({ status: "FAILURE", message: "No user found with given Id" });
     }
 
-    const userRole = await roleModel.findById(existingUser?.role);
+    const userRole = await roleModel.findOne({ role: existingUser?.role });
 
     if (
       userRole?.role == "SUPER_ADMIN" &&
@@ -146,8 +147,6 @@ exports.createUser = async (req, res) => {
   try {
     const { password, email, name, permissions } = req?.body;
 
-    let updatedPermission;
-
     if (!nameRegex.test(name)) {
       return res
         .status(400)
@@ -169,26 +168,6 @@ exports.createUser = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(req?.body?.password, 10);
 
-    // const existingRoles = await roleModel
-    //   .findById(req?.body?.role)
-    //   .populate("permissions");
-
-    // if (!existingRoles) {
-    //   return res.status(400).status({
-    //     status: "FAILURE",
-    //     message: "No role data found with given id",
-    //   });
-    // }
-
-    // let existingPermissions = [];
-    // existingRoles &&
-    //   existingRoles?.permissions?.forEach((item) => {
-    //     existingPermissions.push({
-    //       _id: item?._id,
-    //       permission: item?.permission,
-    //     });
-    //   });
-
     const user = await User.create({
       ...req?.body,
       emailVerified: true,
@@ -203,6 +182,7 @@ exports.createUser = async (req, res) => {
       data: user,
     });
   } catch (err) {
+    console.log("error:-", err?.message);
     res.status(400).json({
       status: "FAILURE",
       message: err?.message || "Internal Server Error",

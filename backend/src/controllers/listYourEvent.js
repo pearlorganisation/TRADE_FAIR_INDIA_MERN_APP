@@ -13,6 +13,31 @@ exports.newListUrl = async (req, res) => {
   }
 };
 
+exports.updateListUrl = async (req, res) => {
+  try {
+    const listUrl = await eventUrl.findByIdAndUpdate(req.params.id, req.body, {
+      runValidators: true,
+      new: true,
+    });
+    if (!listUrl) {
+      return res.status(400).json({
+        status: "FAILURE",
+        message: "No List Url found with given id!!",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "List Your Url Link updated successfully!!",
+    });
+  } catch (e) {
+    res.status(500).json({
+      status: "FAILURE",
+      error: e?.message || "Internal Server Error",
+    });
+  }
+};
+
 exports.getAllUrl = async (req, res) => {
   try {
     const data = await eventUrl.find();

@@ -43,9 +43,15 @@ const ViewEvents = () => {
             <div className={style.table_heading}>
               <h1>Event's Listing</h1>
               <div>
-                <Link to={"/addEvents"} className="btn btn-info btn-sm ">
-                  <AiOutlineFileAdd size={25} />
-                </Link>
+                {isUserHavePermission(
+                  loggedInUserData?.role,
+                  loggedInUserData?.permissions,
+                  "CREATE_EVENT"
+                ) && (
+                  <Link to={"/addEvents"} className="btn btn-info btn-sm ">
+                    <AiOutlineFileAdd size={25} />
+                  </Link>
+                )}
               </div>
             </div>
             <div className="events_table">

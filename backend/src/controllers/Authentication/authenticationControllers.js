@@ -19,8 +19,6 @@ const roleModel = require("../../models/Authentication/roles.js");
 exports.login = async (req, res) => {
   try {
     const { username, password, type } = req.body;
-   
-    
 
     if (!username || !password) {
       return res
@@ -31,9 +29,8 @@ exports.login = async (req, res) => {
     const user = await authModel
       .findOne({ $or: [{ email: username }] })
       .populate("permissions", ["permission", "_id"])
-      .populate("role", ["role", "_id"])
+      // .populate("role", ["role", "_id"])
       .select("-__v");
-
 
     if (type === "CLIENT" && user?.role?.role !== "USER") {
       return res.status(400).json({
@@ -77,7 +74,6 @@ exports.login = async (req, res) => {
 
     //matching password using bcrypt
     const matchPassword = await bcrypt.compare(password, user.password);
- 
 
     if (!matchPassword)
       return res.status(401).json({ success: false, message: "Unauthorized" });
@@ -101,7 +97,7 @@ exports.login = async (req, res) => {
         email: user?.email,
         name: user?.name,
         permissions: permissionArray,
-        role: user?.role?.role,
+        role: user?.role,
         profilePic: user?.profilePic,
       },
     });
@@ -115,7 +111,6 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
   try {
-  
     const hashPassword = await bcrypt.hash(password, 10);
     const data = await authModel.create({ ...req?.body });
 
@@ -168,7 +163,6 @@ exports.refreshToken = async (req, res) => {
       message: "Refresh Token Generated",
     });
   } catch (error) {
-
     return res.status(500).json({
       success: false,
       message: "Internal Server Error",
@@ -187,7 +181,6 @@ exports.logout = async (req, res) => {
       message: "Logged Out Successfully",
     });
   } catch (error) {
-   
     return res.status(500).json({
       success: false,
       message: `Internal Server Error! ${error.message}`,
@@ -242,7 +235,6 @@ exports.resetPassword = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Password Updated Successfully" });
   } catch (error) {
-  
     return res.status(500).json({
       success: false,
       message: `Internal Server Error! ${error.message}`,

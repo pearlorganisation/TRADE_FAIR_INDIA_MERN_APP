@@ -13,7 +13,7 @@ import { deleteShop, fetchShopsList } from "../../features/actions/shopActions";
 import styles from "./Shops.module.css";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import moment from "moment";
-import { availablePermissions } from "../../utils";
+import { availablePermissions, isUserHavePermission } from "../../utils";
 // -------------------------------------------------------------------------------------------------
 const ViewShops = () => {
   const navigate = useNavigate();
@@ -79,9 +79,11 @@ const ViewShops = () => {
             <h1 className="text-center text-danger">Shop's Listing</h1>
           </Col>
 
-          {(loggedInUserData?.role === "ADMIN" ||
-            loggedInUserData?.role === "SUPER_ADMIN" ||
-            loggedInUserData?.role === "USER") && (
+          {isUserHavePermission(
+            loggedInUserData?.role,
+            loggedInUserData?.permissions,
+            "CREATE_SHOP"
+          ) && (
             <Col
               xs="4"
               md="2"
@@ -154,20 +156,29 @@ const ViewShops = () => {
                               : "N.A"}
                           </td>
                           <td className="d-flex gap-3  justify-content-center align-items-center">
-                            <Button
-                              variant="info"
-                              size="md"
-                              title="View Complete Details"
-                              onClick={() => {
-                                setSelectedShopDetails(shop);
-                                setShowCompleteDetailsModal(true);
-                              }}
-                            >
-                              <BiSolidShow />
-                            </Button>
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "VIEW_SHOPS"
+                            ) && (
+                              <Button
+                                variant="info"
+                                size="md"
+                                title="View Complete Details"
+                                onClick={() => {
+                                  setSelectedShopDetails(shop);
+                                  setShowCompleteDetailsModal(true);
+                                }}
+                              >
+                                <BiSolidShow />
+                              </Button>
+                            )}
 
-                            {loggedInUserData?.role === "ADMIN" ||
-                            loggedInUserData?.role === "SUPER_ADMIN" ? (
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "UPDATE_SHOP"
+                            ) && (
                               <>
                                 <Button
                                   variant="warning"
@@ -181,46 +192,22 @@ const ViewShops = () => {
                                 >
                                   <FaEdit />
                                 </Button>
-                                <Button
-                                  variant="danger"
-                                  size="md"
-                                  title="Delete Shop"
-                                  onClick={() => handleDeleteShop(shop?._id)}
-                                >
-                                  <MdDelete />
-                                </Button>
                               </>
-                            ) : (
-                              <>
-                                {loggedInUserData?.permissions.includes(
-                                  "UPDATE_SHOP"
-                                ) && (
-                                  <Button
-                                    variant="warning"
-                                    size="md"
-                                    title="Edit Shop Details"
-                                    onClick={() =>
-                                      navigate("/editShopDetails", {
-                                        state: shop,
-                                      })
-                                    }
-                                  >
-                                    <FaEdit />
-                                  </Button>
-                                )}
-                                {loggedInUserData?.permissions.includes(
-                                  "DELETE_SHOP"
-                                ) && (
-                                  <Button
-                                    variant="danger"
-                                    size="md"
-                                    title="Delete Shop"
-                                    onClick={() => handleDeleteShop(shop?._id)}
-                                  >
-                                    <MdDelete />
-                                  </Button>
-                                )}
-                              </>
+                            )}
+
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "DELETE_SHOP"
+                            ) && (
+                              <Button
+                                variant="danger"
+                                size="md"
+                                title="Delete Shop"
+                                onClick={() => handleDeleteShop(shop?._id)}
+                              >
+                                <MdDelete />
+                              </Button>
                             )}
                           </td>
                         </tr>

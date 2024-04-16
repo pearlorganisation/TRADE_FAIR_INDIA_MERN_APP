@@ -8,7 +8,11 @@ const authSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    email: { type: String, required: [true, "Email is required"] },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: [true, "Email already exists!!"],
+    },
     profilePic: {
       type: String,
       default:
@@ -17,9 +21,10 @@ const authSchema = new mongoose.Schema(
     password: String,
 
     role: {
-      type: mongoose.Schema.ObjectId,
+      type: String,
       ref: "role",
       enum: ["USER", "SUPER_ADMIN"],
+      default: "USER",
     },
     isUserActivate: {
       type: String,

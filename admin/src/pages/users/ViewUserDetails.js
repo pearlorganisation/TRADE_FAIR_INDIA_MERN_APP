@@ -73,7 +73,7 @@ const ViewUserDetails = ({ userData, show, hide }) => {
                 </tr>
                 <tr>
                   <th>Role</th>
-                  <td>{role?.role?.toString()?.toUpperCase() || "N.A"}</td>
+                  <td>{role || "N.A"}</td>
                 </tr>
                 <tr>
                   <th>Assigned Permissions</th>

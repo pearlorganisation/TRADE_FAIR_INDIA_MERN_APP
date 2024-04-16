@@ -90,7 +90,11 @@ const Category = () => {
             md="2"
             className="d-flex align-items-center justify-content-end"
           >
-            {isUserHavePermission(loggedInUserData?.role) && (
+            {isUserHavePermission(
+              loggedInUserData?.role,
+              loggedInUserData?.permissions,
+              "CREATE_CATEGORY"
+            ) && (
               <Button
                 size="md"
                 title="Create New Shop"
@@ -152,19 +156,29 @@ const Category = () => {
                           >
                             <div style={customActionsStyle}>
                               {" "}
-                              <Button
-                                variant="info"
-                                size="md"
-                                title="View Complete Details"
-                                onClick={() => {
-                                  setSelectedShopDetails(shop);
-                                  setShowCompleteDetailsModal(true);
-                                }}
-                                className="me-2"
-                              >
-                                <BiSolidShow />
-                              </Button>
-                              {isUserHavePermission(loggedInUserData?.role) && (
+                              {isUserHavePermission(
+                                loggedInUserData?.role,
+                                loggedInUserData?.permissions,
+                                "VIEW_CATEGORIES"
+                              ) && (
+                                <Button
+                                  variant="info"
+                                  size="md"
+                                  title="View Complete Details"
+                                  onClick={() => {
+                                    setSelectedShopDetails(shop);
+                                    setShowCompleteDetailsModal(true);
+                                  }}
+                                  className="me-2"
+                                >
+                                  <BiSolidShow />
+                                </Button>
+                              )}
+                              {isUserHavePermission(
+                                loggedInUserData?.role,
+                                loggedInUserData?.permissions,
+                                "UPDATE_CATEGORY"
+                              ) && (
                                 <Button
                                   variant="warning"
                                   size="md"
@@ -181,7 +195,11 @@ const Category = () => {
                                   <FaEdit />
                                 </Button>
                               )}
-                              {isUserHavePermission(loggedInUserData?.role) && (
+                              {isUserHavePermission(
+                                loggedInUserData?.role,
+                                loggedInUserData?.permissions,
+                                "DELETE_CATEGORY"
+                              ) && (
                                 <Button
                                   variant="danger"
                                   size="md"

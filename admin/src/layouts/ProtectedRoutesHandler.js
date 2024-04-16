@@ -8,6 +8,7 @@ const ProtectedRouteHandler = ({ allowedRoles, allowedPermissions }) => {
 
   const { isUserLoggedIn, loggedInUserData } = useAuth();
 
+  console.log(allowedPermissions);
   return (isUserLoggedIn &&
     loggedInUserData?.role?.toString()?.toUpperCase() === "SUPER_ADMIN") ||
     (isUserLoggedIn &&

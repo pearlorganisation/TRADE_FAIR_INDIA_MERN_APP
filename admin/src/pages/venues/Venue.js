@@ -106,7 +106,11 @@ const Venue = () => {
             md="2"
             className="d-flex align-items-center justify-content-end"
           >
-            {isUserHavePermission(loggedInUserData?.role) && (
+            {isUserHavePermission(
+              loggedInUserData?.role,
+              loggedInUserData?.permissions,
+              "CREATE_VENUE"
+            ) && (
               <Button
                 size="md"
                 title="Create New Shop"
@@ -153,70 +157,37 @@ const Venue = () => {
                           </td>
                           <td>{item?.City}</td>
                           <td>{item?.Address?.slice(0, 20)}</td>
-                          {/* <OverlayTrigger
-                            trigger={["hover", "focus"]}
-                            placement="bottom"
-                            overlay={
-                              <Popover
-                                id="popover-positioned-bottom"
-                                title="Address"
-                              >
-                                <strong>{item?.Address}</strong>
-                              </Popover>
-                            }
-                          >
-                            <td>{item?.Address?.slice(0, 20)}</td>
-                          </OverlayTrigger> */}
+
                           <td>
-                            {/* <a
-                              href={`${item.GeoLocation}`}
-                              target="_blank"
-                              alt="location"
-                            > */}
                             {item?.GeoLocation?.loactionName?.slice(0, 23)}
-                            {/* </a> */}
                           </td>
                           <td>{item?.PlaceDescription?.slice(0, 20)}</td>
-                          {/* <OverlayTrigger
-                            trigger={["hover", "focus"]}
-                            placement="bottom"
-                            overlay={
-                              <Popover
-                                id="popover-positioned-bottom "
-                                title="Description"
-                              >
-                                <strong>{item?.PlaceDescription}</strong>
-                              </Popover>
-                            }
-                          >
-                            <td>{item?.PlaceDescription}</td>
-                          </OverlayTrigger> */}
-                          {/* <td>
-                          {
-                            item?.HotelNearby?.map(item => {
-                              return <a href={`${item.link}`} target="_blank">
-                              {item.link.slice(0, 23)}
-                            </a>
-                            })
-                          }
-                          
-                        </td> */}
 
                           <td>
                             <div className="d-flex h-100 justify-content-center gap-3">
-                              <Button
-                                variant="info"
-                                size="md"
-                                title="View Complete Details"
-                                onClick={() => {
-                                  setVenueView(item);
-                                  setShowCompleteDetailsModal(true);
-                                }}
-                              >
-                                <BiSolidShow />
-                              </Button>
+                              {isUserHavePermission(
+                                loggedInUserData?.role,
+                                loggedInUserData?.permissions,
+                                "VIEW_VENUES"
+                              ) && (
+                                <Button
+                                  variant="info"
+                                  size="md"
+                                  title="View Complete Details"
+                                  onClick={() => {
+                                    setVenueView(item);
+                                    setShowCompleteDetailsModal(true);
+                                  }}
+                                >
+                                  <BiSolidShow />
+                                </Button>
+                              )}
 
-                              {isUserHavePermission(loggedInUserData?.role) && (
+                              {isUserHavePermission(
+                                loggedInUserData?.role,
+                                loggedInUserData?.permissions,
+                                "UPDATE_VENUE"
+                              ) && (
                                 <Button
                                   variant="warning"
                                   size="md"
@@ -230,7 +201,11 @@ const Venue = () => {
                                   <FaEdit />
                                 </Button>
                               )}
-                              {isUserHavePermission(loggedInUserData?.role) && (
+                              {isUserHavePermission(
+                                loggedInUserData?.role,
+                                loggedInUserData?.permissions,
+                                "DELETE_VENUE"
+                              ) && (
                                 <Button
                                   variant="danger"
                                   size="md"

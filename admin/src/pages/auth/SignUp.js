@@ -97,6 +97,7 @@ const SignUp = () => {
   useEffect(() => {
     dispatch(fetchRolesList());
   }, []);
+
   return (
     <>
       <section>

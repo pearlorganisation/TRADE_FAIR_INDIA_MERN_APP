@@ -8,10 +8,9 @@ import { customFieldregex } from "../../../utils/regexes";
 import LoadingButton from "../../events/LoadingButton";
 import { toast } from "react-toastify";
 import { updateEventCategory } from "../../../features/actions/eventCategory";
-import Select from "react-select";
 
 // ----------------------------------------------------------------------------
-const UpdateEventCategory = () => {
+const UpdateListYourEvent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -36,32 +35,21 @@ const UpdateEventCategory = () => {
   });
 
   const { isLoading, isSuccess, isEventCategoryUpdated, errorMessage } =
-    useSelector((state) => state.eventCategory);
-
-  // Redirection to event category Listing Page after event category Updation
-  useEffect(() => {
-    if (isSuccess && !errorMessage && isCategoryUpdationApiCalled)
-      navigate("/client/eventCategories");
-  }, [navigate, errorMessage, isSuccess, isCategoryUpdationApiCalled]);
-
-  //Showing Error Message in toast
-  useEffect(() => {
-    errorMessage &&
-      isCategoryUpdationApiCalled &&
-      toast.error(errorMessage, {
-        position: "bottom-center",
-      });
-  }, [errorMessage, isCategoryUpdationApiCalled]);
+    useSelector((state) => state.listYourEventLink);
 
   const onSubmit = (formData) => {
-    dispatch(
-      updateEventCategory({
-        id: state?._id,
-        payload: { category: formData?.category },
-      })
-    );
-    setIsCategoryUpdationApiCalled(true);
+    console.log("listYourEventLink::", formData);
+    // dispatch(
+    //   updateEventCategory({
+    //     id: state?._id,
+    //     payload: { category: formData?.category },
+    //   })
+    // );
+    // setIsCategoryUpdationApiCalled(true);
   };
+  useEffect(() => {
+    console.log("state::", state);
+  }, []);
 
   return (
     <>
@@ -72,7 +60,7 @@ const UpdateEventCategory = () => {
               <h2
                 className={`text-center text-danger mb-3 py-2 ${styles.addUserTitle}`}
               >
-                Update Event Category
+                Update List Your Event
               </h2>
             </Col>
           </Row>
@@ -84,15 +72,15 @@ const UpdateEventCategory = () => {
             <Row>
               <Col sm={12} md={6}>
                 <Form.Group className="mb-3" controlId="fullName">
-                  <Form.Label>Event Category</Form.Label>
+                  <Form.Label>List Your Event</Form.Label>
                   <Form.Control
                     type="text"
                     autoComplete={"off"}
                     placeholder="Please Event category"
-                    {...register("category", {
+                    {...register("url", {
                       required: {
                         value: true,
-                        message: "Event category is required!!",
+                        message: "URL Link is required!!",
                       },
                       pattern: {
                         value: customFieldregex,
@@ -100,18 +88,16 @@ const UpdateEventCategory = () => {
                       },
                       minLength: {
                         value: 2,
-                        message:
-                          "Event category Name cannot be less than 2 characters.",
+                        message: "URL Link cannot be less than 2 characters.",
                       },
                       maxLength: {
                         value: 20,
-                        message:
-                          "Event category cannot be more than 20 characters.",
+                        message: "URL Link cannot be more than 20 characters.",
                       },
                     })}
                   />
                   <span className="fw-normal fs-6 text-danger">
-                    {errors?.category?.message}
+                    {errors?.url?.message}
                   </span>
                 </Form.Group>
               </Col>
@@ -140,4 +126,4 @@ const UpdateEventCategory = () => {
   );
 };
 
-export default UpdateEventCategory;
+export default UpdateListYourEvent;

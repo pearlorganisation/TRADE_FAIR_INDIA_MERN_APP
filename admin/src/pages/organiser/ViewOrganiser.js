@@ -78,7 +78,11 @@ const ViewOrganiser = () => {
             </div>
           </div>
           <div className="col-md-2 col-4 d-flex justify-content-end align-items-center">
-            {isUserHavePermission(loggedInUserData?.role) && (
+            {isUserHavePermission(
+              loggedInUserData?.role,
+              loggedInUserData?.permissions,
+              "CREATE_ORGANISER"
+            ) && (
               <div>
                 <Link to={"/addOrganiser"} className="btn btn-info btn-sm ">
                   <AiOutlineFileAdd size={25} />
@@ -133,17 +137,28 @@ const ViewOrganiser = () => {
                             {findStateNameBasedOnStateCode(item.state) || "N.A"}
                           </td>
                           <td className="d-flex gap-3  justify-content-center align-items-center">
-                            <Link
-                              className="btn btn-info"
-                              title="View Content"
-                              onClick={() => {
-                                handleShow();
-                                setOrganiserData(item);
-                              }}
-                            >
-                              <BiSolidShow />
-                            </Link>
-                            {isUserHavePermission(loggedInUserData?.role) && (
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "VIEW_ORGANISERS"
+                            ) && (
+                              <Link
+                                className="btn btn-info"
+                                title="View Content"
+                                onClick={() => {
+                                  handleShow();
+                                  setOrganiserData(item);
+                                }}
+                              >
+                                <BiSolidShow />
+                              </Link>
+                            )}
+
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "UPDATE_ORGANISER"
+                            ) && (
                               <div
                                 // to={"/editOrganiserDetails"}
                                 onClick={() =>
@@ -157,7 +172,11 @@ const ViewOrganiser = () => {
                                 <FaEdit />
                               </div>
                             )}
-                            {isUserHavePermission(loggedInUserData?.role) && (
+                            {isUserHavePermission(
+                              loggedInUserData?.role,
+                              loggedInUserData?.permissions,
+                              "DELETE_ORGANISER"
+                            ) && (
                               <button
                                 onClick={() => handleDelete(item?._id)}
                                 className="btn btn-danger"

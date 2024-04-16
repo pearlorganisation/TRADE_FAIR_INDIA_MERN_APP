@@ -101,7 +101,7 @@ const CreateUser = () => {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("role", role?.value);
+    // formData.append("role", role?.value);
     formData.append(
       "permissions",
       JSON.stringify(
@@ -214,7 +214,7 @@ const CreateUser = () => {
                 </Row>
               </Col>
 
-              <Col sm={12} md={6}>
+              {/* <Col sm={12} md={6}>
                 <Form.Group className="mb-3" controlId="city">
                   <Form.Label>Select Role</Form.Label>
                   <Controller
@@ -241,7 +241,7 @@ const CreateUser = () => {
                     {errors?.role?.message}
                   </span>
                 </Form.Group>
-              </Col>
+              </Col> */}
 
               <Col sm={12} md={6}>
                 <Form.Group className="mb-3" controlId="city">
@@ -262,7 +262,7 @@ const CreateUser = () => {
                     )}
                     rules={{
                       required: {
-                        message: "Permission is required",
+                        message: "Atleast 1 Permission is required",
                         value: true,
                       },
                     }}
