@@ -43,7 +43,7 @@ const CreateUser = () => {
 
   const [modifiedRolesList, setModifiedRolesList] = useState([]);
   const [modifiedPermissionsList, setModifiedPermissionsList] = useState([]);
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [isUserCreationApiCalled, setIsUserCreationApiCalled] = useState(false);
   const [profileImageLogo, setProfileImageLogo] = useState("");
 

@@ -115,7 +115,7 @@ const CreateVenue = () => {
   return (
     <>
       <div className="container bg-inf py-2">
-        <div 
+        <div
           className="col-md-12 fs-4 fw-medium mb-2 py-2 text-center"
           style={{ background: "#dee2e6" }}
         >
@@ -411,7 +411,7 @@ const CreateVenue = () => {
                   message: "Place name cannot be more than 500 characters.",
                 },
               })}
-              disabled
+              // disabled
               type="text"
               className="form-control"
               id="GeoLocation"
