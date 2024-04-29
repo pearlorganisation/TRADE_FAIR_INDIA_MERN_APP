@@ -159,7 +159,7 @@ const CreateEvent = () => {
     formData.append("website", data?.website);
     formData.append("cycle", modifiedCycle);
     formData.append("eventDate", JSON.stringify(dateArrays));
-    formData.append("category", modifiedCategory);
+    formData.append("category", JSON.stringify(modifiedCategory));
     formData.append("shopDetails", JSON.stringify(modifiedShopDetails));
 
     Array.from(data?.eventLogo).forEach((photo) => {
