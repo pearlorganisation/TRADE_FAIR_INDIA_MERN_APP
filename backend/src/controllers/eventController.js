@@ -8,7 +8,7 @@ const Event = require("../models/events");
 // @route   POST /api/v1/EventRegistration
 exports.createEvent = async (req, res) => {
   try {
-    const { shopDetails, eventDate, ageGroup, organiser } = req?.body;
+    const { shopDetails, eventDate, ageGroup, organiser, category } = req?.body;
     const { userId } = req?.userCredentials;
     const { shopGalleries } = req?.files;
 
@@ -16,6 +16,7 @@ exports.createEvent = async (req, res) => {
     let parseOrganiser = JSON.parse(organiser);
     let parseEventDate = JSON.parse(eventDate);
     let parseShop = JSON.parse(shopDetails);
+    let parseCategory = JSON.parse(category);
 
     let shopId =
       parseShop &&
@@ -69,6 +70,7 @@ exports.createEvent = async (req, res) => {
       eventLogo: req?.files?.eventLogo[0],
       eventDate: parseEventDate,
       ageGroup: parseAgeGroup,
+      category: parseCategory,
     });
 
     const savedEventData = await eventData.save();
@@ -201,6 +203,7 @@ exports.updateEvent = async (req, res) => {
       organiser,
       existingShopGallery,
       newShopDetails,
+      category,
     } = req?.body;
 
     const { shopGalleries } = req?.files;
@@ -213,6 +216,7 @@ exports.updateEvent = async (req, res) => {
     let parseEventDate = JSON.parse(eventDate);
     let parseShop = JSON.parse(shopDetails);
     let parseOrganiser = JSON.parse(organiser);
+    let parseCategory = JSON.parse(category);
 
     let newShopData = [];
     let logo;
@@ -273,6 +277,7 @@ exports.updateEvent = async (req, res) => {
         eventLogo: logo || existingData?.eventLogo,
         eventBanner: banner || existingData?.eventBanner,
         eventDate: parseEventDate,
+        category: parseCategory,
       },
       { new: true }
     );
