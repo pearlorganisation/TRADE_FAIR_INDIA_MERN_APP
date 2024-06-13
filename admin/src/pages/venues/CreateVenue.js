@@ -23,6 +23,7 @@ import Location from "../../components/common/Location";
 import { customFieldregex } from "../../utils/regexes";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import LocationSearch from "../../components/common/LocationSearch";
 
 const CreateVenue = () => {
   const dispatch = useDispatch();
@@ -374,7 +375,7 @@ const CreateVenue = () => {
             ))}
           </ul>
 
-          <div className="col-md-12">
+          {/* <div className="col-md-12">
             <label htmlFor="GeoLocation" className="form-label fw-bold">
               Location of Event{" "}
               <OverlayTrigger
@@ -422,8 +423,29 @@ const CreateVenue = () => {
                 {errors?.GeoLocation?.message || "This field is required"}
               </span>
             )}
+          </div> */}
+
+          <div className="col-md-12">
+            <label htmlFor="GeoLocation" className="form-label fw-bold">
+              Location of Event{" "}
+              <OverlayTrigger
+                key="right"
+                placement="right"
+                overlay={
+                  <Tooltip id={`tooltip-top`}>
+                    Please select a location of your choice otherwise default
+                    will select.
+                  </Tooltip>
+                }
+              >
+                <span style={{ cursor: "pointer" }} className="">
+                  <AiOutlineInfoCircle />
+                </span>
+              </OverlayTrigger>
+            </label>
+            <LocationSearch />
+            {/* <Location lat={30.3165} lng={78.0322} setValue={setValue} /> */}
           </div>
-          <Location lat={30.3165} lng={78.0322} setValue={setValue} />
 
           <div className="col-12 d-flex justify-content-end align-items-end">
             {isLoading ? (

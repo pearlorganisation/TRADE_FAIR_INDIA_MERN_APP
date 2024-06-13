@@ -21,7 +21,7 @@ const Location = ({ lat, lng, setValue }) => {
   const reverseGeocode = async (lat, lng) => {
     try {
       const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyA0IsdMLKWpkqHggok3Lw5AYei3wjDvfCY`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyAEg8nFyUAu8zlt1NK5N1HrqLYLhpPhIlQ`
       );
 
       if (response.data.status === "OK") {

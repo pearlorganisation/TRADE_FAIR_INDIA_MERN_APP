@@ -129,11 +129,11 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
             const isNext = idx === activeIndex + 1;
             const isActive = idx === activeIndex + 1;
             return (
-              <SwiperSlide className="">
+              <SwiperSlide className="py-6">
                 <Link to={`/event/${item?.randomString}`} state={item}>
                   {" "}
                   <div
-                    className={`bg-white max-w-[20rem] md:h-[30rem] md:max-w-[25rem] px-4 pt-3 rounded-lg grid grid-rows-[15rem_auto] mx-auto border border-neutral-400 shadow-sm`}
+                    className={`bg-white max-w-[20rem] md:h-[30rem] md:max-w-[25rem]  rounded-lg overflow-hidden grid grid-rows-[15rem_auto] mx-auto shadow-[rgba(100,_100,_111,_0.2)_0px_7px_29px_0px]`}
                   >
                     <div className=" flex justify-center items-center relative">
                       <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
@@ -153,7 +153,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
                       <div className="font-medium text-sm text-[#00373E] space-y-2 py-1">
                         <span className="text-xs">By Bombay inc</span>
                         <span className="flex justify-start items-center gap-1">
-                          <FaCalendarAlt />{" "}
+                          <FaCalendarAlt className="text-[#59B6E1]" />{" "}
                           {new Date(item?.eventDate[1]).toLocaleDateString(
                             "en-US",
                             {
@@ -174,7 +174,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
                         </span>
                         <span className="flex justify-start items-center gap-1">
                           {" "}
-                          <HiOutlineLocationMarker />{" "}
+                          <HiOutlineLocationMarker className="text-[#5DB881]" />{" "}
                           {item?.venue?.Address || "D Y Patil Stadium Raipur"}
                         </span>
                       </div>
@@ -199,7 +199,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
         }}
         className={`${
           windowWidth < 390 ? "opacity-70" : ""
-        } bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-[1.5rem] right-[3rem] lg:-right-6  z-10 cursor-pointer`}
+        } bg-[#00373E] text-[18px] md:text-3xl  text-[#DFFEC8] rounded-full p-1 absolute top-[50%] translate-y-[1.5rem] right-[3rem] lg:-right-6  z-10 cursor-pointer`}
       >
         <FaAngleRight />
       </div>
@@ -209,7 +209,7 @@ const PopularEventCarousel = ({ isLoading, eventData }) => {
         }}
         className={`${
           windowWidth < 390 ? "opacity-70" : ""
-        } bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-[1rem] left-[3rem] lg:-left-4 z-10 cursor-pointer`}
+        } bg-[#00373E] text-[18px] md:text-3xl  text-[#DFFEC8] rounded-full p-1 absolute top-[50%] translate-y-[1rem] left-[3rem] lg:-left-4 z-10 cursor-pointer`}
       >
         <FaAngleLeft />
       </div>
