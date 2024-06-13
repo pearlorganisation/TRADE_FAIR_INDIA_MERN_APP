@@ -45,7 +45,7 @@ const HeroSection = () => {
   }, [banner]);
 
   return (
-    <div className="h-dvh flex justify-center items-center pt-20">
+    <div className="h-dvh flex justify-center items-center pt-32">
       {isLoading ? (
         <div className="bg-slate-200 animate-pulse w-[90%] rounded-2xl mx-auto bg-top h-[80dvh] relative overflow-hidden flex flex-col justify-center items-center gap-12"></div>
       ) : (

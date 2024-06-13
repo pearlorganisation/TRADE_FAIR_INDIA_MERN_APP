@@ -33,16 +33,16 @@ const routes = [
         name: "Home Banner ",
         icon: <LuWallpaper />,
       },
-      {
-        path: "/client/subBanners",
-        name: "Sub Banner",
-        icon: <LuWallpaper />,
-      },
-      {
-        path: "/client/eventCategories",
-        name: "Event Category",
-        icon: <FiUsers />,
-      },
+      // {
+      //   path: "/client/subBanners",
+      //   name: "Sub Banner",
+      //   icon: <LuWallpaper />,
+      // },
+      // {
+      //   path: "/client/eventCategories",
+      //   name: "Event Category",
+      //   icon: <FiUsers />,
+      // },
       {
         path: "/client/eventBanners",
         name: "Shows/Events Banner",

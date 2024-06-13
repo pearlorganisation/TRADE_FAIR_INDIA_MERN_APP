@@ -223,6 +223,28 @@ const Header = () => {
             </ul>
           </div>
         </div>
+        <nav className="bg-white flex justify-between items-center px-8 border-b">
+          <div className="flex justify-center items-center font-medium">
+            {[`HOME`, `EVENTS`, `TRENDING`, `ORGANISER`, `CONTACT US`].map(
+              (_, idx) => {
+                return (
+                  <div className="px-8 hover:text-[#00373E] py-4 cursor-pointer ">
+                    {_}
+                  </div>
+                );
+              }
+            )}
+          </div>
+          <div className="flex justify-center items-center font-medium">
+            {[`CORPORATE`, `GIFT CARDS`].map((_, idx) => {
+              return (
+                <div className="px-8 hover:text-[#00373E] py-4 cursor-pointer ">
+                  {_}
+                </div>
+              );
+            })}
+          </div>
+        </nav>
       </nav>
 
       <SpringModal isOpen={isOpen} setIsOpen={setIsOpen} />

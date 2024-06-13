@@ -21,9 +21,15 @@ const UpcomingEvents = () => {
     <>
       <div className="max-h-dvh py-3 bg-[#FFFEF1] flex flex-col justify-center items-center gap-6">
         <div className="bg-white flex container mx-auto rounded-xl h-[12rem] relative overflow-hidden">
-          <div className="w-full h-full z-10 text-fluid_font0_1 font-semibold flex justify-center items-center flex-col text-[#00373E]">
+          <div className="w-full h-full relative z-10 text-fluid_font0_1 font-semibold flex justify-center items-center flex-col text-[#00373E]">
             {" "}
-            <p className="text-center w-[70%]  md:w-[55%] lg:w-[45%] xl:w-[35%]">
+            <img
+              className="absolute "
+              src={filteredData[0]?.banner}
+              alt=""
+              srcset=""
+            />
+            <p className="text-center z-50 w-[70%]  md:w-[55%] lg:w-[45%] xl:w-[35%]">
               {filteredData[0]?.bannerData}
             </p>
             {/* <span className="text-center ">Trade Shows, </span>{" "}
