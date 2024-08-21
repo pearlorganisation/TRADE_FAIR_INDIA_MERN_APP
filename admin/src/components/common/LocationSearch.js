@@ -14,7 +14,7 @@ const LocationSearch = () => {
   return (
     <div>
       <LoadScript
-        googleMapsApiKey="AIzaSyAEg8nFyUAu8zlt1NK5N1HrqLYLhpPhIlQ"
+        googleMapsApiKey="AIzaSyB_Tnu5hw7u8B4BfcRFIc-0FItvkZjow_Y"
         libraries={["places"]}
       >
         <StandaloneSearchBox

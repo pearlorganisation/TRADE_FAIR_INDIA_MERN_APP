@@ -93,7 +93,7 @@ const Header = () => {
           showNav
             ? "translate-y-[-100%] opacity-0"
             : "translate-y-0 opacity-100"
-        } transition-all duration-200 fixed border-b w-full md:text-sm md:border-none z-20`}
+        } transition-all duration-200 fixed border-b w-full md:text-sm md:border-none z-[9999]`}
       >
         <div className="items-center px-4 max-w-screen-xl mx-auto md:flex  md:px-8">
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -223,7 +223,7 @@ const Header = () => {
             </ul>
           </div>
         </div>
-        <nav className="bg-white flex justify-between items-center px-8 border-b">
+        {/* <nav className="bg-white flex justify-between items-center px-8 border-b">
           <div className="flex justify-center items-center font-medium">
             {[`HOME`, `EVENTS`, `TRENDING`, `ORGANISER`, `CONTACT US`].map(
               (_, idx) => {
@@ -244,7 +244,7 @@ const Header = () => {
               );
             })}
           </div>
-        </nav>
+        </nav> */}
       </nav>
 
       <SpringModal isOpen={isOpen} setIsOpen={setIsOpen} />
