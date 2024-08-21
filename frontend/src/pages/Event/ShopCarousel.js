@@ -65,11 +65,12 @@ const ShopCarousel = ({ shopDetails }) => {
             return (
               <SwiperSlide className="">
                 <Link
-                  to={`${
-                    isAuthenticated
-                      ? `/shop/${item?.shopName?.randomString}`
-                      : "#"
-                  }`}
+                  // to={`${
+                  //   isAuthenticated
+                  //     ? `/shop/${item?.shopName?.randomString}`
+                  //     : "#"
+                  // }`}
+                  to={`/shop/${item?.shopName?.randomString}`}
                   state={item}
                 >
                   <div className="bg-white max-h-[20rem] max-w-[22rem] rounded-lg grid grid-rows-[13rem_auto] mx-auto">

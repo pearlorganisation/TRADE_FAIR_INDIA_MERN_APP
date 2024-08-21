@@ -19,7 +19,7 @@ const roleModel = require("../../models/Authentication/roles.js");
 exports.login = async (req, res) => {
   try {
     const { username, password, type } = req.body;
-
+    console.log(type);
     if (!username || !password) {
       return res
         .status(400)
@@ -32,14 +32,16 @@ exports.login = async (req, res) => {
       // .populate("role", ["role", "_id"])
       .select("-__v");
 
-    if (type === "CLIENT" && user?.role?.role !== "USER") {
+    console.log(user);
+
+    if (type === "CLIENT" && user?.role !== "USER") {
       return res.status(400).json({
         status: "FALIURE",
         message: "Only user can log in client panel!!",
       });
     }
 
-    if (type === "ADMIN" && user?.role?.role === "USER") {
+    if (type === "ADMIN" && user?.role === "USER") {
       return res.status(400).json({
         status: "FAILURE",
         message: "Only vendor and admin can login in admin panel !! ",
@@ -272,7 +274,7 @@ exports.signup = async (req, res) => {
       email,
       permissions: existingPermissions,
       password: hashPassword,
-      role: role?._id,
+      // role: role?._id,
     });
 
     const url =

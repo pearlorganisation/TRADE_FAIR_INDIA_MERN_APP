@@ -28,7 +28,7 @@ const ExploreByChoice = () => {
           }}
           className="flex  box justify-between px-4 bg-white font-medium text-2xl flex-grow basis-[15rem] text-center py-3 rounded-full cursor-pointer md:hover:scale-105 hover:shadow-2xl transition-all duration-200"
         >
-          <span className="w-full">Show All 👍</span>
+          <span className="w-full">Show All</span>
           <span className="icon w-1/5 flex flex-col justify-center">
             <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
               <path d="M312,256l-199-199a15,15 0 01 0-19l29-29a15,15 0 01 19,0l236,235a16,16 0 01 0,24l-236,235a15,15 0 01-19,0l-29-29a15,15 0 01 0-19z" />
@@ -44,7 +44,7 @@ const ExploreByChoice = () => {
                 onClick={() => {
                   dispatch(exploreByChoice(item));
                 }}
-                className="flex  box justify-between px-4 bg-white font-medium text-2xl flex-grow basis-[15rem] text-center py-3 rounded-full cursor-pointer md:hover:scale-105 hover:shadow-2xl transition-all duration-200"
+                className="flex  box justify-between px-4 bg-white font-medium text-2xl w-[10rem] flex-grow basis-[15rem] text-center py-3 rounded-full cursor-pointer md:hover:scale-105 hover:shadow-2xl transition-all duration-200"
               >
                 <style jsx>{`
                   .box {

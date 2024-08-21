@@ -443,8 +443,8 @@ const CreateVenue = () => {
                 </span>
               </OverlayTrigger>
             </label>
-            <LocationSearch />
-            {/* <Location lat={30.3165} lng={78.0322} setValue={setValue} /> */}
+            {/* <LocationSearch /> */}
+            <Location lat={30.3165} lng={78.0322} setValue={setValue} />
           </div>
 
           <div className="col-12 d-flex justify-content-end align-items-end">
