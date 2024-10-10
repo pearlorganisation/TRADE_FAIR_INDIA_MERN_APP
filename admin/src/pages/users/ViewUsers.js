@@ -18,6 +18,8 @@ import styles from "./User.module.css";
 import ViewUserDetails from "./ViewUserDetails";
 import moment from "moment";
 import { isUserHavePermission } from "../../utils";
+import Searching from "../../components/Searching";
+import Pagination from "../../components/Pagination";
 
 // ------------------------------------------------------------------------------------
 
@@ -64,16 +66,16 @@ const ViewUsers = () => {
 
   return (
     <section>
-      <Container className="my-5">
-        <Row className="mb-3">
-          <Col xs="8" md="10">
+         <Container className="my-5 px-20 px-md-5"> 
+      <div className="mb-3 d-flex flex-row justify-content-between align-items-center container-fluid p-5 ">
+<div>
             <h1 className="text-center text-danger">User's Listing</h1>
-          </Col>
-          <Col
-            xs="4"
-            md="2"
-            className="d-flex align-items-center justify-content-end"
-          >
+          </div>
+          <div><Searching/></div>
+          <div
+          
+        >
+        
             {isUserHavePermission(
               loggedInUserData?.role,
               loggedInUserData?.permissions,
@@ -91,15 +93,13 @@ const ViewUsers = () => {
                 <AiOutlineFileAdd size={25} />
               </Button>
             )}
-          </Col>
-        </Row>
+          </div>
+        </div>
 
         <Row>
           <Col>
             <Col>
-              <Col style={{ textAlign: "right" }} className="text-info fs-6">
-                Click on view icon to see complete details
-              </Col>
+          
               <Table striped bordered hover responsive className="text-center">
                 <thead>
                   <tr className="text-center">
@@ -266,6 +266,7 @@ const ViewUsers = () => {
           />
         )}
       </Container>
+<Pagination/>     
     </section>
   );
 };

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Organiser.module.css";
 import { BiSolidShow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import ViewOrganiserDetails from "./ViewOrganiserDetails";
@@ -16,6 +15,9 @@ import {
 import Loader from "../../components/common/Loader";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import { isUserHavePermission } from "../../utils";
+import { Button, FormControl, InputGroup, Row, Col, Card } from "react-bootstrap";
+import Pagination  from "../../components/Pagination";
+import Searching from "../../components/Searching";
 
 const ViewOrganiser = () => {
   const [show, setShow] = useState(false);
@@ -25,12 +27,19 @@ const ViewOrganiser = () => {
   const handleShow = () => setShow(true);
   const { statesList } = useSelector((state) => state.global);
   const [organiserData, setOrganiserData] = useState({});
-  //THis is to create buttons dynamic as per the user role
   const { loggedInUserData } = useSelector((state) => state.auth);
 
-  const { isLoading, isSuccess, errorMessage, organiserList } = useSelector(
-    (state) => state?.organiser
-  );
+  const { isLoading, organiserList } = useSelector((state) => state?.organiser);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [currentPage, setCurrentPage] = useState(() => {
+    return parseInt(searchParams.get("page")) || 1;
+  });
+  const [search, setSearch] = useState(() => {
+    return searchParams.get("query") || "";
+  });
+
+  const RowOnPage = 4;
 
   const handleDelete = (organiserId) => {
     confirmAlert({
@@ -49,11 +58,14 @@ const ViewOrganiser = () => {
     });
   };
 
-  //Getting Full States Names
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   const findStateNameBasedOnStateCode = (stateCode) => {
     if (Array.isArray(statesList) && statesList?.length > 0) {
-      const state = statesList.find((state) =>
-        state?.isoCode === stateCode ? state?.name : ""
+      const state = statesList.find(
+        (state) => state?.isoCode === stateCode ? state?.name : ""
       );
       return state?.name;
     }
@@ -61,147 +73,249 @@ const ViewOrganiser = () => {
 
   useEffect(() => {
     dispatch(fetchOrganiserList());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
-      <div className="container my-5">
-        <div className="row mb-3">
-          <div className="col-md-10 col-8">
-            <div>
-              <h1
-                className="text-danger text-center"
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Organiser's Listing
-              </h1>
-            </div>
+      <div className="container my-5 ">
+        {/* Header Section */}
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center container-fluid p-3 row ">
+          <div className="col-sm-4">
+            <h1 className="text-danger text-center text-md-start">
+              Organiser's Listing
+            </h1>
           </div>
-          <div className="col-md-2 col-4 d-flex justify-content-end align-items-center">
-            {isUserHavePermission(
+          
+       
+             <div className="col-sm-4">
+              <Searching />
+             </div>
+             <div className="col-sm-4 d-flex justify-content-center">            {isUserHavePermission(
               loggedInUserData?.role,
               loggedInUserData?.permissions,
               "CREATE_ORGANISER"
             ) && (
-              <div>
-                <Link to={"/addOrganiser"} className="btn btn-info btn-sm ">
-                  <AiOutlineFileAdd size={25} />
-                </Link>
-              </div>
+              <Button
+                size="md"
+                title="Create New Shop"
+                variant="info"
+                className=""
+                onClick={() => {
+                  navigate("/addOrganiser");
+                }}
+              >
+                <AiOutlineFileAdd size={25} />
+              </Button>
             )}
           </div>
-          {/* <div className="col-md-12">
-            <p className="text-info fs-6 text-end  mb-0">
-              Click on view icon to see complete details
-            </p>
-          </div> */}
-        </div>
-        <div className="row">
-          <div className="events_table">
-            {/* {isLoading && organiserList?.length === 0 && (
-                <section>
-                  <Loader />
-                </section>
-              )} */}
-            <div className="table-responsive">
-              <table className="table table-bordered table-striped table-hover text-center ">
-                <thead>
-                  <tr>
-                    <th scope="col">S.No</th>
-                    <th scope="col">Company Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone No.</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">City</th>
-                    <th scope="col">State</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {isLoading ? (
-                    <TableSkeletonLoading thCount={8} />
-                  ) : Array.isArray(organiserList) &&
-                    organiserList?.length > 0 ? (
-                    organiserList?.map((item, i) => {
-                      return (
-                        <tr key={item?._id || i}>
-                          <th scope="row">{i + 1}</th>
-                          <td>{item.companyName}</td>
-                          <td>{item.email}</td>
-                          <td>{item.phoneNumber}</td>
-                          <td>{item.address}</td>
-                          <td>
-                            {item?.city === "undefined" ? "NA" : item.city}
-                          </td>
-                          <td>
-                            {findStateNameBasedOnStateCode(item.state) || "N.A"}
-                          </td>
-                          <td className="d-flex gap-3  justify-content-center align-items-center">
-                            {isUserHavePermission(
-                              loggedInUserData?.role,
-                              loggedInUserData?.permissions,
-                              "VIEW_ORGANISERS"
-                            ) && (
-                              <Link
-                                className="btn btn-info"
-                                title="View Content"
-                                onClick={() => {
-                                  handleShow();
-                                  setOrganiserData(item);
-                                }}
-                              >
-                                <BiSolidShow />
-                              </Link>
-                            )}
+    </div>
+        
 
-                            {isUserHavePermission(
-                              loggedInUserData?.role,
-                              loggedInUserData?.permissions,
-                              "UPDATE_ORGANISER"
-                            ) && (
-                              <div
-                                // to={"/editOrganiserDetails"}
-                                onClick={() =>
-                                  navigate("/editOrganiserDetails", {
-                                    state: item,
-                                  })
-                                }
-                                className="btn btn-warning"
-                                title="Edit Content"
-                              >
-                                <FaEdit />
-                              </div>
-                            )}
-                            {isUserHavePermission(
-                              loggedInUserData?.role,
-                              loggedInUserData?.permissions,
-                              "DELETE_ORGANISER"
-                            ) && (
-                              <button
-                                onClick={() => handleDelete(item?._id)}
-                                className="btn btn-danger"
-                                title="Delete Content"
-                              >
-                                <MdDelete />
-                              </button>
-                            )}
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <h5>No Data found</h5>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <ViewOrganiserDetails
-            show={show}
-            handleClose={handleClose}
-            organiserData={organiserData}
-          />
+        {/* Table Layout for Medium and Larger Screens */}
+        <div className="d-none d-md-block">
+        <table className="table table-bordered table-striped table-hover text-center my-3">
+        <thead className="table-light">
+              <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Company Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone No.</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                <TableSkeletonLoading thCount={4} />
+              ) : Array.isArray(organiserList) && organiserList?.length > 0 ? (
+                organiserList?.map((item, i) => (
+                  <tr key={item?._id || i}>
+                    <th scope="row">{i + 1}</th>
+                    <td>{item.companyName}</td>
+                    <td className="text-break">{item.email}</td>
+                    <td>{item.phoneNumber}</td>
+                    <td class="text-wrap col-12 col-md-6 col-lg-4 col-xl-3">{item.address}</td>
+                    <td>
+                      {item.city === "undefined" ? "N.A." : item.city}
+                    </td>
+                    <td>
+                      {findStateNameBasedOnStateCode(item.state) || "N.A."}
+                    </td>
+                    <td>
+                      <div className="d-flex flex-row justify-content-center align-items-center gap-2">
+                        {isUserHavePermission(
+                          loggedInUserData?.role,
+                          loggedInUserData?.permissions,
+                          "VIEW_ORGANISERS"
+                        ) && (
+                          <Button
+                            variant="info"
+                            size="sm"
+                            title="View Content"
+                            onClick={() => {
+                              handleShow();
+                              setOrganiserData(item);
+                            }}
+                          >
+                            <BiSolidShow />
+                          </Button>
+                        )}
+                        {isUserHavePermission(
+                          loggedInUserData?.role,
+                          loggedInUserData?.permissions,
+                          "UPDATE_ORGANISER"
+                        ) && (
+                          <Button
+                            variant="warning"
+                            size="sm"
+                            title="Edit Content"
+                            onClick={() =>
+                              navigate("/editOrganiserDetails", {
+                                state: item,
+                              })
+                            }
+                          >
+                            <FaEdit />
+                          </Button>
+                        )}
+                        {isUserHavePermission(
+                          loggedInUserData?.role,
+                          loggedInUserData?.permissions,
+                          "DELETE_ORGANISER"
+                        ) && (
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            title="Delete Content"
+                            onClick={() => handleDelete(item?._id)}
+                          >
+                            <MdDelete />
+                          </Button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="8" className="text-center py-4">
+                    No Data Found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
+
+        {/* Card Layout for Small Screens */}
+        <div className="d-block d-md-none">
+          {isLoading ? (
+            <TableSkeletonLoading thCount={1} />
+          ) : Array.isArray(organiserList) && organiserList?.length > 0 ? (
+            organiserList?.map((item, i) => (
+              <Card key={item?._id || i} className="mb-3">
+                <Card.Body>
+                  <Card.Title>
+                    {i + 1}. {item.companyName}
+                  </Card.Title>
+                  <Card.Text>
+                    <strong>Email:</strong>{" "}
+                    <span className="text-break">
+                      {item.email || "N.A."}
+                    </span>
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Phone No.:</strong> {item.phoneNumber || "N.A."}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Address:</strong>{" "}
+                    <span className="text-break">
+                      {item.address || "N.A."}
+                    </span>
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>City:</strong>{" "}
+                    {item.city === "undefined" ? "N.A." : item.city}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>State:</strong>{" "}
+                    {findStateNameBasedOnStateCode(item.state) || "N.A."}
+                  </Card.Text>
+                  <div className="d-flex flex-row justify-content-center align-items-center gap-2">
+                    {isUserHavePermission(
+                      loggedInUserData?.role,
+                      loggedInUserData?.permissions,
+                      "VIEW_ORGANISERS"
+                    ) && (
+                      <Button
+                        variant="info"
+                        size="sm"
+                        title="View Content"
+                        onClick={() => {
+                          handleShow();
+                          setOrganiserData(item);
+                        }}
+                      >
+                        <BiSolidShow />
+                      </Button>
+                    )}
+                    {isUserHavePermission(
+                      loggedInUserData?.role,
+                      loggedInUserData?.permissions,
+                      "UPDATE_ORGANISER"
+                    ) && (
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        title="Edit Content"
+                        onClick={() =>
+                          navigate("/editOrganiserDetails", {
+                            state: item,
+                          })
+                        }
+                      >
+                        <FaEdit />
+                      </Button>
+                    )}
+                    {isUserHavePermission(
+                      loggedInUserData?.role,
+                      loggedInUserData?.permissions,
+                      "DELETE_ORGANISER"
+                    ) && (
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        title="Delete Content"
+                        onClick={() => handleDelete(item?._id)}
+                      >
+                        <MdDelete />
+                      </Button>
+                    )}
+                  </div>
+                </Card.Body>
+              </Card>
+            ))
+          ) : (
+            <div className="text-center py-4">No Data Found</div>
+          )}
+        </div>
+
+        {/* Modal for Viewing Organiser Details */}
+        <ViewOrganiserDetails
+          show={show}
+          handleClose={handleClose}
+          organiserData={organiserData}
+        /> 
+<div class="container-fluid row" style={{ paddingBottom: "100px"}}>
+<div class="container mt-5 ">
+  <Pagination />
+</div>
+
+</div>
+
+
       </div>
     </>
   );

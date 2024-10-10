@@ -10,7 +10,6 @@ import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import ViewEventDetails from "./ViewEventDetails";
 import style from "./Events.module.css";
-import Pagination from "react-bootstrap/Pagination";
 
 import { GrFormAdd } from "react-icons/gr";
 import { EventPagination } from "./EventPagination";
@@ -21,6 +20,8 @@ import {
 } from "../../features/actions/eventAction";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import { isUserHavePermission } from "../../utils";
+import Searching from "../../components/Searching";
+import Pagination  from '../../components/Pagination'
 
 // -------------------------------------------------------------------------------------------------
 
@@ -61,10 +62,14 @@ const Events = () => {
   return (
     <section>
       <Container className="my-5">
-        <Row className="mb-3">
-          <Col xs="8" md="10">
+              <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+          <div>
             <h1 className="text-center text-danger">Event's Listing</h1>
-          </Col>
+          </div>
+<div>
+<Searching/>
+</div>
+
           <Col
             xs="4"
             md="2"
@@ -88,7 +93,7 @@ const Events = () => {
               </Button>
             )}
           </Col>
-        </Row>
+        </div>
 
         <Row>
           <Col>
@@ -193,6 +198,8 @@ const Events = () => {
           />
         )}
       </Container>
+      <Pagination/>
+
     </section>
   );
 };

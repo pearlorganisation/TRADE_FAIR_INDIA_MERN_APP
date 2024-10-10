@@ -6,7 +6,7 @@ export const fetchOrganiserList = createAsyncThunk(
   "organiser/fetchOrganiserList",
   async (payload, { rejectWithValue }) => {
     try {
-      const { data } = await instance.get("/organiser", payload, {
+      const { data } = await instance.get(`/organiser?limit=${payload?.limit}&page=${payload?.page}`, {
         withCredentials: true,
       });
       return data?.data;
@@ -15,6 +15,11 @@ export const fetchOrganiserList = createAsyncThunk(
     }
   }
 );
+
+
+
+
+
 
 // Create Organiser
 export const addOrganiser = createAsyncThunk(

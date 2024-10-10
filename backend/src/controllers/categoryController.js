@@ -16,26 +16,35 @@ const createCategory = async (req, res) => {
       data: savedData,
     });
   } catch (err) {
-  
     res.status(500).json({ status: "FAILURE", error: err?.message });
   }
 };
 // ----------------------------------getCategory-------------------------------------------------
 const getCategory = async (req, res) => {
+  console.log( req?.query?.page,req?.query?.limit,req?.query)
+ 
+ 
   try {
-    let data = await categoryModel.find();
-    
-    res
-      .status(200)
-      .json({ status: "SUCCESS", message: "Lists of category", data: data });
-  } catch (err) {
+   
 
+    let data = await categoryModel
+      .find()
+      
+      console.log("dhf",data.length-1)
+      res.status(200).json({
+        status: "SUCCESS",
+        message: "Lists of category",
+        data: data, 
+      });
+      
+  } catch (err) {
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
     });
   }
 };
+
 // ---------------------------------getSingleCategory-------------------------------------------
 const getSingleCategory = async (req, res) => {
   try {
@@ -52,7 +61,6 @@ const getSingleCategory = async (req, res) => {
       data: data,
     });
   } catch (err) {
-
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -79,7 +87,6 @@ const updateCategory = async (req, res) => {
       data: data,
     });
   } catch (error) {
-    
     res.status(500).json({
       status: "FAILURE",
       error: error?.message || "Internal Server Error",
@@ -102,7 +109,6 @@ const deleteCategory = async (req, res) => {
       message: "Category Data is deleted successfully",
     });
   } catch (err) {
-  
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -134,7 +140,6 @@ const createProductCategory = async (req, res) => {
       data: data,
     });
   } catch (err) {
- 
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -146,7 +151,6 @@ const createProductCategory = async (req, res) => {
 
 const updateProductCategory = async (req, res) => {
   try {
-  
     let data = await categoryModel.findByIdAndUpdate(
       {
         _id: req?.params?.id,
@@ -165,7 +169,6 @@ const updateProductCategory = async (req, res) => {
       data: data,
     });
   } catch (err) {
-
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -191,7 +194,6 @@ const deleteProductCategory = async (req, res) => {
     //     return res.status(400).json({status : "FAILURE" ,message : "No data is found with given id!!" })
     //  }
   } catch (err) {
-    
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",

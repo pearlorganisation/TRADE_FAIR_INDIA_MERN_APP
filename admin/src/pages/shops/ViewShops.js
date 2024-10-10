@@ -14,6 +14,8 @@ import styles from "./Shops.module.css";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import moment from "moment";
 import { availablePermissions, isUserHavePermission } from "../../utils";
+import Searching from "../../components/Searching";
+import  Pagination  from "../../components/Pagination";
 // -------------------------------------------------------------------------------------------------
 const ViewShops = () => {
   const navigate = useNavigate();
@@ -74,26 +76,26 @@ const ViewShops = () => {
   return (
     <section>
       <Container className="my-5">
-        <Row className="mb-3">
-          <Col xs="8" md="10">
+      <div className="mb-3 d-flex flex-row justify-content-between align-items-center">          <div>
             <h1 className="text-center text-danger">Shop's Listing</h1>
-          </Col>
-
+          </div>
+           <div><Searching/></div>
           {isUserHavePermission(
             loggedInUserData?.role,
             loggedInUserData?.permissions,
             "CREATE_SHOP"
           ) && (
             <Col
-              xs="4"
-              md="2"
-              className="d-flex align-items-center justify-content-end"
+            xs="4"
+            md="2"
+            className="d-flex align-items-center"
             >
-              <Button
-                size="md"
-                title="Create New Shop"
-                variant="info"
-                className="d-flex align-items-center"
+             
+                        <Button
+                        size="md"
+                        title="Create New Shop"
+                        variant="info"
+                        className="d-flex align-items-center"
                 onClick={() => {
                   navigate("/addNewShop");
                 }}
@@ -101,15 +103,17 @@ const ViewShops = () => {
                 <AiOutlineFileAdd size={25} />
               </Button>
             </Col>
+
+            
           )}
-        </Row>
+
+
+        </div>
 
         <Row className={styles.shops_listing_custom_height}>
           <Col>
-            <Col>
-              <Col style={{ textAlign: "right" }} className="text-info fs-6">
-                Click on view icon to see complete details
-              </Col>
+         
+          
               <Table striped bordered hover responsive className="text-center">
                 <thead>
                   <tr className="text-center">
@@ -219,7 +223,7 @@ const ViewShops = () => {
                 </tbody>
               </Table>
             </Col>
-          </Col>
+ 
         </Row>
         {showCompleteDetailsModal && (
           <ViewShopDetails
@@ -228,7 +232,13 @@ const ViewShops = () => {
             shopData={selectedShopDetails}
           />
         )}
+
+
+
+
       </Container>
+      <div className="container-fluid p-10">
+      <Pagination/></div>
     </section>
   );
 };

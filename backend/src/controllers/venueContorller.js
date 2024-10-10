@@ -7,9 +7,11 @@ const validationResult = require("express-validator").validationResult;
 // @route   GET /api/v1/venue
 exports.getVenues = async (req, res, next) => {
   try {
+
+  
     const data = await Venue.find()
       .populate("createdBy", ["_id", "email", "name"])
-      .populate("enquiries");
+      .populate("enquiries")
     res.status(200).json({ status: 200, data });
   } catch (err) {
     res.status(400).json({
@@ -37,6 +39,39 @@ exports.getVenue = async (req, res, next) => {
     res.status(400).json({
       status: false,
       message: err?.message || "Internal server error!!",
+    });
+  }
+};
+
+
+
+
+
+
+const getCategory = async (req, res) => {
+  console.log( req?.query?.page,req?.query?.limit,req?.query)
+ 
+ 
+  try {
+    const page = parseInt( req?.query?.page) || 1;
+    const limit = parseInt(req?.query?.limit )|| 4;
+    const totalPages = await categoryModel.countDocuments();
+console.log(page,limit)
+    let data = await categoryModel
+      .find()
+      .skip(limit * (page - 1))
+      .limit(limit);
+      console.log("dhf",data.length-1)
+      res.status(200).json({
+        status: "SUCCESS",
+        message: "Lists of category",
+        data: { data, totalPages: Math.ceil(totalPages / limit) }, 
+      });
+      
+  } catch (err) {
+    res.status(500).json({
+      status: "FAILURE",
+      error: err?.message || "Internal Server Error",
     });
   }
 };

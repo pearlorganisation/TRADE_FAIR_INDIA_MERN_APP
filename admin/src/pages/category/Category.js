@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, InputGroup, FormControl } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { FaEdit } from "react-icons/fa";
 import { BiSolidShow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 // import ViewShopDetails from "./ViewShopDetails";
 import Loader from "../../components/common/Loader";
@@ -20,9 +20,13 @@ import ViewCategoryDetails from "./ViewCategory";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import styles from "./Category.module.css";
 import { isUserHavePermission } from "../../utils";
+import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from "react-icons/tb";
+import Pagination from "../../components/Pagination";
 
 // -------------------------------------------------------------------------------------------------
 const Category = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //THis is to create buttons dynamic as per the user role
@@ -33,12 +37,29 @@ const Category = () => {
   );
   const { isDeleted } = useSelector((state) => state.category);
   const { categoriesList } = useSelector((state) => state.category);
+  const {totalPages }= useSelector((state) => state.category);
+console.log("tk hj",totalPages)
 
   const [showCompleteDetailsModal, setShowCompleteDetailsModal] =
     useState(false);
 
   const [selectedShopDetails, setSelectedShopDetails] = useState({});
 
+  const [search, setSearch] = useState(()=>{
+    return searchParams.get("query")||"";
+     });
+  
+  const RowPerPage = 4;
+
+  const [currentPage, setCurrentPage] = useState(()=>{
+    return parseInt(searchParams.get("page"))|| 1;
+  });
+  
+  
+  // const totalPages = Math.ceil(categoriesList.length/ RowPerPage);
+  const LastPage = currentPage * RowPerPage;
+  const FirstPage = LastPage - RowPerPage;
+  // const currentCat = categoriesList.slice(FirstPage, LastPage);
   // -------------------------------------------------------------------------------------------------------------
   // This method is used to delete shop.
   const handleDeleteShop = (shopId) => {
@@ -62,7 +83,8 @@ const Category = () => {
   useEffect(() => {
     dispatch(fetchShopsList());
     dispatch(fetchCategoriesList());
-  }, [isDeleted]);
+  }, [isDeleted,]);
+
 
   const customActionsStyle = {
     // position: "absolute",
@@ -71,20 +93,49 @@ const Category = () => {
     // left:"10px"
   };
 
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  useEffect(() => {
+    setSearchParams({ page: currentPage,query:search  });
+}, [currentPage, search]);
+
+   const handleSearch=(e)=>{
+setSearch(e.target.value)
+   }
+
   // -------------------------------------------------------------------------------------------------------------
 
   return (
     <section>
       <Container className="my-5">
-        <Row className="mb-3">
-          <Col xs="8" md="10">
-            <h1
-              className="text-center text-danger"
-              style={{ whiteSpace: "nowrap" }}
-            >
-              Category's Listing
-            </h1>
-          </Col>
+      <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+      <div> <h1 className="text-danger"> Category's Listing </h1></div>
+     
+      <div className="mx-3"> {/* Use mx-3 for horizontal margin */}
+      <InputGroup className="w-100">
+      <FormControl
+        placeholder="Search"
+        value={search}
+        onChange={handleSearch}
+      />
+      <Button
+        variant="info"
+        onClick={() => {
+          setSearch('');
+        }}
+      >
+        Search
+      </Button>
+    </InputGroup>
+  </div>
           <Col
             xs="4"
             md="2"
@@ -108,7 +159,7 @@ const Category = () => {
               </Button>
             )}
           </Col>
-        </Row>
+        </div>
 
         <Row>
           <Col>
@@ -231,6 +282,30 @@ const Category = () => {
           />
         )}
       </Container>
+ 
+      <div className="d-flex gap-2 justify-content-center align-items-center mt-4">
+        <button
+          className="btn btn-info"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          <TbPlayerTrackPrevFilled size={16} color="white" />
+        </button>
+
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          className="btn btn-info"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          <TbPlayerTrackNextFilled size={16} color="white" />
+        </button>
+      </div>
+      {/* <div className="container-fluid p-10">
+      <Pagination/></div> */}
     </section>
   );
 };

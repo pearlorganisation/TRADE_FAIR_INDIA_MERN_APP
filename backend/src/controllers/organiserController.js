@@ -73,12 +73,17 @@ const createOrganiser = async (req, res) => {
 // ---------------------------------get organiser----------------------------------------------------
 
 const getOrganisers = async (req, res) => {
+  const page = parseInt( req?.query?.page) || 1;
+  const limit = parseInt(req?.query?.limit )|| 4;
+  const totalPages = await organiser.countDocuments();
+
   try {
     const data = await organiser
-      .find()
+      .find().skip(limit(page-1)).limit(limit)
       .populate("createdBy", ["_id", "email", "name"])
       .populate("enquiries");
-    res.status(200).json({ status: "SUCCESS", data: data });
+    res.status(200).json({ status: "SUCCESS",         data: { data, totalPages: Math.ceil(totalPages / limit) }, 
+  });
   } catch (err) {
     res.status(500).json({
       status: "FAILURE",
@@ -86,6 +91,8 @@ const getOrganisers = async (req, res) => {
     });
   }
 };
+
+
 
 //----------------------------------------update organiser------------------------------------------
 const updateOrganiser = async (req, res) => {
