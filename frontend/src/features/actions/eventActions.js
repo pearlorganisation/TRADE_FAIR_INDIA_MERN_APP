@@ -7,7 +7,7 @@ export const fetchEventList = createAsyncThunk(
   "event/fetchEvent",
   async (cityName, { rejectWithValue }) => {
     try {
-      const { data } = await instance.get("/event", {
+      const { data } = await instance.get("/event?Limit=infinite", {
         withCredentials: true,
       });
       console.log("cityName::: ", cityName);

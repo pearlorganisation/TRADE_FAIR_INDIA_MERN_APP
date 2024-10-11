@@ -8,11 +8,40 @@ const { cloudinary } = require("../configs/cloudinary");
 // @desc  Get users
 // @route   Get /api/v1/users
 exports.viewUsers = async (req, res) => {
+  const { Page, Limit, Search } = req.query;
+  console.log(Limit);
+  let page = 1;
+  let limit = 10;
+  let search = "";
+
+  if (Page) {
+    page = Math.max(page, Page);
+  }
+  if (Limit) {
+    limit = Math.max(limit, Limit);
+  }
+  if (Search) {
+    search = Search;
+  }
+
+  let skip = (page - 1) * limit;
   try {
-    const existingUsers = await User.find()
+    const totalDocuments = await User.countDocuments({
+      name: { $regex: search, $options: "i" },
+    });
+    if (Limit === "infinite") {
+      limit = totalDocuments;
+    }
+    const totalPage = Math.ceil(totalDocuments / limit);
+    const existingUsers = await User.find({
+      name: { $regex: search, $options: "i" },
+    })
       .populate("permissions", ["permission", "_id"])
       // .populate("role", ["role", "_id"])
-      .populate("createdBy");
+      .populate("createdBy")
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
 
     const total = existingUsers?.length;
 
@@ -20,6 +49,8 @@ exports.viewUsers = async (req, res) => {
       status: "SUCCESS",
       data: existingUsers,
       total,
+      totalDocuments,
+      totalPage,
       message: `Data Found Successfully`,
     });
   } catch (err) {
@@ -195,6 +226,14 @@ exports.createUser = async (req, res) => {
 exports.userStatus = async (req, res) => {
   try {
     let result = req?.body?.isUserActivate ? "Activate" : "Deactivate";
+    const isSuperAdmin = await User.findOne({ _id: req?.params?.id });
+    console.log(isSuperAdmin, "isSuperAdmin");
+    if (isSuperAdmin?.role === "SUPER_ADMIN") {
+      return res.status(400).json({
+        status: "FAILURE",
+        message: "Super Admin Cannot be a deactivated!!",
+      });
+    }
     let updatedresult = await User.findByIdAndUpdate(req?.params?.id, {
       isUserActivate: result,
     });

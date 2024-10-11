@@ -16,26 +16,61 @@ const createCategory = async (req, res) => {
       data: savedData,
     });
   } catch (err) {
-  
     res.status(500).json({ status: "FAILURE", error: err?.message });
   }
 };
 // ----------------------------------getCategory-------------------------------------------------
 const getCategory = async (req, res) => {
-  try {
-    let data = await categoryModel.find();
-    
-    res
-      .status(200)
-      .json({ status: "SUCCESS", message: "Lists of category", data: data });
-  } catch (err) {
+  const { Page, Limit, Search } = req.query;
+  console.log(Limit);
+  let page = 1;
+  let limit = 10;
+  let search = "";
 
+  if (Page) {
+    page = Math.max(page, Page);
+  }
+  if (Limit) {
+    limit = Math.max(limit, Limit);
+  }
+  if (Search) {
+    search = Search;
+  }
+
+  let skip = (page - 1) * limit;
+
+  try {
+    const totalDocuments = await categoryModel.countDocuments({
+      category: { $regex: search, $options: "i" },
+    });
+    if (Limit === "infinite") {
+      limit = totalDocuments;
+    }
+    const totalPage = Math.ceil(totalDocuments / limit);
+    let data = await categoryModel
+      .find({
+        category: { $regex: search, $options: "i" },
+      })
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    console.log("dhf", data.length - 1);
+    res.status(200).json({
+      status: "SUCCESS",
+      message: "Lists of category",
+      data: data,
+      totalPage,
+      totalDocuments,
+    });
+  } catch (err) {
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
     });
   }
 };
+
 // ---------------------------------getSingleCategory-------------------------------------------
 const getSingleCategory = async (req, res) => {
   try {
@@ -52,7 +87,6 @@ const getSingleCategory = async (req, res) => {
       data: data,
     });
   } catch (err) {
-
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -79,7 +113,6 @@ const updateCategory = async (req, res) => {
       data: data,
     });
   } catch (error) {
-    
     res.status(500).json({
       status: "FAILURE",
       error: error?.message || "Internal Server Error",
@@ -102,7 +135,6 @@ const deleteCategory = async (req, res) => {
       message: "Category Data is deleted successfully",
     });
   } catch (err) {
-  
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -134,7 +166,6 @@ const createProductCategory = async (req, res) => {
       data: data,
     });
   } catch (err) {
- 
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -146,7 +177,6 @@ const createProductCategory = async (req, res) => {
 
 const updateProductCategory = async (req, res) => {
   try {
-  
     let data = await categoryModel.findByIdAndUpdate(
       {
         _id: req?.params?.id,
@@ -165,7 +195,6 @@ const updateProductCategory = async (req, res) => {
       data: data,
     });
   } catch (err) {
-
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",
@@ -191,7 +220,6 @@ const deleteProductCategory = async (req, res) => {
     //     return res.status(400).json({status : "FAILURE" ,message : "No data is found with given id!!" })
     //  }
   } catch (err) {
-    
     res.status(500).json({
       status: "FAILURE",
       error: err?.message || "Internal Server Error",

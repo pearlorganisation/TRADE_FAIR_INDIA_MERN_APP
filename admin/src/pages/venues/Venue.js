@@ -6,13 +6,15 @@ import {
   Button,
   OverlayTrigger,
   Popover,
+  InputGroup,
+  FormControl,
 } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { FaEdit } from "react-icons/fa";
 import { BiSolidShow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import ViewVenueDetails from "./ViewVenueDetails";
@@ -28,6 +30,12 @@ import {
 import { Controller } from "react-hook-form";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import { isUserHavePermission } from "../../utils";
+import {
+  TbPlayerTrackNextFilled,
+  TbPlayerTrackPrevFilled,
+} from "react-icons/tb";
+import Searching from "../../components/Searching";
+import Pagination from "../../components/Pagination";
 
 // -------------------------------------------------------------------------------------------------
 
@@ -35,6 +43,7 @@ const Venue = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { statesList } = useSelector((state) => state.global);
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const [showCompleteDetailsModal, setShowCompleteDetailsModal] =
     useState(false);
@@ -42,7 +51,7 @@ const Venue = () => {
   const [venueView, setVenueView] = useState({});
   const { loggedInUserData } = useSelector((state) => state.auth);
 
-  const { venueList, isLoading, isvenueDeleted } = useSelector(
+  const { venueList, isLoading, isvenueDeleted, totalPages } = useSelector(
     (state) => state.venue
   );
 
@@ -85,22 +94,33 @@ const Venue = () => {
 
   useEffect(() => {
     if (isvenueDeleted) {
-      dispatch(fetchVenuesList());
+      const search = searchParams.get("search");
+      const page = searchParams.get("page");
+      dispatch(fetchVenuesList({ page, search }));
     }
   }, [isvenueDeleted]);
 
   //--------------------------------
   useEffect(() => {
-    dispatch(fetchVenuesList());
-  }, []);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    dispatch(fetchVenuesList({ page, search }));
+  }, [searchParams]);
 
   return (
     <section>
       <Container className="my-5">
-        <Row className="mb-3">
-          <Col xs="8" md="10">
-            <h1 className="text-center text-danger">Venue's Listing</h1>
-          </Col>
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+          <div>
+            {" "}
+            <h1 className="text-danger"> Venue Listing </h1>
+          </div>
+
+          <div className="mx-3">
+            {" "}
+            {/* Use mx-3 for horizontal margin */}
+            <Searching />
+          </div>
           <Col
             xs="4"
             md="2"
@@ -109,7 +129,7 @@ const Venue = () => {
             {isUserHavePermission(
               loggedInUserData?.role,
               loggedInUserData?.permissions,
-              "CREATE_VENUE"
+              "CREATE_CATEGORY"
             ) && (
               <Button
                 size="md"
@@ -117,14 +137,14 @@ const Venue = () => {
                 variant="info"
                 className="d-flex align-items-center"
                 onClick={() => {
-                  navigate("/createVenue");
+                  navigate("/addCategoryDetails");
                 }}
               >
-                <GrFormAdd className={style.aicon} size={25} />
+                <AiOutlineFileAdd size={25} />
               </Button>
             )}
           </Col>
-        </Row>
+        </div>
 
         <Row>
           <Col>
@@ -236,6 +256,9 @@ const Venue = () => {
           />
         )}
       </Container>
+      <div className="container-fluid p-10">
+        <Pagination totalPages={totalPages} />
+      </div>
     </section>
   );
 };

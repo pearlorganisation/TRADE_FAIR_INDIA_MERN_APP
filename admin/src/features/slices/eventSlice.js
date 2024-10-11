@@ -15,6 +15,7 @@ const initialState = {
   isSuccess: false,
   errorMessage: "",
   eventsList: [],
+  totalPages: 1,
 };
 
 export const eventSlice = createSlice({
@@ -35,7 +36,9 @@ export const eventSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.errorMessage = "";
-        state.eventsList = action.payload;
+        state.eventsList = action.payload.data;
+        console.log(action.payload, "event payload");
+        state.totalPages = action.payload.totalPage;
       })
       .addCase(fetchEventList.rejected, (state, action) => {
         state.isLoading = false;

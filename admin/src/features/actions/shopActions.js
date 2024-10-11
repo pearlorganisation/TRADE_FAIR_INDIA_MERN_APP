@@ -5,13 +5,16 @@ import { toast } from "react-toastify";
 
 export const fetchShopsList = createAsyncThunk(
   "shop/fetchShopsList",
-  async (payload, { rejectWithValue }) => {
+  async ({ search, page }, { rejectWithValue }) => {
     try {
-      const { data } = await instance.get("/shopRegistration", {
-        withCredentials: true,
-      });
+      const { data } = await instance.get(
+        `/shopRegistration?Search=${search || ""}&Page=${page || 1}`,
+        {
+          withCredentials: true,
+        }
+      );
 
-      return data?.data;
+      return data;
     } catch (error) {
       return rejectWithValue(error);
     }

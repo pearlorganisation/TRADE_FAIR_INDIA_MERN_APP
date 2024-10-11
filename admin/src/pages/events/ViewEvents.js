@@ -162,6 +162,8 @@ const ViewEvents = () => {
           </div>
         </div>
       </div>
+      <div className="container-fluid p-2 ">
+      <Pagination/></div>
     </>
   );
 };

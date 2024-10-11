@@ -4,13 +4,16 @@ import { instance } from "../../services/axiosInterceptor";
 
 export const fetchEventList = createAsyncThunk(
   "event/fetchEventList",
-  async (payload, { rejectWithValue }) => {
+  async ({ search, page }, { rejectWithValue }) => {
     try {
-      const { data } = await instance.get("/event", {
-        withCredentials: true,
-      });
+      const { data } = await instance.get(
+        `/event?Search=${search || ""}&Page=${page || 1}`,
+        {
+          withCredentials: true,
+        }
+      );
 
-      return data?.data;
+      return data;
     } catch (error) {
       return rejectWithValue(error);
     }

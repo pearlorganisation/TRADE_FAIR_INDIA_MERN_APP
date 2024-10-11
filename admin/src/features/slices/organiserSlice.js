@@ -16,6 +16,7 @@ const initialState = {
   isOrganiserCreationSuccess: false,
   errorMessage: "",
   organiserList: [],
+  totalPages: 1,
 };
 
 export const organiserSlice = createSlice({
@@ -39,7 +40,8 @@ export const organiserSlice = createSlice({
         state.isOrganiserCreationSuccess = false;
 
         state.errorMessage = "";
-        state.organiserList = action.payload;
+        state.organiserList = action.payload.data;
+        state.totalPages = action.payload.totalPage;
       })
       .addCase(fetchOrganiserList.rejected, (state, action) => {
         state.isLoading = false;

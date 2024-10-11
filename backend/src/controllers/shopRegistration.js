@@ -56,22 +56,51 @@ exports.createRegistration = async (req, res, next) => {
 // @desc    Get all shop registrations
 // @route   POST /api/v1/shopRegistration
 exports.getRegistration = async (req, res) => {
+  const { Page, Search, Limit } = req.query;
+  let page = 1;
+  let limit = 10;
+  let search = "";
+  if (Page) {
+    page = Math.max(page, Page);
+  }
+  if (Search) {
+    search = Search;
+  }
+  if (Limit) {
+    limit = Math.max(limit, Limit);
+  }
+  let skip = (page - 1) * limit;
   try {
     let filter = {};
     if (req?.userCredentials?.role === "USER") {
       filter = { createdBy: req?.userCredentials?.userId };
     }
-    const allRegistrations = await Registration.find(filter)
+    const totalDocuments = await Registration.countDocuments({
+      shopName: { $regex: search, $options: "i" },
+    });
+    const totalPage = Math.ceil(totalDocuments / limit);
+    if (Limit === "infinite") {
+      limit = totalDocuments;
+    }
+    const allRegistrations = await Registration.find({
+      ...filter,
+      shopName: { $regex: search, $options: "i" },
+    })
       .populate("category")
       .populate("createdBy", ["_id", "name", "email"])
       .populate("productCategories")
       .populate("enquiries")
-      .populate("events");
+      .populate("events")
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
 
     return res.status(200).json({
       status: true,
       data: allRegistrations,
       total: allRegistrations.length,
+      totalDocuments,
+      totalPage,
     });
   } catch (err) {
     res.status(400).json({

@@ -7,7 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { confirmAlert } from "react-confirm-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   deleteUser,
   fetchUsersList,
@@ -18,6 +18,8 @@ import styles from "./User.module.css";
 import ViewUserDetails from "./ViewUserDetails";
 import moment from "moment";
 import { isUserHavePermission } from "../../utils";
+import Searching from "../../components/Searching";
+import Pagination from "../../components/Pagination";
 
 // ------------------------------------------------------------------------------------
 
@@ -25,8 +27,15 @@ const ViewUsers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { usersList, isLoading, isSuccess, errorMessage, isUserStatusUpdated } =
-    useSelector((state) => state?.user);
+  const {
+    usersList,
+    isLoading,
+    isSuccess,
+    errorMessage,
+    isUserStatusUpdated,
+    totalPages,
+  } = useSelector((state) => state?.user);
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const { loggedInUserData } = useSelector((state) => state.auth);
 
@@ -59,21 +68,22 @@ const ViewUsers = () => {
   // -------------------------------------------------------------------------------------------------------------
 
   useEffect(() => {
-    dispatch(fetchUsersList());
-  }, [isUserStatusUpdated]);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    dispatch(fetchUsersList({ search, page }));
+  }, [isUserStatusUpdated, searchParams]);
 
   return (
     <section>
-      <Container className="my-5">
-        <Row className="mb-3">
-          <Col xs="8" md="10">
+      <Container className="my-5 px-20 px-md-5">
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center container-fluid p-5 ">
+          <div>
             <h1 className="text-center text-danger">User's Listing</h1>
-          </Col>
-          <Col
-            xs="4"
-            md="2"
-            className="d-flex align-items-center justify-content-end"
-          >
+          </div>
+          <div>
+            <Searching />
+          </div>
+          <div>
             {isUserHavePermission(
               loggedInUserData?.role,
               loggedInUserData?.permissions,
@@ -91,15 +101,12 @@ const ViewUsers = () => {
                 <AiOutlineFileAdd size={25} />
               </Button>
             )}
-          </Col>
-        </Row>
+          </div>
+        </div>
 
         <Row>
           <Col>
             <Col>
-              <Col style={{ textAlign: "right" }} className="text-info fs-6">
-                Click on view icon to see complete details
-              </Col>
               <Table striped bordered hover responsive className="text-center">
                 <thead>
                   <tr className="text-center">
@@ -266,6 +273,7 @@ const ViewUsers = () => {
           />
         )}
       </Container>
+      <Pagination totalPages={totalPages} />
     </section>
   );
 };

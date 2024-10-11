@@ -19,6 +19,7 @@ const initialState = {
   categoryIndividualList: [],
   deletedData: false,
   isDeleted: false,
+  totalPages: 1,
 };
 
 // ---------------------------------------------------------------------------------------
@@ -41,7 +42,8 @@ export const categorySlice = createSlice({
         state.isSuccess = true;
         state.errorMessage = "";
         state.isDeleted = false;
-        state.categoriesList = action.payload;
+        state.categoriesList = action.payload.data;
+        state.totalPages = action.payload.totalPage;
         state.categoryIndividualList = [];
         // state.categoryIndividualList = action.payload;
       })

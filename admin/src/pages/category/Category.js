@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { FaEdit } from "react-icons/fa";
 import { BiSolidShow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 // import ViewShopDetails from "./ViewShopDetails";
 import Loader from "../../components/common/Loader";
@@ -20,9 +27,17 @@ import ViewCategoryDetails from "./ViewCategory";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import styles from "./Category.module.css";
 import { isUserHavePermission } from "../../utils";
+import {
+  TbPlayerTrackNextFilled,
+  TbPlayerTrackPrevFilled,
+} from "react-icons/tb";
+import Pagination from "../../components/Pagination";
+import Searching from "../../components/Searching";
 
 // -------------------------------------------------------------------------------------------------
 const Category = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //THis is to create buttons dynamic as per the user role
@@ -32,13 +47,14 @@ const Category = () => {
     (state) => state.shop
   );
   const { isDeleted } = useSelector((state) => state.category);
-  const { categoriesList } = useSelector((state) => state.category);
+  const { categoriesList, totalPages } = useSelector((state) => state.category);
 
   const [showCompleteDetailsModal, setShowCompleteDetailsModal] =
     useState(false);
 
   const [selectedShopDetails, setSelectedShopDetails] = useState({});
 
+  // const currentCat = categoriesList.slice(FirstPage, LastPage);
   // -------------------------------------------------------------------------------------------------------------
   // This method is used to delete shop.
   const handleDeleteShop = (shopId) => {
@@ -60,9 +76,11 @@ const Category = () => {
 
   //Calling Fetch Shops List API
   useEffect(() => {
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
     dispatch(fetchShopsList());
-    dispatch(fetchCategoriesList());
-  }, [isDeleted]);
+    dispatch(fetchCategoriesList({ page, search }));
+  }, [isDeleted, searchParams]);
 
   const customActionsStyle = {
     // position: "absolute",
@@ -76,15 +94,17 @@ const Category = () => {
   return (
     <section>
       <Container className="my-5">
-        <Row className="mb-3">
-          <Col xs="8" md="10">
-            <h1
-              className="text-center text-danger"
-              style={{ whiteSpace: "nowrap" }}
-            >
-              Category's Listing
-            </h1>
-          </Col>
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+          <div>
+            {" "}
+            <h1 className="text-danger"> Category's Listing </h1>
+          </div>
+
+          <div className="mx-3">
+            {" "}
+            {/* Use mx-3 for horizontal margin */}
+            <Searching />
+          </div>
           <Col
             xs="4"
             md="2"
@@ -108,7 +128,7 @@ const Category = () => {
               </Button>
             )}
           </Col>
-        </Row>
+        </div>
 
         <Row>
           <Col>
@@ -231,6 +251,10 @@ const Category = () => {
           />
         )}
       </Container>
+
+      <Pagination totalPages={totalPages} />
+      {/* <div className="container-fluid p-10">
+      <Pagination/></div> */}
     </section>
   );
 };

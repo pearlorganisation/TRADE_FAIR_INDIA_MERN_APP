@@ -16,6 +16,7 @@ const initialState = {
   errorMessage: "",
   usersList: [],
   isUserStatusUpdated: false,
+  totalPages: 1,
 };
 
 export const userSlice = createSlice({
@@ -36,11 +37,13 @@ export const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.errorMessage = "";
-        state.usersList = action.payload;
+        state.totalPages = action.payload.totalPage;
+        state.usersList = action.payload?.data;
       })
       .addCase(fetchUsersList.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
+
         state.errorMessage = action.payload;
       })
 

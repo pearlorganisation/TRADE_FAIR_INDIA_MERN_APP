@@ -4,9 +4,9 @@ import styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
-    <div className={`${styles.footer_container}`}>
+    <div className={`${styles.footer_container} `}    >
       <div
-        className={` d-flex justify-content-center align-items-center flex-wrap container mx-auto`}
+        className={` d-flex justify-content-center align-items-center flex-wrap container-fluid mt-10 mx-auto`}
       >
         <div className="">
           This website is maintained and designed by{" "}

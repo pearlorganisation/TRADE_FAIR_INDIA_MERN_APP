@@ -5,12 +5,11 @@ import { FaEdit } from "react-icons/fa";
 import { BiSolidShow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import ViewEventDetails from "./ViewEventDetails";
 import style from "./Events.module.css";
-import Pagination from "react-bootstrap/Pagination";
 
 import { GrFormAdd } from "react-icons/gr";
 import { EventPagination } from "./EventPagination";
@@ -21,6 +20,8 @@ import {
 } from "../../features/actions/eventAction";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import { isUserHavePermission } from "../../utils";
+import Searching from "../../components/Searching";
+import Pagination from "../../components/Pagination";
 
 // -------------------------------------------------------------------------------------------------
 
@@ -30,7 +31,10 @@ const Events = () => {
   //Dynamic handling of buttons  as per role
   const { loggedInUserData } = useSelector((state) => state.auth);
 
-  const { eventsList, isLoading } = useSelector((state) => state.event);
+  const { eventsList, isLoading, totalPages } = useSelector(
+    (state) => state.event
+  );
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const [event, setEvent] = useState({});
 
@@ -55,16 +59,22 @@ const Events = () => {
     });
   };
   useEffect(() => {
-    dispatch(fetchEventList());
-  }, [dispatch]);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    dispatch(fetchEventList({ search, page }));
+  }, [searchParams]);
 
   return (
     <section>
       <Container className="my-5">
-        <Row className="mb-3">
-          <Col xs="8" md="10">
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+          <div>
             <h1 className="text-center text-danger">Event's Listing</h1>
-          </Col>
+          </div>
+          <div>
+            <Searching />
+          </div>
+
           <Col
             xs="4"
             md="2"
@@ -88,7 +98,7 @@ const Events = () => {
               </Button>
             )}
           </Col>
-        </Row>
+        </div>
 
         <Row>
           <Col>
@@ -193,6 +203,7 @@ const Events = () => {
           />
         )}
       </Container>
+      <Pagination totalPages={totalPages} />
     </section>
   );
 };
