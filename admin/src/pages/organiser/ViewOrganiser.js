@@ -15,8 +15,15 @@ import {
 import Loader from "../../components/common/Loader";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import { isUserHavePermission } from "../../utils";
-import { Button, FormControl, InputGroup, Row, Col, Card } from "react-bootstrap";
-import Pagination  from "../../components/Pagination";
+import {
+  Button,
+  FormControl,
+  InputGroup,
+  Row,
+  Col,
+  Card,
+} from "react-bootstrap";
+import Pagination from "../../components/Pagination";
 import Searching from "../../components/Searching";
 
 const ViewOrganiser = () => {
@@ -29,17 +36,10 @@ const ViewOrganiser = () => {
   const [organiserData, setOrganiserData] = useState({});
   const { loggedInUserData } = useSelector((state) => state.auth);
 
-  const { isLoading, organiserList } = useSelector((state) => state?.organiser);
+  const { isLoading, organiserList, totalPages } = useSelector(
+    (state) => state?.organiser
+  );
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const [currentPage, setCurrentPage] = useState(() => {
-    return parseInt(searchParams.get("page")) || 1;
-  });
-  const [search, setSearch] = useState(() => {
-    return searchParams.get("query") || "";
-  });
-
-  const RowOnPage = 4;
 
   const handleDelete = (organiserId) => {
     confirmAlert({
@@ -58,22 +58,20 @@ const ViewOrganiser = () => {
     });
   };
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
-
   const findStateNameBasedOnStateCode = (stateCode) => {
     if (Array.isArray(statesList) && statesList?.length > 0) {
-      const state = statesList.find(
-        (state) => state?.isoCode === stateCode ? state?.name : ""
+      const state = statesList.find((state) =>
+        state?.isoCode === stateCode ? state?.name : ""
       );
       return state?.name;
     }
   };
 
   useEffect(() => {
-    dispatch(fetchOrganiserList());
-  }, [dispatch]);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    dispatch(fetchOrganiserList({ search, page }));
+  }, [searchParams]);
 
   return (
     <>
@@ -85,12 +83,13 @@ const ViewOrganiser = () => {
               Organiser's Listing
             </h1>
           </div>
-          
-       
-             <div className="col-sm-4">
-              <Searching />
-             </div>
-             <div className="col-sm-4 d-flex justify-content-center">            {isUserHavePermission(
+
+          <div className="col-sm-4">
+            <Searching />
+          </div>
+          <div className="col-sm-4 d-flex justify-content-center">
+            {" "}
+            {isUserHavePermission(
               loggedInUserData?.role,
               loggedInUserData?.permissions,
               "CREATE_ORGANISER"
@@ -108,13 +107,12 @@ const ViewOrganiser = () => {
               </Button>
             )}
           </div>
-    </div>
-        
+        </div>
 
         {/* Table Layout for Medium and Larger Screens */}
         <div className="d-none d-md-block">
-        <table className="table table-bordered table-striped table-hover text-center my-3">
-        <thead className="table-light">
+          <table className="table table-bordered table-striped table-hover text-center my-3">
+            <thead className="table-light">
               <tr>
                 <th scope="col">S.No</th>
                 <th scope="col">Company Name</th>
@@ -136,10 +134,10 @@ const ViewOrganiser = () => {
                     <td>{item.companyName}</td>
                     <td className="text-break">{item.email}</td>
                     <td>{item.phoneNumber}</td>
-                    <td class="text-wrap col-12 col-md-6 col-lg-4 col-xl-3">{item.address}</td>
-                    <td>
-                      {item.city === "undefined" ? "N.A." : item.city}
+                    <td class="text-wrap col-12 col-md-6 col-lg-4 col-xl-3">
+                      {item.address}
                     </td>
+                    <td>{item.city === "undefined" ? "N.A." : item.city}</td>
                     <td>
                       {findStateNameBasedOnStateCode(item.state) || "N.A."}
                     </td>
@@ -222,18 +220,14 @@ const ViewOrganiser = () => {
                   </Card.Title>
                   <Card.Text>
                     <strong>Email:</strong>{" "}
-                    <span className="text-break">
-                      {item.email || "N.A."}
-                    </span>
+                    <span className="text-break">{item.email || "N.A."}</span>
                   </Card.Text>
                   <Card.Text>
                     <strong>Phone No.:</strong> {item.phoneNumber || "N.A."}
                   </Card.Text>
                   <Card.Text>
                     <strong>Address:</strong>{" "}
-                    <span className="text-break">
-                      {item.address || "N.A."}
-                    </span>
+                    <span className="text-break">{item.address || "N.A."}</span>
                   </Card.Text>
                   <Card.Text>
                     <strong>City:</strong>{" "}
@@ -307,15 +301,12 @@ const ViewOrganiser = () => {
           show={show}
           handleClose={handleClose}
           organiserData={organiserData}
-        /> 
-<div class="container-fluid row" style={{ paddingBottom: "100px"}}>
-<div class="container mt-5 ">
-  <Pagination />
-</div>
-
-</div>
-
-
+        />
+        <div class="container-fluid row" style={{ paddingBottom: "100px" }}>
+          <div class="container mt-5 ">
+            <Pagination totalPages={totalPages} />
+          </div>
+        </div>
       </div>
     </>
   );

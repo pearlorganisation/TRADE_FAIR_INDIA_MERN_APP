@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, InputGroup, FormControl } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { FaEdit } from "react-icons/fa";
 import { BiSolidShow } from "react-icons/bi";
@@ -20,8 +27,12 @@ import ViewCategoryDetails from "./ViewCategory";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import styles from "./Category.module.css";
 import { isUserHavePermission } from "../../utils";
-import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from "react-icons/tb";
+import {
+  TbPlayerTrackNextFilled,
+  TbPlayerTrackPrevFilled,
+} from "react-icons/tb";
 import Pagination from "../../components/Pagination";
+import Searching from "../../components/Searching";
 
 // -------------------------------------------------------------------------------------------------
 const Category = () => {
@@ -36,29 +47,13 @@ const Category = () => {
     (state) => state.shop
   );
   const { isDeleted } = useSelector((state) => state.category);
-  const { categoriesList } = useSelector((state) => state.category);
-  const {totalPages }= useSelector((state) => state.category);
-console.log("tk hj",totalPages)
+  const { categoriesList, totalPages } = useSelector((state) => state.category);
 
   const [showCompleteDetailsModal, setShowCompleteDetailsModal] =
     useState(false);
 
   const [selectedShopDetails, setSelectedShopDetails] = useState({});
 
-  const [search, setSearch] = useState(()=>{
-    return searchParams.get("query")||"";
-     });
-  
-  const RowPerPage = 4;
-
-  const [currentPage, setCurrentPage] = useState(()=>{
-    return parseInt(searchParams.get("page"))|| 1;
-  });
-  
-  
-  // const totalPages = Math.ceil(categoriesList.length/ RowPerPage);
-  const LastPage = currentPage * RowPerPage;
-  const FirstPage = LastPage - RowPerPage;
   // const currentCat = categoriesList.slice(FirstPage, LastPage);
   // -------------------------------------------------------------------------------------------------------------
   // This method is used to delete shop.
@@ -81,10 +76,11 @@ console.log("tk hj",totalPages)
 
   //Calling Fetch Shops List API
   useEffect(() => {
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
     dispatch(fetchShopsList());
-    dispatch(fetchCategoriesList());
-  }, [isDeleted,]);
-
+    dispatch(fetchCategoriesList({ page, search }));
+  }, [isDeleted, searchParams]);
 
   const customActionsStyle = {
     // position: "absolute",
@@ -93,49 +89,22 @@ console.log("tk hj",totalPages)
     // left:"10px"
   };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-  useEffect(() => {
-    setSearchParams({ page: currentPage,query:search  });
-}, [currentPage, search]);
-
-   const handleSearch=(e)=>{
-setSearch(e.target.value)
-   }
-
   // -------------------------------------------------------------------------------------------------------------
 
   return (
     <section>
       <Container className="my-5">
-      <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
-      <div> <h1 className="text-danger"> Category's Listing </h1></div>
-     
-      <div className="mx-3"> {/* Use mx-3 for horizontal margin */}
-      <InputGroup className="w-100">
-      <FormControl
-        placeholder="Search"
-        value={search}
-        onChange={handleSearch}
-      />
-      <Button
-        variant="info"
-        onClick={() => {
-          setSearch('');
-        }}
-      >
-        Search
-      </Button>
-    </InputGroup>
-  </div>
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+          <div>
+            {" "}
+            <h1 className="text-danger"> Category's Listing </h1>
+          </div>
+
+          <div className="mx-3">
+            {" "}
+            {/* Use mx-3 for horizontal margin */}
+            <Searching />
+          </div>
           <Col
             xs="4"
             md="2"
@@ -282,28 +251,8 @@ setSearch(e.target.value)
           />
         )}
       </Container>
- 
-      <div className="d-flex gap-2 justify-content-center align-items-center mt-4">
-        <button
-          className="btn btn-info"
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        >
-          <TbPlayerTrackPrevFilled size={16} color="white" />
-        </button>
 
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-
-        <button
-          className="btn btn-info"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          <TbPlayerTrackNextFilled size={16} color="white" />
-        </button>
-      </div>
+      <Pagination totalPages={totalPages} />
       {/* <div className="container-fluid p-10">
       <Pagination/></div> */}
     </section>

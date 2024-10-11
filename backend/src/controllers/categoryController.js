@@ -21,22 +21,48 @@ const createCategory = async (req, res) => {
 };
 // ----------------------------------getCategory-------------------------------------------------
 const getCategory = async (req, res) => {
-  console.log( req?.query?.page,req?.query?.limit,req?.query)
- 
- 
-  try {
-   
+  const { Page, Limit, Search } = req.query;
+  console.log(Limit);
+  let page = 1;
+  let limit = 10;
+  let search = "";
 
+  if (Page) {
+    page = Math.max(page, Page);
+  }
+  if (Limit) {
+    limit = Math.max(limit, Limit);
+  }
+  if (Search) {
+    search = Search;
+  }
+
+  let skip = (page - 1) * limit;
+
+  try {
+    const totalDocuments = await categoryModel.countDocuments({
+      category: { $regex: search, $options: "i" },
+    });
+    if (Limit === "infinite") {
+      limit = totalDocuments;
+    }
+    const totalPage = Math.ceil(totalDocuments / limit);
     let data = await categoryModel
-      .find()
-      
-      console.log("dhf",data.length-1)
-      res.status(200).json({
-        status: "SUCCESS",
-        message: "Lists of category",
-        data: data, 
-      });
-      
+      .find({
+        category: { $regex: search, $options: "i" },
+      })
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    console.log("dhf", data.length - 1);
+    res.status(200).json({
+      status: "SUCCESS",
+      message: "Lists of category",
+      data: data,
+      totalPage,
+      totalDocuments,
+    });
   } catch (err) {
     res.status(500).json({
       status: "FAILURE",

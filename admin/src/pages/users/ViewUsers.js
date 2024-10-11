@@ -7,7 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { confirmAlert } from "react-confirm-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   deleteUser,
   fetchUsersList,
@@ -27,8 +27,15 @@ const ViewUsers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { usersList, isLoading, isSuccess, errorMessage, isUserStatusUpdated } =
-    useSelector((state) => state?.user);
+  const {
+    usersList,
+    isLoading,
+    isSuccess,
+    errorMessage,
+    isUserStatusUpdated,
+    totalPages,
+  } = useSelector((state) => state?.user);
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const { loggedInUserData } = useSelector((state) => state.auth);
 
@@ -61,21 +68,22 @@ const ViewUsers = () => {
   // -------------------------------------------------------------------------------------------------------------
 
   useEffect(() => {
-    dispatch(fetchUsersList());
-  }, [isUserStatusUpdated]);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    dispatch(fetchUsersList({ search, page }));
+  }, [isUserStatusUpdated, searchParams]);
 
   return (
     <section>
-         <Container className="my-5 px-20 px-md-5"> 
-      <div className="mb-3 d-flex flex-row justify-content-between align-items-center container-fluid p-5 ">
-<div>
+      <Container className="my-5 px-20 px-md-5">
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center container-fluid p-5 ">
+          <div>
             <h1 className="text-center text-danger">User's Listing</h1>
           </div>
-          <div><Searching/></div>
-          <div
-          
-        >
-        
+          <div>
+            <Searching />
+          </div>
+          <div>
             {isUserHavePermission(
               loggedInUserData?.role,
               loggedInUserData?.permissions,
@@ -99,7 +107,6 @@ const ViewUsers = () => {
         <Row>
           <Col>
             <Col>
-          
               <Table striped bordered hover responsive className="text-center">
                 <thead>
                   <tr className="text-center">
@@ -266,7 +273,7 @@ const ViewUsers = () => {
           />
         )}
       </Container>
-<Pagination/>     
+      <Pagination totalPages={totalPages} />
     </section>
   );
 };

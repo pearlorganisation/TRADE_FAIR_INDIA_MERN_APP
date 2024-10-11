@@ -73,17 +73,45 @@ const createOrganiser = async (req, res) => {
 // ---------------------------------get organiser----------------------------------------------------
 
 const getOrganisers = async (req, res) => {
-  const page = parseInt( req?.query?.page) || 1;
-  const limit = parseInt(req?.query?.limit )|| 4;
-  const totalPages = await organiser.countDocuments();
+  const { Page, Limit, Search } = req.query;
+  console.log(Limit);
+  let page = 1;
+  let limit = 10;
+  let search = "";
 
+  if (Page) {
+    page = Math.max(page, Page);
+  }
+  if (Limit) {
+    limit = Math.max(limit, Limit);
+  }
+  if (Search) {
+    search = Search;
+  }
+
+  let skip = (page - 1) * limit;
   try {
+    const totalDocuments = await organiser.countDocuments({
+      companyName: { $regex: search, $options: "i" },
+    });
+    if (Limit === "infinite") {
+      limit = totalDocuments;
+    }
+
+    const totalPage = Math.ceil(totalDocuments / limit);
     const data = await organiser
-      .find().skip(limit(page-1)).limit(limit)
+      .find({
+        companyName: { $regex: search, $options: "i" },
+      })
       .populate("createdBy", ["_id", "email", "name"])
-      .populate("enquiries");
-    res.status(200).json({ status: "SUCCESS",         data: { data, totalPages: Math.ceil(totalPages / limit) }, 
-  });
+      .populate("enquiries")
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+    res.status(200).json({
+      status: "SUCCESS",
+      data: { data, totalPage, totalDocuments },
+    });
   } catch (err) {
     res.status(500).json({
       status: "FAILURE",
@@ -91,8 +119,6 @@ const getOrganisers = async (req, res) => {
     });
   }
 };
-
-
 
 //----------------------------------------update organiser------------------------------------------
 const updateOrganiser = async (req, res) => {

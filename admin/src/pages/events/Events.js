@@ -5,7 +5,7 @@ import { FaEdit } from "react-icons/fa";
 import { BiSolidShow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import ViewEventDetails from "./ViewEventDetails";
@@ -21,7 +21,7 @@ import {
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import { isUserHavePermission } from "../../utils";
 import Searching from "../../components/Searching";
-import Pagination  from '../../components/Pagination'
+import Pagination from "../../components/Pagination";
 
 // -------------------------------------------------------------------------------------------------
 
@@ -31,7 +31,10 @@ const Events = () => {
   //Dynamic handling of buttons  as per role
   const { loggedInUserData } = useSelector((state) => state.auth);
 
-  const { eventsList, isLoading } = useSelector((state) => state.event);
+  const { eventsList, isLoading, totalPages } = useSelector(
+    (state) => state.event
+  );
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const [event, setEvent] = useState({});
 
@@ -56,19 +59,21 @@ const Events = () => {
     });
   };
   useEffect(() => {
-    dispatch(fetchEventList());
-  }, [dispatch]);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    dispatch(fetchEventList({ search, page }));
+  }, [searchParams]);
 
   return (
     <section>
       <Container className="my-5">
-              <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
           <div>
             <h1 className="text-center text-danger">Event's Listing</h1>
           </div>
-<div>
-<Searching/>
-</div>
+          <div>
+            <Searching />
+          </div>
 
           <Col
             xs="4"
@@ -198,8 +203,7 @@ const Events = () => {
           />
         )}
       </Container>
-      <Pagination/>
-
+      <Pagination totalPages={totalPages} />
     </section>
   );
 };

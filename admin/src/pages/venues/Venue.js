@@ -30,7 +30,10 @@ import {
 import { Controller } from "react-hook-form";
 import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import { isUserHavePermission } from "../../utils";
-import { TbPlayerTrackNextFilled, TbPlayerTrackPrevFilled } from "react-icons/tb";
+import {
+  TbPlayerTrackNextFilled,
+  TbPlayerTrackPrevFilled,
+} from "react-icons/tb";
 import Searching from "../../components/Searching";
 import Pagination from "../../components/Pagination";
 
@@ -40,18 +43,18 @@ const Venue = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { statesList } = useSelector((state) => state.global);
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const [showCompleteDetailsModal, setShowCompleteDetailsModal] =
     useState(false);
 
   const [venueView, setVenueView] = useState({});
   const { loggedInUserData } = useSelector((state) => state.auth);
-  // const {totalPages }= useSelector((state) => state.category);
-const totalPages=4;
-  const { venueList, isLoading, isvenueDeleted } = useSelector(
+
+  const { venueList, isLoading, isvenueDeleted, totalPages } = useSelector(
     (state) => state.venue
-  ); 
- 
+  );
+
   //This func is used for hover properties
   // const popoverBottom = (
   //   <Popover id="popover-positioned-bottom" title="Popover bottom">
@@ -91,29 +94,37 @@ const totalPages=4;
 
   useEffect(() => {
     if (isvenueDeleted) {
-      dispatch(fetchVenuesList());
+      const search = searchParams.get("search");
+      const page = searchParams.get("page");
+      dispatch(fetchVenuesList({ page, search }));
     }
   }, [isvenueDeleted]);
 
   //--------------------------------
   useEffect(() => {
-    dispatch(fetchVenuesList());
-  }, []);
- 
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    dispatch(fetchVenuesList({ page, search }));
+  }, [searchParams]);
 
   return (
     <section>
       <Container className="my-5">
-      <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
-      <div> <h1 className="text-danger"> Venue Listing </h1></div>
-     
-      <div className="mx-3"> {/* Use mx-3 for horizontal margin */}
-      <Searching/>
-  </div>
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+          <div>
+            {" "}
+            <h1 className="text-danger"> Venue Listing </h1>
+          </div>
+
+          <div className="mx-3">
+            {" "}
+            {/* Use mx-3 for horizontal margin */}
+            <Searching />
+          </div>
           <Col
-           xs="4"
-           md="2"
-           className="d-flex align-items-center justify-content-end"
+            xs="4"
+            md="2"
+            className="d-flex align-items-center justify-content-end"
           >
             {isUserHavePermission(
               loggedInUserData?.role,
@@ -121,10 +132,10 @@ const totalPages=4;
               "CREATE_CATEGORY"
             ) && (
               <Button
-              size="md"
-              title="Create New Shop"
-              variant="info"
-              className="d-flex align-items-center"
+                size="md"
+                title="Create New Shop"
+                variant="info"
+                className="d-flex align-items-center"
                 onClick={() => {
                   navigate("/addCategoryDetails");
                 }}
@@ -134,7 +145,6 @@ const totalPages=4;
             )}
           </Col>
         </div>
-
 
         <Row>
           <Col>
@@ -246,9 +256,9 @@ const totalPages=4;
           />
         )}
       </Container>
-   <div className="container-fluid p-10">
-  <Pagination/></div>
-  
+      <div className="container-fluid p-10">
+        <Pagination totalPages={totalPages} />
+      </div>
     </section>
   );
 };

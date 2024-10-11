@@ -5,7 +5,7 @@ import { FaEdit } from "react-icons/fa";
 import { BiSolidShow } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import ViewShopDetails from "./ViewShopDetails";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,16 +15,16 @@ import TableSkeletonLoading from "../../components/common/TableSkeletonLoading";
 import moment from "moment";
 import { availablePermissions, isUserHavePermission } from "../../utils";
 import Searching from "../../components/Searching";
-import  Pagination  from "../../components/Pagination";
+import Pagination from "../../components/Pagination";
 // -------------------------------------------------------------------------------------------------
 const ViewShops = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, isSuccess, errorMessage, shopsList } = useSelector(
-    (state) => state.shop
-  );
+  const { isLoading, isSuccess, errorMessage, shopsList, totalPages } =
+    useSelector((state) => state.shop);
   const { loggedInUserData } = useSelector((state) => state.auth);
   const { statesList } = useSelector((state) => state.global);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [showCompleteDetailsModal, setShowCompleteDetailsModal] =
     useState(false);
@@ -62,8 +62,10 @@ const ViewShops = () => {
 
   //Calling Fetch Shops List API
   useEffect(() => {
-    dispatch(fetchShopsList());
-  }, []);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    dispatch(fetchShopsList({ page, search }));
+  }, [searchParams]);
 
   useEffect(() => {
     console.log(availablePermissions);
@@ -76,26 +78,25 @@ const ViewShops = () => {
   return (
     <section>
       <Container className="my-5">
-      <div className="mb-3 d-flex flex-row justify-content-between align-items-center">          <div>
+        <div className="mb-3 d-flex flex-row justify-content-between align-items-center">
+          {" "}
+          <div>
             <h1 className="text-center text-danger">Shop's Listing</h1>
           </div>
-           <div><Searching/></div>
+          <div>
+            <Searching />
+          </div>
           {isUserHavePermission(
             loggedInUserData?.role,
             loggedInUserData?.permissions,
             "CREATE_SHOP"
           ) && (
-            <Col
-            xs="4"
-            md="2"
-            className="d-flex align-items-center"
-            >
-             
-                        <Button
-                        size="md"
-                        title="Create New Shop"
-                        variant="info"
-                        className="d-flex align-items-center"
+            <Col xs="4" md="2" className="d-flex align-items-center">
+              <Button
+                size="md"
+                title="Create New Shop"
+                variant="info"
+                className="d-flex align-items-center"
                 onClick={() => {
                   navigate("/addNewShop");
                 }}
@@ -103,127 +104,119 @@ const ViewShops = () => {
                 <AiOutlineFileAdd size={25} />
               </Button>
             </Col>
-
-            
           )}
-
-
         </div>
 
         <Row className={styles.shops_listing_custom_height}>
           <Col>
-         
-          
-              <Table striped bordered hover responsive className="text-center">
-                <thead>
-                  <tr className="text-center">
-                    <th>S.No</th>
-                    <th>Shop Id</th>
-                    <th>Shop Name</th>
-                    <th>State</th>
-                    <th>City</th>
-                    <th>Date of Registration</th>
-                    <th>Created At</th>
-                    <th>Last Updated At</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  {isLoading ? (
-                    <TableSkeletonLoading thCount={9} />
-                  ) : Array.isArray(shopsList) && shopsList?.length > 0 ? (
-                    shopsList?.map((shop, i) => {
-                      return (
-                        <tr key={shop?._id || i}>
-                          <td>{i + 1}</td>
-                          <td>{shop?._id || "N.A"}</td>
-                          <td>{shop?.shopName || "N.A"}</td>
-                          <td>
-                            {findStateNameBasedOnStateCode(shop?.state) ||
-                              "N.A"}
-                          </td>
-                          <td>{shop?.city || "N.A"}</td>
-                          <td>{shop?.registrationDate || "N.A"}</td>
-                          <td>
-                            {/* {shop?.createdAt
+            <Table striped bordered hover responsive className="text-center">
+              <thead>
+                <tr className="text-center">
+                  <th>S.No</th>
+                  <th>Shop Id</th>
+                  <th>Shop Name</th>
+                  <th>State</th>
+                  <th>City</th>
+                  <th>Date of Registration</th>
+                  <th>Created At</th>
+                  <th>Last Updated At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody className="text-center">
+                {isLoading ? (
+                  <TableSkeletonLoading thCount={9} />
+                ) : Array.isArray(shopsList) && shopsList?.length > 0 ? (
+                  shopsList?.map((shop, i) => {
+                    return (
+                      <tr key={shop?._id || i}>
+                        <td>{i + 1}</td>
+                        <td>{shop?._id || "N.A"}</td>
+                        <td>{shop?.shopName || "N.A"}</td>
+                        <td>
+                          {findStateNameBasedOnStateCode(shop?.state) || "N.A"}
+                        </td>
+                        <td>{shop?.city || "N.A"}</td>
+                        <td>{shop?.registrationDate || "N.A"}</td>
+                        <td>
+                          {/* {shop?.createdAt
                               ? moment(shop?.createdAt).format(
                                   "MMMM Do YYYY, h:mm:ss a"
                                 )
                               : "N.A"} */}
-                            {shop?.createdBy?.name || "N.A"}
-                          </td>
-                          <td>
-                            {shop?.updatedAt
-                              ? moment(shop?.updatedAt).format(
-                                  "MMMM Do YYYY, h:mm:ss a"
-                                )
-                              : "N.A"}
-                          </td>
-                          <td className="d-flex gap-3  justify-content-center align-items-center">
-                            {isUserHavePermission(
-                              loggedInUserData?.role,
-                              loggedInUserData?.permissions,
-                              "VIEW_SHOPS"
-                            ) && (
-                              <Button
-                                variant="info"
-                                size="md"
-                                title="View Complete Details"
-                                onClick={() => {
-                                  setSelectedShopDetails(shop);
-                                  setShowCompleteDetailsModal(true);
-                                }}
-                              >
-                                <BiSolidShow />
-                              </Button>
-                            )}
+                          {shop?.createdBy?.name || "N.A"}
+                        </td>
+                        <td>
+                          {shop?.updatedAt
+                            ? moment(shop?.updatedAt).format(
+                                "MMMM Do YYYY, h:mm:ss a"
+                              )
+                            : "N.A"}
+                        </td>
+                        <td className="d-flex gap-3  justify-content-center align-items-center">
+                          {isUserHavePermission(
+                            loggedInUserData?.role,
+                            loggedInUserData?.permissions,
+                            "VIEW_SHOPS"
+                          ) && (
+                            <Button
+                              variant="info"
+                              size="md"
+                              title="View Complete Details"
+                              onClick={() => {
+                                setSelectedShopDetails(shop);
+                                setShowCompleteDetailsModal(true);
+                              }}
+                            >
+                              <BiSolidShow />
+                            </Button>
+                          )}
 
-                            {isUserHavePermission(
-                              loggedInUserData?.role,
-                              loggedInUserData?.permissions,
-                              "UPDATE_SHOP"
-                            ) && (
-                              <>
-                                <Button
-                                  variant="warning"
-                                  size="md"
-                                  title="Edit Shop Details"
-                                  onClick={() =>
-                                    navigate("/editShopDetails", {
-                                      state: shop,
-                                    })
-                                  }
-                                >
-                                  <FaEdit />
-                                </Button>
-                              </>
-                            )}
-
-                            {isUserHavePermission(
-                              loggedInUserData?.role,
-                              loggedInUserData?.permissions,
-                              "DELETE_SHOP"
-                            ) && (
+                          {isUserHavePermission(
+                            loggedInUserData?.role,
+                            loggedInUserData?.permissions,
+                            "UPDATE_SHOP"
+                          ) && (
+                            <>
                               <Button
-                                variant="danger"
+                                variant="warning"
                                 size="md"
-                                title="Delete Shop"
-                                onClick={() => handleDeleteShop(shop?._id)}
+                                title="Edit Shop Details"
+                                onClick={() =>
+                                  navigate("/editShopDetails", {
+                                    state: shop,
+                                  })
+                                }
                               >
-                                <MdDelete />
+                                <FaEdit />
                               </Button>
-                            )}
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <h5 className="mt-5 text-center">No Shop Found</h5>
-                  )}
-                </tbody>
-              </Table>
-            </Col>
- 
+                            </>
+                          )}
+
+                          {isUserHavePermission(
+                            loggedInUserData?.role,
+                            loggedInUserData?.permissions,
+                            "DELETE_SHOP"
+                          ) && (
+                            <Button
+                              variant="danger"
+                              size="md"
+                              title="Delete Shop"
+                              onClick={() => handleDeleteShop(shop?._id)}
+                            >
+                              <MdDelete />
+                            </Button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <h5 className="mt-5 text-center">No Shop Found</h5>
+                )}
+              </tbody>
+            </Table>
+          </Col>
         </Row>
         {showCompleteDetailsModal && (
           <ViewShopDetails
@@ -232,13 +225,8 @@ const ViewShops = () => {
             shopData={selectedShopDetails}
           />
         )}
-
-
-
-
+        <Pagination totalPages={totalPages} />
       </Container>
-      <div className="container-fluid p-10">
-      <Pagination/></div>
     </section>
   );
 };

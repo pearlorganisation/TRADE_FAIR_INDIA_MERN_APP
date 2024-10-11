@@ -5,18 +5,20 @@ import { instance } from "../../services/axiosInterceptor";
 
 export const fetchCategoriesList = createAsyncThunk(
   "category/fetchCategoriesList",
-  async (payload, { rejectWithValue }) => {
-    console.log(payload)
+  async ({ search, page }, { rejectWithValue }) => {
     try {
-      const { data } = await instance.get("/category",payload,{
-        withCredentials: true,
-        headers: {
-          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-      });
+      const { data } = await instance.get(
+        `/category?Search=${search || ""}&Page=${page || 1}`,
 
-      return data
-      
+        {
+          withCredentials: true,
+          headers: {
+            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          },
+        }
+      );
+
+      return data;
     } catch (error) {
       return rejectWithValue(error);
     }

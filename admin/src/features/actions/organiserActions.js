@@ -4,22 +4,20 @@ import { instance } from "../../services/axiosInterceptor";
 // Get Organuser
 export const fetchOrganiserList = createAsyncThunk(
   "organiser/fetchOrganiserList",
-  async (payload, { rejectWithValue }) => {
+  async ({ search, page }, { rejectWithValue }) => {
     try {
-      const { data } = await instance.get(`/organiser?limit=${payload?.limit}&page=${payload?.page}`, {
-        withCredentials: true,
-      });
+      const { data } = await instance.get(
+        `/organiser?Search=${search || ""}&Page=${page || 1}`,
+        {
+          withCredentials: true,
+        }
+      );
       return data?.data;
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
-
-
-
-
-
 
 // Create Organiser
 export const addOrganiser = createAsyncThunk(

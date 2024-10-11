@@ -15,6 +15,7 @@ const initialState = {
   isSuccess: false,
   errorMessage: "",
   shopsList: [],
+  totalPages: 1,
 };
 
 // ---------------------------------------------------------------------------------------
@@ -37,7 +38,8 @@ export const shopSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.errorMessage = "";
-        state.shopsList = action.payload;
+        state.shopsList = action.payload?.data;
+        state.totalPages = action.payload?.totalPage;
       })
       .addCase(fetchShopsList.rejected, (state, action) => {
         state.isLoading = false;

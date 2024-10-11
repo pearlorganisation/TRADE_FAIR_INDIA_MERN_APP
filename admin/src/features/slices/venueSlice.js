@@ -35,6 +35,7 @@ export const venueSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.errorMessage = "";
+        state.totalPages = action.payload.totalPage;
         state.venueList = action.payload.data;
       })
       .addCase(fetchVenuesList.rejected, (state, action) => {

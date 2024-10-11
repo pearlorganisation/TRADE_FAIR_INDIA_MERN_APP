@@ -99,20 +99,51 @@ exports.createEvent = async (req, res) => {
 // @desc    Get all event event
 // @route   POST /api/v1/EventRegistration
 exports.getEvent = async (req, res) => {
+  const { Page, Limit, Search } = req.query;
+
+  let page = 1;
+  let limit = 10;
+  let search = "";
+
+  if (Page) {
+    page = Math.max(page, Page);
+  }
+  if (Limit) {
+    limit = Math.max(limit, Limit);
+  }
+  if (Search) {
+    search = Search;
+  }
+
+  let skip = (page - 1) * limit;
+
   try {
-    const allEvents = await Event.find()
+    const totalDocuments = await Event.countDocuments({
+      eventName: { $regex: search, $options: "i" },
+    });
+    if (Limit === "infinite") {
+      limit = totalDocuments;
+    }
+    const totalPage = Math.ceil(totalDocuments / limit);
+    const allEvents = await Event.find({
+      eventName: { $regex: search, $options: "i" },
+    })
       .populate("organiser", ["_id", "companyName"])
       .populate("venue", ["_id", "PlaceName", "Address", "City"])
       .populate("category", ["_id", "category"])
       .populate("shopDetails.shopName")
       .populate("createdBy", ["_id", "email", "name"])
-      .populate("enquiries");
+      .populate("enquiries")
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
 
     const totalEvents = await Event.countDocuments();
     res.status(200).json({
       status: true,
       data: allEvents,
-      total: totalEvents,
+      totalDocuments,
+      totalPage,
     });
   } catch (err) {
     res.status(400).json({
@@ -239,7 +270,7 @@ exports.updateEvent = async (req, res) => {
       shopGalleries?.forEach((imgItem, i) => {
         parseShop?.forEach((shopItem) => {
           if (newShopDetails && parseNewShopDetails) {
-            parseNewShopDetails?.((pItem) => {
+            parseNewShopDetails?.map((pItem) => {
               if (imgItem?.originalname?.includes(pItem?.uniqueKey)) {
                 pItem.gallery = [];
                 pItem?.gallery.push(imgItem);
