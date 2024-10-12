@@ -137,7 +137,7 @@ const Venue = () => {
                 variant="info"
                 className="d-flex align-items-center"
                 onClick={() => {
-                  navigate("/addCategoryDetails");
+                  navigate("/createVenue");
                 }}
               >
                 <AiOutlineFileAdd size={25} />

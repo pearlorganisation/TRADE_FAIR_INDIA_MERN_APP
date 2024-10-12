@@ -199,10 +199,10 @@ const CreateEvent = () => {
   const [eventBannerImg, setEventBannerImg] = useState("");
 
   useEffect(() => {
-    dispatch(fetchVenuesList());
-    dispatch(fetchOrganiserList());
-    dispatch(fetchCategoriesList());
-    dispatch(fetchShopsList());
+    dispatch(fetchVenuesList({ limit: "infinite" }));
+    dispatch(fetchOrganiserList({ limit: "infinite" }));
+    dispatch(fetchCategoriesList({ limit: "infinite" }));
+    dispatch(fetchShopsList({ limit: "infinite" }));
     if (venueList?.length > 0) {
       setVenues([]);
       venueList?.map((item) => {
