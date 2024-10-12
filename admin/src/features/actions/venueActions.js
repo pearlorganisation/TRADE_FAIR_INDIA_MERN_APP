@@ -4,10 +4,10 @@ import { instance } from "../../services/axiosInterceptor";
 
 export const fetchVenuesList = createAsyncThunk(
   "venue/fetchVenuesList",
-  async ({ search, page }, { rejectWithValue }) => {
+  async ({ search, page, limit }, { rejectWithValue }) => {
     try {
       const { data } = await instance.get(
-        `/venue?Search=${search || ""}&Page=${page || 1}`,
+        `/venue?Search=${search || ""}&Page=${page || 1}&Limit=${limit || 10}`,
         {
           withCredentials: true,
         }
