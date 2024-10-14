@@ -26,7 +26,7 @@ exports.getVenues = async (req, res, next) => {
 
   try {
     const totalDocuments = await Venue.countDocuments({
-      category: { $regex: search, $options: "i" },
+      PlaceName: { $regex: search, $options: "i" },
     });
     if (Limit === "infinite") {
       limit = totalDocuments;
