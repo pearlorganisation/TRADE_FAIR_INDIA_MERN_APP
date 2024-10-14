@@ -45,6 +45,7 @@ app.use(
             "http://localhost:4112",
             "http://localhost:4113",
             "http://localhost:4114",
+            "http://localhost:5173",
           ],
           methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
           allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
