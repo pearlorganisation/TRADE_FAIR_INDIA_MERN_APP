@@ -12,8 +12,14 @@ const MultipleImagesUpload = ({ sendImagesToShop, ind, uniqueKeyValue }) => {
     setImages(imageList);
   };
 
+  console.log("sendImagesToShop, ind, uniqueKeyValue ", ind, uniqueKeyValue);
+
   useEffect(() => {
     sendImagesToShop({ images, ind, uniqueKeyValue });
+  }, [images]);
+
+  useEffect(() => {
+    console.log(images, "images");
   }, [images]);
 
   return (

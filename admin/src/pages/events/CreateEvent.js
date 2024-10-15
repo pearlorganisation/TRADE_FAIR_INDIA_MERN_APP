@@ -413,22 +413,38 @@ const CreateEvent = () => {
                         {...register("eventLogo", {
                           required: true,
                           validate: (value) => {
-                            return value?.[0]?.size <= 2000000
-                              ? ![
+                            const file = value?.[0];
+                            if (file) {
+                              // Check file size
+                              if (file.size > 2000000) {
+                                return "Image size should be maximum 2MB";
+                              }
+                              // Check file type
+                              if (
+                                ![
                                   "image/png",
                                   "image/jpeg",
                                   "image/jpg",
-                                ].includes(value?.[0].type)
-                                ? "We accept only png, jpeg,   jpg format"
-                                : true
-                              : "Image size should be maximum 2mb";
+                                ].includes(file.type)
+                              ) {
+                                return "We accept only PNG, JPEG, JPG formats";
+                              }
+                              return true; // Validation passed
+                            }
+                          },
+                          onChange: (e) => {
+                            handleLogoImage(e); // Call your custom onChange handler
                           },
                         })}
                         type="file"
                         className="form-control"
                         id="eventLogo"
-                        onChange={handleLogoImage}
                       />
+                      {errors.eventLogo && (
+                        <div className="text-danger">
+                          {errors.eventLogo.message}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="col-md-3">
@@ -494,7 +510,7 @@ const CreateEvent = () => {
                     Description
                   </label>
                   <textarea
-                    {...register("description")}
+                    {...register("description", { required: true })}
                     className="form-control"
                     id="description"
                     rows="6"
@@ -509,7 +525,7 @@ const CreateEvent = () => {
                     Why you should attend this?
                   </label>
                   <textarea
-                    {...register("attendReason")}
+                    {...register("attendReason", { required: true })}
                     className="form-control"
                     id="attendReason"
                     rows="6"
@@ -527,7 +543,7 @@ const CreateEvent = () => {
                     Terms and condition
                   </label>
                   <textarea
-                    {...register("termsConditions")}
+                    {...register("termsConditions", { required: true })}
                     className="form-control"
                     id="termsConditions"
                     rows="6"
@@ -542,7 +558,7 @@ const CreateEvent = () => {
                     Rules & Regulation / Safety
                   </label>
                   <textarea
-                    {...register("rules")}
+                    {...register("rules", { required: true })}
                     className="form-control"
                     id="rules"
                     rows="6"
@@ -579,6 +595,7 @@ const CreateEvent = () => {
                   </label>
                   <input
                     {...register("website", {
+                      required: true,
                       pattern: {
                         value:
                           /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/.*)?$/,
