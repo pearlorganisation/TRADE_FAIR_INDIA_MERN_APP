@@ -258,6 +258,7 @@ const CreateUser = () => {
                         }}
                         isMulti
                         isClearable
+                        closeMenuOnSelect={false}
                       />
                     )}
                     rules={{
