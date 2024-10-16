@@ -196,13 +196,35 @@ const UpdateVenue = () => {
               Description of Place
             </label>
             <textarea
-              {...register("PlaceDescription", { required: true })}
+              {...register("PlaceDescription", {
+                required: {
+                  value: true,
+                  message: "Place Description is required",
+                },
+                minLength: {
+                  value: 10,
+                  message:
+                    "Place Description cannot be less than 10 characters.",
+                },
+                maxLength: {
+                  value: 500,
+                  message:
+                    "Place Description cannot be more than 500 characters.",
+                },
+                pattern: {
+                  value: customFieldregex,
+                  message: "Description is invalid",
+                },
+              })}
               className="form-control"
               id="PlaceDescription"
               rows="9"
+              placeholder="Enter Description Here..."
             ></textarea>
             {errors.PlaceDescription && (
-              <span className="text-danger">This field is required</span>
+              <span className="text-danger">
+                {errors.PlaceDescription?.message || "This field is required"}
+              </span>
             )}
           </div>
 
@@ -211,13 +233,29 @@ const UpdateVenue = () => {
               Address
             </label>
             <textarea
-              {...register("Address", { required: true })}
+              {...register("Address", {
+                required: {
+                  value: true,
+                  message: "Address is required",
+                },
+                minLength: {
+                  value: 10,
+                  message: "Address cannot be less than 10 characters.",
+                },
+                maxLength: {
+                  value: 500,
+                  message: "Address cannot be more than 500 characters.",
+                },
+              })}
               className="form-control"
               id="description"
               rows="9"
+              placeholder="Enter Address Here..."
             ></textarea>
             {errors.Address && (
-              <span className="text-danger">This field is required</span>
+              <span className="text-danger">
+                {errors.Address?.message || "This field is required"}
+              </span>
             )}
           </div>
           <ul>
@@ -239,13 +277,24 @@ const UpdateVenue = () => {
                   <div className="col-md-12 position-relative ">
                     <input
                       {...register(`HotelNearby.${index}.link`, {
-                        required: true,
+                        required: "URL is required",
+                        pattern: {
+                          value:
+                            /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+                          message: "Please enter a valid URL",
+                        },
                       })}
                       type="text"
                       className="form-control"
                       id="HotelNearby"
                       defaultValue={item.link}
                     />
+                    {errors?.HotelNearby?.[index]?.link && (
+                      <span className="text-danger">
+                        {errors?.HotelNearby?.[index]?.link?.message ||
+                          "This field is required"}
+                      </span>
+                    )}
 
                     {fields.length > 1 && (
                       <button
