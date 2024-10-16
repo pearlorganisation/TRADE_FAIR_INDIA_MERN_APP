@@ -697,36 +697,32 @@ const UpdateEvent = () => {
                       </label>
                       <input
                         {...register("eventLogo", {
+                          required: true,
+                          validate: (value) => {
+                            const file = value?.[0];
+                            if (file) {
+                              // Check file size
+                              if (file.size > 2000000) {
+                                return "Image size should be maximum 2MB";
+                              }
+                              // Check file type
+                              if (
+                                ![
+                                  "image/png",
+                                  "image/jpeg",
+                                  "image/jpg",
+                                ].includes(file.type)
+                              ) {
+                                return "We accept only PNG, JPEG, JPG formats";
+                              }
+                              return true; // Validation passed
+                            }
+                          },
                           onChange: (event) => handleImage(event.target.files),
-                          required: {
-                            value: false, // true,
-                            message: "Please upload event logo.",
-                          },
-                          validate: {
-                            lessThan2MB: (files) => {
-                              const { isDirty } = getFieldState("eventLogo");
-                              return isDirty
-                                ? files[0]?.size < 2000000 ||
-                                    "Only 2 MB size is allowed"
-                                : true;
-                            },
-                            acceptedFormats: (files) => {
-                              const { isDirty } = getFieldState("eventLogo");
-                              return isDirty
-                                ? [
-                                    "image/png",
-                                    "image/jpeg",
-                                    "image/jpg",
-                                  ].includes(files[0]?.type) ||
-                                    "Only (png,jpeg and jpg) format is allowed"
-                                : true;
-                            },
-                          },
                         })}
                         type="file"
-                        className="form-control d-none"
+                        className="form-control"
                         id="eventLogo"
-                        // onChange={handleLogoImage}
                       />
                       <img
                         width={120}
@@ -735,6 +731,11 @@ const UpdateEvent = () => {
                         src={selectedLogo?.path}
                         alt="eventLogo"
                       />
+                      {errors.eventLogo && (
+                        <div className="text-danger">
+                          {errors.eventLogo.message}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="col-md-4">

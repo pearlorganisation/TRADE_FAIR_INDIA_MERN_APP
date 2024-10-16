@@ -350,15 +350,23 @@ const CreateVenue = () => {
                 <div className="col-md-12 position-relative ">
                   <input
                     {...register(`HotelNearby.${index}.link`, {
-                      required: true,
+                      required: "URL is required",
+                      pattern: {
+                        value:
+                          /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
+                        message: "Please enter a valid URL",
+                      },
                     })}
                     type="text"
                     className="form-control"
                     id="HotelNearby"
-                    placeholder="Enter Here..."
+                    defaultValue={item.link}
                   />
                   {errors?.HotelNearby?.[index]?.link && (
-                    <span className="text-danger">This field is required</span>
+                    <span className="text-danger">
+                      {errors?.HotelNearby?.[index]?.link?.message ||
+                        "This field is required"}
+                    </span>
                   )}
                   {fields.length > 1 && (
                     <button
