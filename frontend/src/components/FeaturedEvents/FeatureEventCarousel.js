@@ -149,7 +149,19 @@ const FeatureEventCarousel = ({ isLoading, eventsData }) => {
                   >
                     <div className=" flex justify-center items-center relative">
                       <div className="absolute w-full h-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white flex flex-col justify-end items-start p-2">
-                        <span>MeetUp 2023</span> <span>Raipur</span>
+                        {/* <span>MeetUp 2023</span> <span>Raipur</span> */}
+                        <span>
+                          MeetUp{" "}
+                          {" - " +
+                            new Date(item?.eventDate[0]).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
+                        </span>
                       </div>
                       <img
                         className="w-full h-full"
