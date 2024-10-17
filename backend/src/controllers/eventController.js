@@ -203,7 +203,7 @@ exports.getSingleEvent = async (req, res) => {
     const singleEventData = await Event.findOne({
       randomString: req?.params?.id,
     })
-      .populate("organiser", ["_id", "companyName", "logo"])
+      .populate("organiser", ["_id", "companyName", "logo", "phoneNumber"])
       .populate("venue", ["_id", "PlaceName", "Address", "GeoLocation", "City"])
       .populate("category", ["_id", "category"])
       .populate("shopDetails.shopName")

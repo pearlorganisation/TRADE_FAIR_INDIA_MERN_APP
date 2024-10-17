@@ -282,20 +282,30 @@ const Event = () => {
               <div className="text-teal-600 font-semibold py-2 border-b-2 border-[#0D948B]">
                 Organiser :
               </div>
-              <div className="text-slate-700 font-medium flex gap-3">
-                <div className="rounded-full overflow-hidden w-fit">
-                  <img height={100} width={100} src={OLogo} />
-                </div>
-                <div className="grid">
-                  <span className="font-medium text-2xl md:text-3xl">
-                    {/* {singleEventData?.organiser[0]?.companyName} */}
-                  </span>
-                  <span className="text-lg md:text-xl">
-                    12+ Events Done In Past
-                  </span>
-                  <span className="text-lg md:text-xl">0987654321</span>
-                </div>
-              </div>
+              {singleEventData?.organiser?.map((item) => {
+                return (
+                  <div className="text-slate-700 font-medium flex gap-3">
+                    <div className="rounded-full overflow-hidden w-fit">
+                      <img
+                        height={100}
+                        width={100}
+                        src={item?.logo?.path || OLogo}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="font-medium text-2xl md:text-3xl">
+                        {item?.companyName}
+                      </span>
+                      {/* <span className="text-lg md:text-xl">
+                        12+ Events Done In Past
+                      </span> */}
+                      <span className="text-lg md:text-xl">
+                        {item?.phoneNumber}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
