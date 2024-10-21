@@ -5,8 +5,20 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io5";
 import { FaFacebookF } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchListYourLink } from "../../features/actions/listYourEventLinkAction";
+import { useEffect, useState } from "react";
+import SpringModal from "../LogoutModal/LogoutModal";
 
 const Footer = () => {
+  const dispatch = useDispatch();
+  const { listYourLink } = useSelector((state) => state.listYourEventLink);
+  const { authData, isAuthenticated } = useSelector((state) => state.auth);
+  const [isOpen, setIsOpen] = useState(false); // modal
+  useEffect(() => {
+    dispatch(fetchListYourLink());
+  }, []);
+
   return (
     <footer className="text-gray-500  px-4 py-5 container mx-auto border-t-2 ">
       <div className="gap-6 md:grid md:grid-cols-[20rem_auto] ">
@@ -14,12 +26,22 @@ const Footer = () => {
           <div className="flex flex-col text-center md:text-left justify-center items-center md:justify-start md:items-start gap-6 font-medium  h-full bg-[#00373E] rounded-xl text-white px-8 py-5">
             <span className="text-4xl">Wanna list you Event ?</span>
             <span className="text-lg">List Your Event :</span>
-            <button
-              className="bg-[#DFFEC8] rounded-3xl px-3 w-full py-2 text-[#00373E]"
-              type="button"
-            >
-              List Event
-            </button>
+            {Array.isArray(listYourLink) &&
+              listYourLink.length > 0 &&
+              listYourLink
+                ?.filter((it, idx) => idx < 1)
+                ?.map((item) => {
+                  return (
+                    <a
+                      href={item?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#DFFEC8] rounded-3xl text-center px-3 w-full py-2 text-[#00373E]"
+                    >
+                      List Event
+                    </a>
+                  );
+                })}
           </div>
         </div>
         <div className="justify-between sm:flex w-full shadow-sm">
@@ -54,9 +76,25 @@ const Footer = () => {
             </div>
             <div className="mt-6 ">
               <div className="flex flex-col gap-3 ">
-                <button className="block py-2 px-3 font-medium text-center bg-[#00373e] text-white  active:shadow-none rounded-lg shadow md:inline">
-                  Sign in
-                </button>
+                {isAuthenticated ? (
+                  <button
+                    type="button"
+                    className="block py-2 px-3 font-medium text-center bg-[#00373e] text-white  active:shadow-none rounded-lg shadow md:inline"
+                    onClick={() => {
+                      setIsOpen(true);
+                    }}
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="block py-2 px-3 font-medium text-center bg-[#00373e] text-white  active:shadow-none rounded-lg shadow md:inline"
+                  >
+                    Sign in
+                  </Link>
+                )}
+
                 {/* <button
                   className="flex justify-center items-center gap-2 py-2 px-3 font-medium text-center bg-[#00373e] text-white  active:shadow-none rounded-lg shadow"
                   type="button"
@@ -89,6 +127,7 @@ const Footer = () => {
           &copy; All copyrights reserved to @tradefare 2024.
         </div>
       </div>
+      <SpringModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </footer>
   );
 };

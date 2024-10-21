@@ -92,12 +92,8 @@ const UpdateListYourEvent = () => {
                         message: "Event category  Name is invalid",
                       },
                       minLength: {
-                        value: 2,
-                        message: "URL Link cannot be less than 2 characters.",
-                      },
-                      maxLength: {
-                        value: 20,
-                        message: "URL Link cannot be more than 20 characters.",
+                        value: 3,
+                        message: "URL Link cannot be less than 3 characters.",
                       },
                     })}
                   />

@@ -170,9 +170,10 @@ const EventCarousel = () => {
         onClick={() => {
           goNext();
         }}
-        className={`${
-          windowWidth < 390 ? "opacity-70" : ""
-        } absolute bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1  top-[50%] translate-y-1/2 right-[3rem] lg:-right-6  z-10 cursor-pointer`}
+        className={`bg-[#00373E] text-[28px] md:text-3xl text-[#DFFEC8] rounded-full p-1 
+              absolute top-[50%] translate-y-[-50%] right-[1rem] 
+              sm:right-[1.5rem] lg:right-6 z-10 cursor-pointer 
+              ${windowWidth < 390 ? "opacity-70" : ""}`}
       >
         <FaAngleRight />
       </div>
@@ -180,9 +181,10 @@ const EventCarousel = () => {
         onClick={() => {
           goPrev();
         }}
-        className={`${
-          windowWidth < 390 ? "opacity-70" : ""
-        } bg-[#DFFEC8] text-[18px] md:text-3xl  text-[#00373E] rounded-full p-1 absolute top-[50%] translate-y-1/2 left-[3rem] lg:-left-4 z-10 cursor-pointer`}
+        className={`bg-[#00373E] text-[28px] md:text-3xl text-[#DFFEC8] rounded-full p-1 
+              absolute top-[50%] translate-y-[-50%] left-[1rem] 
+              sm:left-[1.5rem] lg:left-4 z-10 cursor-pointer 
+              ${windowWidth < 390 ? "opacity-70" : ""}`}
       >
         <FaAngleLeft />
       </div>

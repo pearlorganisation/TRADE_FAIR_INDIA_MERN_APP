@@ -36,9 +36,12 @@ export const eventsSlice = createSlice({
       if (action?.payload?.category != "All") {
         state.filteredExploreByChoice = current(
           state?.filteredEventData
-        )?.filter(
-          (item) => item?.category[0].category === action?.payload?.category
-        );
+        )?.filter((item) => {
+          console.log(item, "item");
+          return item?.category?.some(
+            (item) => item?.category === action?.payload?.category
+          );
+        });
       } else {
         state.filteredExploreByChoice = state.filteredEventData;
       }
