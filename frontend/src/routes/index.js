@@ -1,4 +1,7 @@
 import { lazy } from "react";
+import ForgetPassword from "../pages/Auth/ForgetPassword/ForgetPassword";
+import OTPVerification from "../pages/Auth/ForgetPassword/OTPVerification";
+import ConfirmPassword from "../pages/Auth/ForgetPassword/ConfirmPassword";
 
 const Home = lazy(() => import("../pages/Home/Home"));
 const Event = lazy(() => import("../pages/Event/Event"));
@@ -46,6 +49,22 @@ const coreRoutes = [
     title: "EmailVerification",
     component: <EmailVerification />,
   },
+
+  {
+    path:"/forgetpass",
+    title:"forgetpass",
+    component:<ForgetPassword/>
+  },{
+    path:"/OTPVerification",
+  title:"OTPVerification",
+  component:<OTPVerification/>
+  },
+  {
+    path:"ConfirmPassword",
+    title:"ConfirmPassword",
+    component:<ConfirmPassword/>
+
+  }
 ];
 
 export default coreRoutes;
