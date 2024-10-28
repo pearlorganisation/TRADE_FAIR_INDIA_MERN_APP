@@ -4,6 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchCategoryList } from "../actions/categoryAction";
 import {
   emailVerification,
+  forgetPasswordOtpVerification,
+  resetPassword,
+  sendOTP,
   signIn,
   signUp,
   userLogout,
@@ -16,6 +19,12 @@ const initialState = {
   isEmailVerified: false,
   authData: [],
   errorMessage: "",
+
+  //forget password
+  step1: "not-completd", // send otp
+  email: null, // store user email
+  step2: "not-completd", // otp verifcation
+  step3: "not-completd", // reset-password
 };
 
 // ---------------------------------------------------------------------------------------
@@ -30,6 +39,10 @@ export const authSlice = createSlice({
       state.isEmailVerified = false;
       state.authData = [];
       state.errorMessage = "";
+      state.step1 = null;
+      state.step2 = null;
+      state.step3 = null;
+      state.email = null;
     },
   },
   extraReducers: (builder) => {
@@ -109,6 +122,57 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.errorMessage = action.payload;
         toast.error(`Uh-oh! ${action.payload}`);
+      })
+
+      //forget password
+
+      .addCase(sendOTP.pending, (state, action) => {
+        state.isLoading = true;
+        state.errorMessage = "";
+      })
+      .addCase(sendOTP.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = "";
+        state.step1 = "completed";
+        state.email = action.payload?.email;
+        toast.success("OTP Sent Successfully!!");
+      })
+      .addCase(sendOTP.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = action.payload;
+        toast.error(`Uh-oh! ⏳ ${action.payload}`);
+      })
+
+      .addCase(forgetPasswordOtpVerification.pending, (state, action) => {
+        state.isLoading = true;
+        state.errorMessage = "";
+      })
+      .addCase(forgetPasswordOtpVerification.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = "";
+        state.step2 = "completed";
+        toast.success("OTP Verified Successfully!!");
+      })
+      .addCase(forgetPasswordOtpVerification.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = action.payload;
+        toast.error(`Uh-oh! ⏳ ${action.payload}`);
+      })
+
+      .addCase(resetPassword.pending, (state, action) => {
+        state.isLoading = true;
+        state.errorMessage = "";
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = "";
+        state.step3 = "completed";
+        toast.success("Password Reset Successfully!!");
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = action.payload;
+        toast.error(`Uh-oh! ⏳ ${action.payload}`);
       });
   },
 });
@@ -116,7 +180,7 @@ export const authSlice = createSlice({
 // -------------------------------------------------------------------------
 
 // Action creators are generated for each case reducer function
-export const {} = authSlice.actions;
+export const { resetFields } = authSlice.actions;
 export default authSlice.reducer;
 
 // ================================================== THE END ==================================================

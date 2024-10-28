@@ -9,6 +9,8 @@ const {
   emailVerify,
   signup,
   verifyEmail,
+  userSendOTP,
+  forgotPasswordOtpVerification,
 } = require("../../controllers/Authentication/authenticationControllers.js");
 const { verifyToken } = require("../../middleware/verifyToken.js");
 // ---------------------------------------------------------------------------------------------------------------
@@ -25,5 +27,9 @@ router.route("/logout").post(verifyToken, logout);
 
 router.route("/resetPassword").put(resetPassword);
 router.route("/verifyEmail/:token/:id").patch(verifyEmail);
+router.route("/sendOTP").post(userSendOTP);
+router
+  .route("/forgotPasswordOtpVerification")
+  .post(forgotPasswordOtpVerification);
 
 module.exports = router;
