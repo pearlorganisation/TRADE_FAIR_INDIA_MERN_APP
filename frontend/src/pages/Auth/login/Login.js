@@ -30,9 +30,9 @@ const Login = () => {
       navigate("/");
     }
   }, [authData]);
-  const handleforget=()=>{
-    navigate("/forgetpass")
-  }
+  const handleforget = () => {
+    navigate("/forgetpass");
+  };
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
@@ -111,7 +111,13 @@ const Login = () => {
               Sign in
             </button>
           )}
-          <button onClick={handleforget} >forget Password</button>
+          <button
+            onClick={handleforget}
+            type="button"
+            className="w-full px-4 py-2  font-medium text-[#00373E] hover:bg-black/10 rounded-lg duration-150"
+          >
+            Forget Password
+          </button>
         </form>
         {/* <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
           <svg

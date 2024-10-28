@@ -1,22 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { sendOTP } from '../../../features/actions/authAction';
 
 function ForgetPassword() {
- const{register,handleSubmit ,formState:{errors}}=useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { step1 } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
- const onSubmit = (data) => {
+  const onSubmit = (data) => {
+    dispatch(sendOTP({ email: data?.email }))
     // Here, you would handle sending the reset request to the server
     console.log(data);
-    alert('Password reset link has been sent to your email!');
-    Navigate("/otpverification")
   };
- 
+  useEffect(() => {
+    if (step1 === 'completed') {
+      navigate('/OTPVerification')
+    }
+  }, [step1])
+
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full"
+        className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full"
       >
         <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
           Forgot Password?
@@ -36,9 +46,8 @@ function ForgetPassword() {
                 message: 'Enter a valid email',
               },
             })}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.email ? 'border-red-500' : ''
-            }`}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? 'border-red-500' : ''
+              }`}
           />
           {errors.email && (
             <p className="text-red-500 text-xs italic mt-1">{errors.email.message}</p>
@@ -48,7 +57,7 @@ function ForgetPassword() {
         <div className="flex items-center justify-center">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-[#00373E] hover:bg-[#00373E] text-white w-full font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Send Reset Link
           </button>

@@ -20,6 +20,10 @@ export const signUp = createAsyncThunk(
 export const signIn = createAsyncThunk(
   "auth/signIn",
   async (payload, { rejectWithValue }) => {
+    console.log(
+      process.env.REACT_APP_API_BASE_URL_DEVELOPMENT,
+      "process.env.REACT_APP_API_BASE_URL_DEVELOPMENT"
+    );
     try {
       const { data } = await instance.post("/auth/login", payload, {
         withCredentials: true,
@@ -57,6 +61,60 @@ export const userLogout = createAsyncThunk(
       });
       return data;
     } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+//Forgot password
+
+export const sendOTP = createAsyncThunk(
+  "auth/sendOTP",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await instance.post(`/auth/sendOTP/`, data, {
+        withCredentials: true,
+      });
+      console.log(result, "result");
+      return result?.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const forgetPasswordOtpVerification = createAsyncThunk(
+  "auth/forgetPasswordOtpVerification",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await instance.post(
+        `/auth/forgotPasswordOtpVerification/`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(result, "result");
+      return result?.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await instance.put(`/auth/resetPassword`, data, {
+        withCredentials: true,
+      });
+      console.log(result, "result");
+      return result?.data;
+    } catch (error) {
+      console.log(error);
       return rejectWithValue(error);
     }
   }

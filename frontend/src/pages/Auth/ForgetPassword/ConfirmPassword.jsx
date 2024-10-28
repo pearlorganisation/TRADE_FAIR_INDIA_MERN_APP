@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { resetPassword } from "../../../features/actions/authAction";
+import { resetFields } from "../../../features/slices/authSlice";
 
 function ConfirmPassword() {
   const {
@@ -9,16 +13,35 @@ function ConfirmPassword() {
     watch,
   } = useForm();
   const password = watch("password"); // Watch the password field
+  const { step1, step2, step3, email } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   // Handle form submission
   const onSubmit = (data) => {
-    if (data.password !== data.confirmPassword) {
-      alert("Passwords do not match");
-    } else {
-      alert("Password successfully updated");
-      // Call your API or backend function to reset the password here
-    }
+    console.log(data)
+    dispatch(resetPassword({ email, ...data }))
   };
+  useEffect(() => {
+    if (step1 != 'completed' && step2 != 'completed') {
+      navigate('/forgetpass')
+    }
+  }, [step1, step2])
+  useEffect(() => {
+
+
+    return () => {
+      dispatch(resetFields())
+    }
+  }, [])
+
+
+  useEffect(() => {
+    if (step3 === 'completed') {
+      navigate('/login')
+    }
+  }, [step3])
+
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">

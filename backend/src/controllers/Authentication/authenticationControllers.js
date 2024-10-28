@@ -4,13 +4,18 @@ const authModel = require("../../models/Authentication/authenticationModel.js");
 const shopOwner = require("../../models/Authentication/ownerSchema.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { saveAccessTokenToCookie } = require("../../utils/index.js");
+const {
+  saveAccessTokenToCookie,
+  generateOtp,
+} = require("../../utils/index.js");
 const {
   accessTokenValidity,
   refreshTokenValidity,
 } = require("../../utils/index.js");
 const { sendTokenMail } = require("../../utils/sendTokenMail.js");
 const roleModel = require("../../models/Authentication/roles.js");
+const { otpModel } = require("../../models/Authentication/otp.js");
+const { sendMail } = require("../../utils/sendMail.js");
 // -----------------------------------------------------------------------------------------------------------
 
 // @desc - to fetch the users data
@@ -334,4 +339,66 @@ exports.verifyEmail = async (req, res) => {
       message: `${e?.message} -Invalid Email!!`,
     });
   }
+};
+
+exports.userSendOTP = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const isUserValid = await authModel.find({ email });
+    if (!isUserValid) {
+      return res.status(400).json({
+        status: "FAILURE",
+        message: "No user exist with given email!!",
+      });
+    }
+    let otp = generateOtp();
+    sendMail(email, otp).then(async () => {
+      const ifExist = await otpModel.findOne({ email });
+
+      if (ifExist) {
+        await otpModel.findOneAndUpdate(
+          { email },
+          {
+            otp,
+          }
+        );
+      } else await otpModel.create({ otp, email });
+
+      res.status(200).json({
+        status: true,
+        message: "OTP sent successfully and valid for 5 min!!",
+        email,
+      });
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "FAILURE",
+      message: err?.message || "Internal Server Error!! ",
+    });
+  }
+};
+
+exports.forgotPasswordOtpVerification = async (req, res) => {
+  const { email, otp } = req.body;
+  try {
+    const isUserExist = await otpModel.findOne({ email });
+    if (!isUserExist) {
+      res.status(400).json({
+        status: false,
+        message: "OTP Expired!!",
+      });
+    }
+    console.log(isUserExist, otp);
+    if (isUserExist?.otp === otp) {
+      res.status(200).json({
+        status: true,
+        message: "OTP Verified Succssfully!!",
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "OTP Does not match!!",
+      });
+    }
+  } catch (error) {}
 };
