@@ -6,7 +6,7 @@ import { sendOTP } from '../../../features/actions/authAction';
 
 function ForgetPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm()
-  const { step1 } = useSelector((state) => state.auth);
+  const { step1, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -55,12 +55,20 @@ function ForgetPassword() {
         </div>
 
         <div className="flex items-center justify-center">
-          <button
-            type="submit"
-            className="bg-[#00373E] hover:bg-[#00373E] text-white w-full font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Send Reset Link
-          </button>
+          {
+            isLoading ? <button
+              type="button"
+              disabled={isLoading}
+              className="bg-[#00373E] hover:bg-[#00373E] text-white w-full font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Loading...
+            </button> : <button
+              type="submit"
+              className="bg-[#00373E] hover:bg-[#00373E] text-white w-full font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Send Reset Link
+            </button>
+          }
         </div>
 
         <div className="mt-4 text-center">

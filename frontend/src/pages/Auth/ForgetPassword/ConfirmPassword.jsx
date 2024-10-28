@@ -13,7 +13,7 @@ function ConfirmPassword() {
     watch,
   } = useForm();
   const password = watch("password"); // Watch the password field
-  const { step1, step2, step3, email } = useSelector((state) => state.auth);
+  const { step1, step2, step3, email, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -97,12 +97,20 @@ function ConfirmPassword() {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-black font-bold py-2 px-4 rounded hover:bg-blue-700"
-        >
-          Reset Password
-        </button>
+        {
+          isLoading ? <button
+            type="button"
+            disabled={isLoading}
+            className="w-full bg-[#00373E] text-white font-bold py-2 px-4 rounded hover:bg-[#00373E]/90"
+          >
+            Loading...
+          </button> : <button
+            type="submit"
+            className="w-full bg-[#00373E] text-white font-bold py-2 px-4 rounded hover:bg-[#00373E]/90"
+          >
+            Reset Password
+          </button>
+        }
       </form>
     </div>
   );

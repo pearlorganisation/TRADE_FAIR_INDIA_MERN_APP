@@ -6,7 +6,7 @@ import { forgetPasswordOtpVerification } from '../../../features/actions/authAct
 
 function OTPVerification() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { step1, step2, email } = useSelector((state) => state.auth);
+  const { step1, step2, email, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -49,12 +49,20 @@ function OTPVerification() {
           {errors.otp && <p className="text-red-500 text-sm">{errors.otp.message}</p>}
         </div>
 
-        <button
-          type="submit"
-          className="bg-[#00373E] hover:bg-[#00373E] text-white w-full font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Verify OTP
-        </button>
+        {
+          isLoading ? <button
+            type="button"
+            disabled={isLoading}
+            className="bg-[#00373E] hover:bg-[#00373E] text-white w-full font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Loading...
+          </button> : <button
+            type="submit"
+            className="bg-[#00373E] hover:bg-[#00373E] text-white w-full font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Verify OTP
+          </button>
+        }
       </form>
     </div>
   );
