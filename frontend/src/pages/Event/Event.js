@@ -96,10 +96,10 @@ const Event = () => {
                     formattedDate?.length > 0 &&
                     formattedDate[0]?.date}
                 </span>{" "}
-                <span className="flex justify-start items-center gap-2">
+                {/* <span className="flex justify-start items-center gap-2">
                   <RiTimerLine size={20} />
                   03:00 PM TO 100:00 PM
-                </span>
+                </span> */}
               </div>
             </div>
 

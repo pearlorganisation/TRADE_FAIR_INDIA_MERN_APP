@@ -106,16 +106,15 @@ const EventCarousel = () => {
                     <div className=" flex justify-center items-center text-center relative">
                       <div className="absolute bottom-1 w-full bg-gradient-to-bl from-gray-700/10 via-gray-900/20 to-black/70 font-medium text-lg text-white p-2">
                         <span>
-                          MeetUp{" "}
-                          {" - " +
-                            new Date(item?.eventDate[0]).toLocaleDateString(
-                              "en-US",
-                              {
-                                month: "long",
-                                day: "numeric",
-                                year: "numeric",
-                              }
-                            )}
+                          {/* MeetUp{" "} */}
+                          {new Date(item?.eventDate[0]).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            }
+                          )}
                         </span>
                         {/* <span>MeetUp 2023</span> <span>Raipur</span> */}
                       </div>
