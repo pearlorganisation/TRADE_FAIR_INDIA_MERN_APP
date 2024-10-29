@@ -55,6 +55,7 @@ const ShopCarousel = ({ events }) => {
         {Array.isArray(events) &&
           events.length > 0 &&
           events.map((item) => {
+            console.log(item, "AB");
             return (
               <SwiperSlide className="">
                 {" "}

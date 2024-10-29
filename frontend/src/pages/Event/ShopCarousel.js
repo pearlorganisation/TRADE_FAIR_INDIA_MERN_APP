@@ -88,7 +88,8 @@ const ShopCarousel = ({ shopDetails }) => {
                       <div className="font-medium text-sm text-[#00373E] py-1">
                         <span className="flex justify-start items-center gap-1">
                           {" "}
-                          <HiOutlineLocationMarker /> D Y Patil Stadium Raipur
+                          <HiOutlineLocationMarker />{" "}
+                          {item?.shopName?.shopAddress}
                         </span>
                       </div>
                     </div>
