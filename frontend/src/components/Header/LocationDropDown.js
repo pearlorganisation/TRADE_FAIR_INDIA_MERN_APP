@@ -44,13 +44,32 @@ const LocationDropDown = () => {
   return (
     <div className="z-50">
       <div
+        onMouseLeave={() => {
+          setSelected(!isSelected);
+        }}
         onClick={() => setSelected(!isSelected)}
         className="w-full md:w-72  font-medium relative  text-left  border-2 bg-white h-full px-3 py-2 rounded-md flex justify-between items-center"
       >
         {selectedData?.name}
         <RiExpandUpDownLine className="!cursor-pointer" />
         {isSelected ? (
-          <div className="absolute  top-[2.6rem] bg-white left-0  w-full rounded-md flex flex-col">
+          <div className="absolute  top-[2.45rem] overflow-auto max-h-[12rem] bg-white left-0  w-full rounded-md flex flex-col">
+            {locationData?.map((item) => {
+              console.log(`${selectedData.name == item.name ? true : false}`);
+              return (
+                <span
+                  className={`${
+                    selectedData.name == item.name ? "bg-blue-100" : ""
+                  } py-2 px-3 hover:bg-[#00373E]/10 cursor-pointer`}
+                  onClick={() => {
+                    setSelectedData({ name: item?.name });
+                    dispatch(filterEvent(item));
+                  }}
+                >
+                  {item?.name}
+                </span>
+              );
+            })}
             {locationData?.map((item) => {
               console.log(`${selectedData.name == item.name ? true : false}`);
               return (
