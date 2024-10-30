@@ -58,9 +58,9 @@ const SignUp = () => {
   // }, [authData]);
 
   return (
-    <main className="w-full h-screen flex flex-col items-center justify-center bg-gray-50 sm:px-4">
-      <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
-        <div className="text-center">
+    <main className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-50 sm:px-4 pt-[6rem]">
+      <div className="w-full h-full flex flex-col  justify-center items-center space-y-6 text-gray-600 sm:max-w-md">
+        <div className="text-center w-full">
           <div className="font-medium text-lg flex justify-center items-center gap-2">
             <div className="rounded-md  h-[2.5rem] w-[2.5rem] bg-[#00373E] text-white grid place-items-center">
               TF
@@ -82,7 +82,7 @@ const SignUp = () => {
             </p>
           </div>
         </div>
-        <div className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg">
+        <div className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg w-full">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div>
               <label className="font-medium">Name</label>
