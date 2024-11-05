@@ -344,10 +344,11 @@ exports.verifyEmail = async (req, res) => {
 exports.userSendOTP = async (req, res) => {
   try {
     const { email } = req.body;
-    const isUserValid = await authModel.find({ email });
+    const isUserValid = await authModel.findOne({ email });
+    console.log(isUserValid, "isUserValid");
     if (!isUserValid) {
       return res.status(400).json({
-        status: "FAILURE",
+        status: fale,
         message: "No user exist with given email!!",
       });
     }
@@ -365,14 +366,14 @@ exports.userSendOTP = async (req, res) => {
       } else await otpModel.create({ otp, email });
 
       res.status(200).json({
-        status: true,
+        success: true,
         message: "OTP sent successfully and valid for 5 min!!",
         email,
       });
     });
   } catch (err) {
     res.status(400).json({
-      status: "FAILURE",
+      success: false,
       message: err?.message || "Internal Server Error!! ",
     });
   }
@@ -384,19 +385,19 @@ exports.forgotPasswordOtpVerification = async (req, res) => {
     const isUserExist = await otpModel.findOne({ email });
     if (!isUserExist) {
       res.status(400).json({
-        status: false,
+        success: false,
         message: "OTP Expired!!",
       });
     }
     console.log(isUserExist, otp);
     if (isUserExist?.otp === otp) {
       res.status(200).json({
-        status: true,
+        success: true,
         message: "OTP Verified Succssfully!!",
       });
     } else {
       res.status(400).json({
-        status: false,
+        success: false,
         message: "OTP Does not match!!",
       });
     }

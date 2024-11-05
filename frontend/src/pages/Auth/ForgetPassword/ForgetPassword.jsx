@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { sendOTP } from '../../../features/actions/authAction';
+import { resetFields } from '../../../features/slices/authSlice';
 
 function ForgetPassword() {
   const { register, handleSubmit, formState: { errors } } = useForm()
@@ -16,10 +17,11 @@ function ForgetPassword() {
     console.log(data);
   };
   useEffect(() => {
-    if (step1 === 'completed') {
+    if (step1?.success) {
       navigate('/OTPVerification')
     }
   }, [step1])
+
 
 
   return (
@@ -72,9 +74,9 @@ function ForgetPassword() {
         </div>
 
         <div className="mt-4 text-center">
-          <a href="/login" className="bg-blue-500 hover:underline text-sm">
+          <Link to="/login" className="bg-blue-500 hover:underline text-sm">
             Back to Login
-          </a>
+          </Link>
         </div>
       </form>
     </div>

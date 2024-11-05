@@ -21,6 +21,7 @@ const CreateBanner = () => {
   } = useForm();
 
   const handleBanner = (bannerData) => {
+    console.log(bannerData, "bannerData");
     formData.append("banner", bannerData?.banner[0]);
     formData.append("mobileBanner", bannerData?.mobileBanner[0]);
 
