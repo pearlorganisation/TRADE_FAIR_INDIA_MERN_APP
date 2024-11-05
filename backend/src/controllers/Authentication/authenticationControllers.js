@@ -348,7 +348,7 @@ exports.userSendOTP = async (req, res) => {
     console.log(isUserValid, "isUserValid");
     if (!isUserValid) {
       return res.status(400).json({
-        status: fale,
+        status: false,
         message: "No user exist with given email!!",
       });
     }
