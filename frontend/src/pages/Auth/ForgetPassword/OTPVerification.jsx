@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { forgetPasswordOtpVerification } from '../../../features/actions/authAction';
+import { resetFields } from '../../../features/slices/authSlice';
 
 function OTPVerification() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { step1, step2, email, isLoading } = useSelector((state) => state.auth);
+  const { step2, email, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -16,16 +17,18 @@ function OTPVerification() {
     // Call your API or backend verification function here, e.g., verifyOtp(data.otp);
   };
 
+  // useEffect(() => {
+  //   if (step1 != 'completed') {
+  //     navigate('/forgetpass')
+  //   }
+  // }, [step1])
   useEffect(() => {
-    if (step1 != 'completed') {
-      navigate('/forgetpass')
-    }
-  }, [step1])
-  useEffect(() => {
-    if (step2 === 'completed') {
+    if (step2?.success) {
       navigate('/ConfirmPassword')
     }
   }, [step2])
+
+
 
 
   return (
@@ -63,6 +66,15 @@ function OTPVerification() {
             Verify OTP
           </button>
         }
+        <div className="mt-4 text-center">
+          <Link
+            onClick={() => {
+              dispatch(resetFields())
+            }}
+            to="/forgetpass" className="bg-blue-500 hover:underline text-sm">
+            Back to Forgot Password
+          </Link>
+        </div>
       </form>
     </div>
   );

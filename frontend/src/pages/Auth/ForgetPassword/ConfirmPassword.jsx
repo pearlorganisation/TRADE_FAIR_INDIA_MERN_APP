@@ -13,7 +13,7 @@ function ConfirmPassword() {
     watch,
   } = useForm();
   const password = watch("password"); // Watch the password field
-  const { step1, step2, step3, email, isLoading } = useSelector((state) => state.auth);
+  const { step3, email, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -22,11 +22,7 @@ function ConfirmPassword() {
     console.log(data)
     dispatch(resetPassword({ email, ...data }))
   };
-  useEffect(() => {
-    if (step1 != 'completed' && step2 != 'completed') {
-      navigate('/forgetpass')
-    }
-  }, [step1, step2])
+
   useEffect(() => {
 
 
@@ -37,7 +33,7 @@ function ConfirmPassword() {
 
 
   useEffect(() => {
-    if (step3 === 'completed') {
+    if (step3?.success) {
       navigate('/login')
     }
   }, [step3])

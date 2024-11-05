@@ -42,7 +42,7 @@ export const authSlice = createSlice({
       state.step1 = null;
       state.step2 = null;
       state.step3 = null;
-      state.email = null;
+      // state.email = null;
     },
   },
   extraReducers: (builder) => {
@@ -133,7 +133,7 @@ export const authSlice = createSlice({
       .addCase(sendOTP.fulfilled, (state, action) => {
         state.isLoading = false;
         state.errorMessage = "";
-        state.step1 = "completed";
+        state.step1 = action.payload;
         state.email = action.payload?.email;
         toast.success("OTP Sent Successfully!!");
       })
@@ -150,7 +150,8 @@ export const authSlice = createSlice({
       .addCase(forgetPasswordOtpVerification.fulfilled, (state, action) => {
         state.isLoading = false;
         state.errorMessage = "";
-        state.step2 = "completed";
+        state.step2 = action.payload;
+
         toast.success("OTP Verified Successfully!!");
       })
       .addCase(forgetPasswordOtpVerification.rejected, (state, action) => {
@@ -166,7 +167,8 @@ export const authSlice = createSlice({
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.isLoading = false;
         state.errorMessage = "";
-        state.step3 = "completed";
+        state.step3 = action.payload;
+
         toast.success("Password Reset Successfully!!");
       })
       .addCase(resetPassword.rejected, (state, action) => {
