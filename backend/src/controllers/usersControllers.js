@@ -35,6 +35,7 @@ exports.viewUsers = async (req, res) => {
     const totalPage = Math.ceil(totalDocuments / limit);
     const existingUsers = await User.find({
       name: { $regex: search, $options: "i" },
+      emailVerified: true,
     })
       .populate("permissions", ["permission", "_id"])
       // .populate("role", ["role", "_id"])
